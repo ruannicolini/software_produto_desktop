@@ -89,5 +89,11 @@ public class CidadeDAO {
         
     }
 
+    public void excluir ( Cidade cid ) throws Exception, SQLException {
+        
+        String sql = "DELETE FROM cidade WHERE id_cidade = " + cid.getIdCidade();
+        stmt.execute(sql);
+        
+    }
     
 }

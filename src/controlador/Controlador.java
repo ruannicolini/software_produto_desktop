@@ -98,8 +98,8 @@ public class Controlador {
                                
     }
     
-    public void excluirCidade(Cidade cidade) throws SQLException{
-        
+    public void excluirCidade(Cidade cid) throws SQLException, Exception{
+        cidDAO.excluir(cid);
     }
     
     public void alterarCidade(int id, String nome, String uf) throws Exception, SQLException {
