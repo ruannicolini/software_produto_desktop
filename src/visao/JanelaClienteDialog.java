@@ -436,6 +436,7 @@ public class JanelaClienteDialog extends javax.swing.JDialog {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
+        btnNovo.setVisible(true);
         habilitarModo(1);
         if((jtfNome.getText().trim().equals(""))&& (jtfEndereco.getText().trim().equals("")) && (jtfBairro.getText().trim().equals("")
                 && (jtfCel.getText().trim().equals(""))&&(jtfCep.getText().trim().equals(""))&&(jtfCnpj.getText().trim().equals(""))

@@ -181,6 +181,9 @@ public class JanelaCidadeDialog extends javax.swing.JDialog {
             
             JOptionPane.showMessageDialog(this, "Cidade "+ jtfNome.getText() + " inserida com sucesso.");
             
+            jtfNome.setText("");
+            cmbUf.setSelectedIndex(11);
+            
         } catch (NumberFormatException erro) {
             JOptionPane.showMessageDialog(this, "Digite um ID numerico." + 
                     erro.getMessage() + erro.getCause() );
