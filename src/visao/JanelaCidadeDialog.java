@@ -166,9 +166,12 @@ public class JanelaCidadeDialog extends javax.swing.JDialog {
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
         habilitarModo(1);
-        jtfNome.setText("");
-        cmbUf.setSelectedIndex(11);
-        this.setVisible(false);
+        if(jtfNome.getText().trim().equals("")){
+            this.setVisible(false); 
+        }else{
+            jtfNome.setText("");
+            cmbUf.setSelectedIndex(11);
+        }
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
@@ -189,7 +192,6 @@ public class JanelaCidadeDialog extends javax.swing.JDialog {
                     erro.getMessage() + erro.getClass() );
         }        
         
-        this.setVisible(false);
         
     }//GEN-LAST:event_btnNovoActionPerformed
 
@@ -229,7 +231,7 @@ public class JanelaCidadeDialog extends javax.swing.JDialog {
                 // Limpa a janela
                 jtfNome.setText("");
                 cmbUf.setSelectedIndex(11);
-                this.setVisible(false);
+                habilitarModo(1);
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "ERRO ao ALTERAR. " + ex.getMessage() );

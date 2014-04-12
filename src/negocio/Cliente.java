@@ -13,7 +13,7 @@ import util.*;
  * @author Ruan
  */
 public class Cliente {
-    int idCliente;
+    int idCliente; 
     String nome;
     String endereco;
     String numero;
@@ -23,10 +23,11 @@ public class Cliente {
     String telCel;
     Cidade cidade;
     String cep;
+    String email;
     char tipo_cliente;
 
     public Cliente(String nome, String endereco, String numero, String bairro, String complemento, 
-            String telFixo, String telCel, Cidade cidade, String cep, char tipo_cliente) {
+            String telFixo, String telCel, Cidade cidade, String cep, char tipo_cliente, String email) {
         this.nome = nome;
         this.endereco = endereco;
         this.numero = numero;
@@ -37,6 +38,23 @@ public class Cliente {
         this.cidade = cidade;
         this.cep = cep;
         this.tipo_cliente = tipo_cliente;
+        this.email = email;
+    }
+    
+    public Cliente(int idCliente, String nome, String endereco, String numero, String bairro, String complemento, 
+            String telFixo, String telCel, Cidade cidade, String cep, char tipo_cliente, String email) throws ClienteException {
+        setIdCliente(idCliente);
+        this.nome = nome;
+        this.endereco = endereco;
+        this.numero = numero;
+        this.bairro = bairro;
+        this.complemento = complemento;
+        this.telFixo = telFixo;
+        this.telCel = telCel;
+        this.cidade = cidade;
+        this.cep = cep;
+        this.tipo_cliente = tipo_cliente;
+        this.email = email;
     }
 
     public int getIdCliente() {
@@ -131,7 +149,24 @@ public class Cliente {
         this.tipo_cliente = tipo_cliente;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
     
+    
+    
+    @Override
+    public String toString() {
+        return nome;
+    }
+
+    public Object[] toArray() {
+            return new Object[]{this, bairro, cidade, telFixo, telCel};
+        }     
     
     
     

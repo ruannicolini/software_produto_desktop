@@ -22,10 +22,9 @@ CREATE TABLE cliente(id_cliente INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
 					cpf VARCHAR(11),
 					cnpj VARCHAR(15), 
 					ie VARCHAR(20),
+					email varchar(60),
 					FOREIGN KEY(id_cidade)
 					REFERENCES cidade(id_cidade) ON DELETE RESTRICT);
-
-
 
 CREATE TABLE linha(id_linha INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT, nome VARCHAR(40),
 					descricao VARCHAR(100) NOT NULL);
@@ -54,14 +53,5 @@ CREATE TABLE pedido_item(id_pedido_item INTEGER PRIMARY KEY NOT NULL AUTO_INCREM
 						REFERENCES pedido(id_pedido) ON DELETE RESTRICT,
 						FOREIGN KEY(id_produto)
 						REFERENCES produto(id_produto) ON DELETE RESTRICT);
-					
 
-
-
-SELECT * FROM cidade;					
-SELECT * FROM CLIENTE;
-
-
-alter table cliente add cep varchar(9);
-alter table cliente modify numero varchar(7);
-alter table cidade drop cep;
+SELECT * FROM Cidade;

@@ -15,6 +15,7 @@ import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import negocio.*;
+import util.ClienteException;
 
 /**
  *
@@ -34,14 +35,14 @@ public class Controlador {
     
   
     public int inserirCliente(String nome, String endereco, String numero, String bairro, String complemento, 
-            String tel, String cel, Cidade cidade, String cep, char tipo_cliente, String cpf, String cnpj, String ie)
+            String tel, String cel, Cidade cidade, String cep, char tipo_cliente,String email, String cpf, String cnpj, String ie)
             throws Exception, SQLException {
       
         if(tipo_cliente == 'J'){
-            cli = new PessoaJuridica(nome, endereco, numero, bairro, complemento, tel, cel, cidade, cep, tipo_cliente, cnpj, ie);
+            cli = new PessoaJuridica(nome, endereco, numero, bairro, complemento, tel, cel, cidade, cep, tipo_cliente,email, cnpj, ie);
         }else{
             if(tipo_cliente == 'F'){
-                cli = new PessoaFisica(nome, endereco, numero, bairro, complemento, tel, cel, cidade, cep, tipo_cliente, cpf);
+                cli = new PessoaFisica(nome, endereco, numero, bairro, complemento, tel, cel, cidade, cep, tipo_cliente, email, cpf);
                 
              }
         }
@@ -50,6 +51,10 @@ public class Controlador {
         
         return cli.getIdCliente();
         
+    }
+    
+    public void excluirCliente(Cliente cli) throws SQLException, Exception{
+        cliDAO.excluir(cli);        
     }
     
     public void inserirCidade(String nome, String uf) throws Exception, SQLException{
@@ -107,5 +112,61 @@ public class Controlador {
         Cidade cid = new Cidade( id, nome, uf );
         cidDAO.alterar(cid);
     }
+    
+    public void pesquisarCliente( JTable tabela, int tipo, String pesq ) throws Exception, SQLException {
+        
+        List lista = null;
+        
+        switch (tipo) {
+            case 0: // Pesquisar NOME
+                lista = cliDAO.pesquisar(pesq);
+                break;
+            case 1: // Pesquisar ID
+                int id = Integer.parseInt(pesq);
+                lista = cliDAO.pesquisar(id);
+                break;
+            case 2: // Pesquisar BAIRRO
+                lista = cliDAO.pesquisarCidade(pesq);
+                break;
+            
+        }
+        
+        
+        // PERCORRE A LISTA E COLOCA NA TABELA
+        
+        Cliente cli;
+
+        // Apagar as linhas da tabela
+        ((DefaultTableModel) tabela.getModel()).setRowCount(0);
+        
+        Iterator<Cliente> ite = lista.iterator();
+        while ( ite.hasNext() ) {
+            cli = ite.next();
+            
+            ((DefaultTableModel) tabela.getModel()).addRow( cli.toArray() );                        
+
+        }
+        
+                               
+    }
+    
+    public int alterarCliente(int id, String nome, String endereco, String numero, String bairro, String complemento,
+                    String telFixo, String telCel, Cidade cidade, String cep, char tipo_cliente, String email,
+                    String cpf, String cnpj, String ie) throws SQLException, ClienteException, Exception{
+                    Cliente cli = null;
+                    if( tipo_cliente == 'F'){
+                       cli = new PessoaFisica( id, nome, endereco, numero, bairro, complemento, telFixo, telCel, cidade, cep, tipo_cliente, email, cpf);
+                    }else{
+                        if(tipo_cliente == 'J'){
+                            cli = new PessoaJuridica( id, nome, endereco, numero, bairro, complemento, telFixo, telCel, cidade, cep, tipo_cliente, email, cnpj, ie);
+                        }
+                    }
+        
+                    cliDAO.alterar(cli);
+             
+                    return cli.getIdCliente();
+        
+    }
+    
     
 }

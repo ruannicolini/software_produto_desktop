@@ -5,30 +5,30 @@
  */
 
 package visao;
+
 import controlador.Controlador;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import negocio.Cidade;
 import negocio.Cliente;
 
 /**
  *
  * @author Ruan
  */
-public class JanelaCidadePesqDialog extends javax.swing.JDialog {
-    
+public class JanelaClientePesqDialog extends javax.swing.JDialog {
     Controlador control;
-    Cidade cidSelecionada;
+    Cliente cliSelecionado;
 
     /**
-     * Creates new form JanelaCidadePesqDialog
+     * Creates new form JanelaClientePesqDialog
      */
-    public JanelaCidadePesqDialog(java.awt.Frame parent, boolean modal) throws Exception, SQLException  {
+    public JanelaClientePesqDialog(java.awt.Dialog parent, boolean modal) throws Exception, SQLException  {
         super(parent, modal);
         initComponents();
+        
         control = new Controlador();
-        cidSelecionada = null;
+        cliSelecionado = null;
     }
 
     /**
@@ -45,16 +45,17 @@ public class JanelaCidadePesqDialog extends javax.swing.JDialog {
         txtPesq = new javax.swing.JTextField();
         btnPesquisar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblCidades = new javax.swing.JTable();
-        btnSelecionar = new javax.swing.JButton();
-        btnExcluir = new javax.swing.JButton();
+        tblClientes = new javax.swing.JTable();
         btnCancelar = new javax.swing.JButton();
+        btnExcluir = new javax.swing.JButton();
+        btnSelecionar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(241, 240, 240));
+        jPanel1.setPreferredSize(new java.awt.Dimension(417, 363));
 
-        cmbTipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Nome", "UF" }));
+        cmbTipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Nome", "ID", "Cidade" }));
 
         btnPesquisar.setText("Pesquisar");
         btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
@@ -63,28 +64,28 @@ public class JanelaCidadePesqDialog extends javax.swing.JDialog {
             }
         });
 
-        tblCidades.setModel(new javax.swing.table.DefaultTableModel(
+        tblClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Cidade", "UF"
+                "Nome", "Bairro", "Cidade", "Tel. Fixo", "Tel. Cel."
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(tblCidades);
+        jScrollPane1.setViewportView(tblClientes);
 
-        btnSelecionar.setText("Selecionar");
-        btnSelecionar.addActionListener(new java.awt.event.ActionListener() {
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSelecionarActionPerformed(evt);
+                btnCancelarActionPerformed(evt);
             }
         });
 
@@ -95,10 +96,10 @@ public class JanelaCidadePesqDialog extends javax.swing.JDialog {
             }
         });
 
-        btnCancelar.setText("Cancelar");
-        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+        btnSelecionar.setText("Selecionar");
+        btnSelecionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelarActionPerformed(evt);
+                btnSelecionarActionPerformed(evt);
             }
         });
 
@@ -136,7 +137,7 @@ public class JanelaCidadePesqDialog extends javax.swing.JDialog {
                     .addComponent(btnPesquisar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar)
                     .addComponent(btnSelecionar)
@@ -152,40 +153,36 @@ public class JanelaCidadePesqDialog extends javax.swing.JDialog {
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
         try {
             // TODO add your handling code here:
-            control.pesquisarCidade(tblCidades, cmbTipo.getSelectedIndex(), txtPesq.getText() );
+            control.pesquisarCliente(tblClientes, cmbTipo.getSelectedIndex(), txtPesq.getText() );
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "ERRO ao PESQUISAR no BANCO. " + ex.getMessage() );
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "ERRO ao PESQUISAR. " + ex.getMessage() );
         }
+        
+      
 
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
-    private void btnSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionarActionPerformed
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
+//        cliSelecionado = null;
+        this.setVisible(false);
 
-        int linha = tblCidades.getSelectedRow();
-        if ( linha >= 0 ) {
-            cidSelecionada = (Cidade) tblCidades.getValueAt(linha, 0);
-            setVisible(false);
-        } else {
-            JOptionPane.showMessageDialog(this, "Selecione uma CIDADE.");
-        }
-        
-
-    }//GEN-LAST:event_btnSelecionarActionPerformed
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-//        // TODO add your handling code here:
-        try{ 
-            int linha = tblCidades.getSelectedRow();
+        // TODO add your handling code here:
+
+        try{
+            int linha = tblClientes.getSelectedRow();
             if ( linha >= 0 ) {
-                cidSelecionada = (Cidade) tblCidades.getValueAt(linha, 0);
-                control.excluirCidade(cidSelecionada);
-                ((DefaultTableModel) tblCidades.getModel()).removeRow(linha);
-                JOptionPane.showMessageDialog(this, "CIDADE excluida.");
+                cliSelecionado = (Cliente) tblClientes.getValueAt(linha, 0);
+                control.excluirCliente(cliSelecionado);
+                ((DefaultTableModel) tblClientes.getModel()).removeRow(linha);
+                JOptionPane.showMessageDialog(this, "CLIENTE excluido.");
             } else {
-                JOptionPane.showMessageDialog(this, "Selecione uma CIDADE.");
+                JOptionPane.showMessageDialog(this, "Selecione um CLIENTE.");
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "ERRO ao EXCLUIR no BANCO. " + ex.getMessage() );
@@ -194,61 +191,25 @@ public class JanelaCidadePesqDialog extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
-    public Cidade getCidade() {
-        return cidSelecionada;
-    }
-    
-    
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+    private void btnSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionarActionPerformed
         // TODO add your handling code here:
-        cidSelecionada = null;
-        this.setVisible(false);
 
-    }//GEN-LAST:event_btnCancelarActionPerformed
+        int linha = tblClientes.getSelectedRow();
+        if ( linha >= 0 ) {
+            cliSelecionado = (Cliente) tblClientes.getValueAt(linha, 0);
+            setVisible(false);
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecione um CLIENTE.");
+        }
 
+    }//GEN-LAST:event_btnSelecionarActionPerformed
 
-    
+    public Cliente getCliente() {
+        return cliSelecionado;
+    }
     /**
      * @param args the command line arguments
      */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(JanelaCidadePesqDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(JanelaCidadePesqDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(JanelaCidadePesqDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(JanelaCidadePesqDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//
-//        /* Create and display the dialog */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                JanelaCidadePesqDialog dialog = new JanelaCidadePesqDialog(new javax.swing.JFrame(), true);
-//                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-//                    @Override
-//                    public void windowClosing(java.awt.event.WindowEvent e) {
-//                        System.exit(0);
-//                    }
-//                });
-//                dialog.setVisible(true);
-//            }
-//        });
-//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
@@ -258,7 +219,7 @@ public class JanelaCidadePesqDialog extends javax.swing.JDialog {
     private javax.swing.JComboBox cmbTipo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblCidades;
+    private javax.swing.JTable tblClientes;
     private javax.swing.JTextField txtPesq;
     // End of variables declaration//GEN-END:variables
 }

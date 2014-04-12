@@ -16,6 +16,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import negocio.Cidade;
+import negocio.Cliente;
+import negocio.PessoaFisica;
+import negocio.PessoaJuridica;
 
 /**
  *
@@ -24,6 +27,7 @@ import negocio.Cidade;
 public class JanelaClienteDialog extends javax.swing.JDialog {
 
     Controlador control;
+    Cliente cli = null;
     /**
      * Creates new form JanelaClienteDialog
      */
@@ -69,13 +73,15 @@ public class JanelaClienteDialog extends javax.swing.JDialog {
         jtfNumero.setText("");
         jtfComplemento.setText("");
         jtfBairro.setText("");
-        jtfCgc.setText("");
+        jtfCnpj.setText("");
         jtfTel.setText("");
         jtfCel.setText("");
         jtfEmail.setText("");
         cmbCidade.setSelectedIndex(0);
         jtfCep.setText("");
         jtfCpf.setText("");
+        jtfIe.setText("");
+        rbJuridica.setSelected(true); // ao limpar, pessoa juridica deve ficar selecionada
     }
     
 
@@ -111,13 +117,13 @@ public class JanelaClienteDialog extends javax.swing.JDialog {
         lblNome = new javax.swing.JLabel();
         lblEnder1 = new javax.swing.JLabel();
         btnPesqCli = new javax.swing.JButton();
-        lblCGC = new javax.swing.JLabel();
-        jtfCgc = new javax.swing.JTextField();
+        lblCnpj = new javax.swing.JLabel();
+        jtfCnpj = new javax.swing.JTextField();
         jtfIe = new javax.swing.JTextField();
         lblCGC1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        rbFisica = new javax.swing.JRadioButton();
+        rbJuridica = new javax.swing.JRadioButton();
         jLabel1 = new javax.swing.JLabel();
         jtfCpf = new javax.swing.JTextField();
         cmbCidade = new javax.swing.JComboBox();
@@ -177,6 +183,11 @@ public class JanelaClienteDialog extends javax.swing.JDialog {
         btnAlterar.setText("Alterar");
         btnAlterar.setEnabled(false);
         btnAlterar.setPreferredSize(new java.awt.Dimension(57, 23));
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarActionPerformed(evt);
+            }
+        });
 
         lblNome.setText("Nome");
 
@@ -184,8 +195,13 @@ public class JanelaClienteDialog extends javax.swing.JDialog {
 
         btnPesqCli.setBackground(new java.awt.Color(241, 240, 240));
         btnPesqCli.setText("...");
+        btnPesqCli.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesqCliActionPerformed(evt);
+            }
+        });
 
-        lblCGC.setText("CGC");
+        lblCnpj.setText("Cnpj");
 
         jtfIe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -198,18 +214,23 @@ public class JanelaClienteDialog extends javax.swing.JDialog {
         jPanel2.setBackground(new java.awt.Color(241, 240, 240));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Pessoa"));
 
-        bGroupTipo.add(jRadioButton1);
-        jRadioButton1.setMnemonic('f');
-        jRadioButton1.setText("Física");
-        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+        bGroupTipo.add(rbFisica);
+        rbFisica.setMnemonic('f');
+        rbFisica.setText("Física");
+        rbFisica.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton1ActionPerformed(evt);
+                rbFisicaActionPerformed(evt);
             }
         });
 
-        bGroupTipo.add(jRadioButton2);
-        jRadioButton2.setMnemonic('j');
-        jRadioButton2.setText("Jurídica");
+        bGroupTipo.add(rbJuridica);
+        rbJuridica.setMnemonic('j');
+        rbJuridica.setText("Jurídica");
+        rbJuridica.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbJuridicaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -217,17 +238,17 @@ public class JanelaClienteDialog extends javax.swing.JDialog {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jRadioButton1)
+                .addComponent(rbFisica)
                 .addGap(18, 18, 18)
-                .addComponent(jRadioButton2)
+                .addComponent(rbJuridica)
                 .addGap(33, 33, 33))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2))
+                    .addComponent(rbFisica)
+                    .addComponent(rbJuridica))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -266,7 +287,7 @@ public class JanelaClienteDialog extends javax.swing.JDialog {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(jtfCgc, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jtfCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(27, 27, 27)
                                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -308,7 +329,7 @@ public class JanelaClienteDialog extends javax.swing.JDialog {
                                                         .addComponent(jtfCep))
                                                     .addComponent(jtfComplemento)))))
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                        .addComponent(lblCGC)
+                                        .addComponent(lblCnpj)
                                         .addGap(34, 34, 34)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jtfEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -351,8 +372,8 @@ public class JanelaClienteDialog extends javax.swing.JDialog {
                     .addComponent(jtfCep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCGC)
-                    .addComponent(jtfCgc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblCnpj)
+                    .addComponent(jtfCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
                     .addComponent(jtfCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -391,8 +412,8 @@ public class JanelaClienteDialog extends javax.swing.JDialog {
         int id = 0;
         try {
                 id = control.inserirCliente(jtfNome.getText(), jtfEndereco.getText(), jtfNumero.getText(), jtfBairro.getText(), jtfComplemento.getText(),
-                    jtfTel.getText(), jtfCel.getText(), (Cidade) cmbCidade.getSelectedItem(),jtfCep.getText(), (char) bGroupTipo.getSelection().getMnemonic(),
-                    jtfCpf.getText(), jtfCgc.getText(), jtfIe.getText());
+                    jtfTel.getText(), jtfCel.getText(), (Cidade) cmbCidade.getSelectedItem(),jtfCep.getText(), (char) bGroupTipo.getSelection().getMnemonic(), jtfEmail.getText(),
+                    jtfCpf.getText(), jtfCnpj.getText(), jtfIe.getText());
             
                 JOptionPane.showMessageDialog(this, "Cliente " + id + " - " + jtfNome.getText() + " inserido com sucesso.");
 
@@ -416,8 +437,14 @@ public class JanelaClienteDialog extends javax.swing.JDialog {
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
         habilitarModo(1);
-
-        limpaDados();
+        if((jtfNome.getText().trim().equals(""))&& (jtfEndereco.getText().trim().equals("")) && (jtfBairro.getText().trim().equals("")
+                && (jtfCel.getText().trim().equals(""))&&(jtfCep.getText().trim().equals(""))&&(jtfCnpj.getText().trim().equals(""))
+                && (jtfComplemento.getText().trim().equals(""))&&(jtfCpf.getText().trim().equals(""))&&(jtfEmail.getText().trim().equals("")
+                && (jtfIe.getText().trim().equals(""))&&(jtfTel.getText().trim().equals(""))&&(jtfNumero.getText().trim().equals(""))))){
+            this.setVisible(false); 
+        }else{
+            limpaDados();
+        }
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void jtfComplementoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfComplementoActionPerformed
@@ -428,9 +455,12 @@ public class JanelaClienteDialog extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtfIeActionPerformed
 
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+    private void rbFisicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbFisicaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
+        jtfCpf.setEnabled(true);
+        jtfCnpj.setEnabled(false);
+        jtfIe.setEnabled(false);
+    }//GEN-LAST:event_rbFisicaActionPerformed
 
     private void jtfEnderecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfEnderecoActionPerformed
         // TODO add your handling code here:
@@ -438,6 +468,12 @@ public class JanelaClienteDialog extends javax.swing.JDialog {
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         // TODO add your handling code here:
+        
+        rbJuridica.setSelected(true);
+        jtfCpf.setEnabled(false);
+        jtfCnpj.setEnabled(true);
+        jtfIe.setEnabled(true);
+        
         try {        
             control.carregarComboCidade(cmbCidade);
         } catch (SQLException erro) {
@@ -449,6 +485,106 @@ public class JanelaClienteDialog extends javax.swing.JDialog {
         } 
         
     }//GEN-LAST:event_formComponentShown
+
+    private void btnPesqCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesqCliActionPerformed
+        // TODO add your handling code here:
+        JanelaClientePesqDialog cliPesq;
+        try {
+            cliPesq = new JanelaClientePesqDialog(null, true);
+            cliPesq.setVisible(true); 
+            
+          cli = cliPesq.getCliente();
+            
+            if ( cli != null ){
+                if(cli.getTipo_cliente() == 'F'){
+                    
+                    jtfCpf.setEnabled(true);
+                    
+                    jtfNome.setText( cli.getNome()  );
+                    jtfEndereco.setText( cli.geteEdereco()  );
+                    jtfBairro.setText( cli.getBairro()  );
+                    jtfNumero.setText(cli.getNumero());
+                    jtfComplemento.setText(cli.getComplemento());
+                    jtfCep.setText(cli.getCep());
+                    jtfTel.setText(cli.getTelFixo());
+                    jtfCel.setText(cli.getTelCel());
+                    jtfEmail.setText(cli.getEmail());
+                    cmbCidade.setSelectedItem(cli.getCidade());
+                    rbFisica.setSelected(true);
+                    
+                    jtfCpf.setText(((PessoaFisica)cli).getCpf()); 
+                    
+                    jtfCnpj.setEnabled(false);
+                    jtfIe.setEnabled(false);
+                }else{
+                    if(cli.getTipo_cliente() == 'J'){
+                        
+                        jtfCnpj.setEnabled(true);
+                        jtfIe.setEnabled(true);
+                        
+                                                
+                        jtfNome.setText( cli.getNome()  );
+                        jtfEndereco.setText( cli.geteEdereco()  );
+                        jtfBairro.setText( cli.getBairro()  );
+                        jtfNumero.setText(cli.getNumero());
+                        jtfComplemento.setText(cli.getComplemento());
+                        jtfCep.setText(cli.getCep());
+                        jtfTel.setText(cli.getTelFixo());
+                        jtfCel.setText(cli.getTelCel());
+                        jtfEmail.setText(cli.getEmail());
+                        cmbCidade.setSelectedItem(cli.getCidade());
+                        rbJuridica.setSelected(true);
+
+                        jtfCnpj.setText(((PessoaJuridica)cli).getCnpj());
+                        jtfIe.setText(((PessoaJuridica)cli).getIe()); 
+                        
+                        jtfCpf.setEnabled(false);
+                    }
+                }
+                btnNovo.setVisible(false);
+                btnAlterar.setVisible(true);
+                btnAlterar.setEnabled(true);
+            }
+            
+            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "ERRO ao PESQUISAR. " + ex.getMessage() );
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "ERRO ao PESQUISAR. " + ex.getMessage() );
+        }        
+
+    }//GEN-LAST:event_btnPesqCliActionPerformed
+
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        // TODO add your handling code here:
+        try{
+            if ( cli != null ) {   
+                control.alterarCliente(cli.getIdCliente(),jtfNome.getText(), jtfEndereco.getText(), jtfNumero.getText(), jtfBairro.getText(), jtfComplemento.getText(),
+                    jtfTel.getText(), jtfCel.getText(), (Cidade) cmbCidade.getSelectedItem(),jtfCep.getText(), (char) bGroupTipo.getSelection().getMnemonic(), jtfEmail.getText(),
+                    jtfCpf.getText(), jtfCnpj.getText(), jtfIe.getText());
+                        
+                JOptionPane.showMessageDialog(this, "Cliente " + cli.getNome() + " alterado com sucesso."  );
+                limpaDados();
+                btnNovo.setVisible(true);
+                habilitarModo(1);
+                
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "ERRO ao ALTERAR. " + ex.getMessage() );
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "ERRO ao ALTERAR. " + ex.getMessage() );
+        }                  
+ 
+        
+        
+    }//GEN-LAST:event_btnAlterarActionPerformed
+
+    private void rbJuridicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbJuridicaActionPerformed
+        // TODO add your handling code here:
+        jtfCpf.setEnabled(false);
+        jtfCnpj.setEnabled(true);
+        jtfIe.setEnabled(true);
+    }//GEN-LAST:event_rbJuridicaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -503,12 +639,10 @@ public class JanelaClienteDialog extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JTextField jtfBairro;
     private javax.swing.JTextField jtfCel;
     private javax.swing.JTextField jtfCep;
-    private javax.swing.JTextField jtfCgc;
+    private javax.swing.JTextField jtfCnpj;
     private javax.swing.JTextField jtfComplemento;
     private javax.swing.JTextField jtfCpf;
     private javax.swing.JTextField jtfEmail;
@@ -517,9 +651,9 @@ public class JanelaClienteDialog extends javax.swing.JDialog {
     private javax.swing.JTextField jtfNome;
     private javax.swing.JTextField jtfNumero;
     private javax.swing.JTextField jtfTel;
-    private javax.swing.JLabel lblCGC;
     private javax.swing.JLabel lblCGC1;
     private javax.swing.JLabel lblCidade;
+    private javax.swing.JLabel lblCnpj;
     private javax.swing.JLabel lblEnder;
     private javax.swing.JLabel lblEnder1;
     private javax.swing.JLabel lblEnder2;
@@ -528,5 +662,7 @@ public class JanelaClienteDialog extends javax.swing.JDialog {
     private javax.swing.JLabel lblEnder5;
     private javax.swing.JLabel lblEnder7;
     private javax.swing.JLabel lblNome;
+    private javax.swing.JRadioButton rbFisica;
+    private javax.swing.JRadioButton rbJuridica;
     // End of variables declaration//GEN-END:variables
 }

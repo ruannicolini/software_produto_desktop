@@ -72,7 +72,7 @@
                                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Group type="102" attributes="0">
-                                                  <Component id="jtfCgc" min="-2" pref="194" max="-2" attributes="1"/>
+                                                  <Component id="jtfCnpj" min="-2" pref="194" max="-2" attributes="1"/>
                                                   <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                                                   <Group type="103" groupAlignment="0" attributes="0">
                                                       <Group type="102" attributes="0">
@@ -129,7 +129,7 @@
                                           </Group>
                                       </Group>
                                       <Group type="102" alignment="0" attributes="0">
-                                          <Component id="lblCGC" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblCnpj" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Component id="jtfEmail" min="-2" pref="194" max="-2" attributes="1"/>
@@ -188,8 +188,8 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="lblCGC" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jtfCgc" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblCnpj" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jtfCnpj" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jtfCpf" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -302,6 +302,9 @@
               <Dimension value="[57, 23]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAlterarActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jtfNome">
         </Component>
@@ -322,13 +325,16 @@
             </Property>
             <Property name="text" type="java.lang.String" value="..."/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPesqCliActionPerformed"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="lblCGC">
+        <Component class="javax.swing.JLabel" name="lblCnpj">
           <Properties>
-            <Property name="text" type="java.lang.String" value="CGC"/>
+            <Property name="text" type="java.lang.String" value="Cnpj"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jtfCgc">
+        <Component class="javax.swing.JTextField" name="jtfCnpj">
         </Component>
         <Component class="javax.swing.JTextField" name="jtfIe">
           <Events>
@@ -357,9 +363,9 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jRadioButton1" min="-2" max="-2" attributes="0"/>
+                      <Component id="rbFisica" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jRadioButton2" min="-2" max="-2" attributes="0"/>
+                      <Component id="rbJuridica" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -368,8 +374,8 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jRadioButton1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jRadioButton2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="rbFisica" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="rbJuridica" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
@@ -377,7 +383,7 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JRadioButton" name="jRadioButton1">
+            <Component class="javax.swing.JRadioButton" name="rbFisica">
               <Properties>
                 <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                   <ComponentRef name="bGroupTipo"/>
@@ -386,10 +392,10 @@
                 <Property name="text" type="java.lang.String" value="F&#xed;sica"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioButton1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rbFisicaActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JRadioButton" name="jRadioButton2">
+            <Component class="javax.swing.JRadioButton" name="rbJuridica">
               <Properties>
                 <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                   <ComponentRef name="bGroupTipo"/>
@@ -397,6 +403,9 @@
                 <Property name="mnemonic" type="int" value="106"/>
                 <Property name="text" type="java.lang.String" value="Jur&#xed;dica"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rbJuridicaActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
