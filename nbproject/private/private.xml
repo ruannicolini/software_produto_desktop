@@ -4,7 +4,11 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/Ruan/Documents/NetBeansProjects/BioExtratus/src/visao/JanelaProdutoPesqDialog.java</file>
+            <file>file:/C:/Users/Ruan/Documents/NetBeansProjects/BioExtratus/src/dao/ProdutoDAO.java</file>
+            <file>file:/C:/Users/Ruan/Documents/NetBeansProjects/BioExtratus/src/negocio/Cidade.java</file>
+            <file>file:/C:/Users/Ruan/Documents/NetBeansProjects/BioExtratus/src/controlador/Controlador.java</file>
             <file>file:/C:/Users/Ruan/Documents/NetBeansProjects/BioExtratus/src/visao/JanelaCidadeDialog.java</file>
+            <file>file:/C:/Users/Ruan/Documents/NetBeansProjects/BioExtratus/src/negocio/Produto.java</file>
             <file>file:/C:/Users/Ruan/Documents/NetBeansProjects/BioExtratus/src/visao/JanelaProdutoDialog.java</file>
         </group>
     </open-files>

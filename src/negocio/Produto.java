@@ -83,7 +83,11 @@ public class Produto {
         this.status = status;
     }
 
+    @Override
+    public String toString() {
+        return descricao;
+    }
     public Object[] toArray() {
-        return new Object[]{this,this.descricao, this.linha.getNome(), this.tipo.getDescricao(), this.getPreco(), this.getStatus()};
+        return new Object[]{this, this.linha.getNome(), this.tipo.getDescricao(), this.getPreco()};
     }
 }

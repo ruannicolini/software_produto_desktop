@@ -111,7 +111,7 @@ public class ProdutoDAO {
         List lista = new ArrayList();
         
         // Consulta no banco
-        rs = stmt.executeQuery("SELECT * from Produto, Linha , TIPOPRODUTO WHERE TIPOPRODUTO.descricao LIKE '%" + pesqTipo + "%' AND PRODUTO.ID_TIPOPRODUTO = TIPO.ID_TIPO AND LINHA.ID_LINHA = PRODUTO.ID_LINHA");
+        rs = stmt.executeQuery("SELECT * from Produto, Linha , TIPOPRODUTO WHERE TIPOPRODUTO.descricao LIKE '%" + pesqTipo + "%' AND PRODUTO.ID_TIPOPRODUTO = TIPOPRODUTO.ID_TIPO AND LINHA.ID_LINHA = PRODUTO.ID_LINHA");
         
         // Transformar RS em List
         
