@@ -10,6 +10,7 @@ import controlador.Controlador;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import negocio.Cidade;
+import negocio.Linha;
 
 /**
  *
@@ -25,6 +26,8 @@ public class JanelaCidadeDialog extends javax.swing.JDialog {
     public JanelaCidadeDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
+        
         
         try {
             control = new Controlador();
@@ -201,7 +204,7 @@ public class JanelaCidadeDialog extends javax.swing.JDialog {
     
     private void btnBuscaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscaActionPerformed
         // TODO add your handling code here:
-        habilitarModo(2);
+        
         JanelaCidadePesqDialog cidPesq;
         try {
             cidPesq = new JanelaCidadePesqDialog(null, true);
@@ -211,7 +214,8 @@ public class JanelaCidadeDialog extends javax.swing.JDialog {
             
             if ( cid != null ){
                 jtfNome.setText( cid.getNome()  );
-                cmbUf.setSelectedItem(cid.getUf()  );                                    
+                cmbUf.setSelectedItem(cid.getUf()  );
+                habilitarModo(2);
             }
             
             

@@ -54,4 +54,4 @@ CREATE TABLE pedido_item(id_pedido_item INTEGER PRIMARY KEY NOT NULL AUTO_INCREM
 						FOREIGN KEY(id_produto)
 						REFERENCES produto(id_produto) ON DELETE RESTRICT);
 
-SELECT * FROM Cidade;
+SELECT * FROM lINHA;

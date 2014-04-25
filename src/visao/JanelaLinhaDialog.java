@@ -6,11 +6,18 @@
 
 package visao;
 
+import controlador.Controlador;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import negocio.Linha;
+
 /**
  *
  * @author Ruan
  */
 public class JanelaLinhaDialog extends javax.swing.JDialog {
+    Controlador control;
+    Linha lin = null;
 
     /**
      * Creates new form JanelaProdutoDialog
@@ -18,6 +25,19 @@ public class JanelaLinhaDialog extends javax.swing.JDialog {
     public JanelaLinhaDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
+        
+        try {
+            control = new Controlador();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "ERRO de conexão com o BANCO. Procure o suporte. " + 
+                        e.getMessage() );
+
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ERRO não esperado. " + 
+                        e.getMessage() );
+        }
     }
 
     
@@ -47,7 +67,7 @@ public class JanelaLinhaDialog extends javax.swing.JDialog {
         btnAlterar = new javax.swing.JButton();
         btnNovo = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jtaDescricao = new javax.swing.JTextArea();
+        jtfDescricao = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jtfNome = new javax.swing.JTextField();
@@ -68,18 +88,33 @@ public class JanelaLinhaDialog extends javax.swing.JDialog {
 
         btnAlterar.setText("Alterar");
         btnAlterar.setEnabled(false);
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarActionPerformed(evt);
+            }
+        });
 
         btnNovo.setText("Novo");
+        btnNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNovoActionPerformed(evt);
+            }
+        });
 
-        jtaDescricao.setColumns(20);
-        jtaDescricao.setRows(5);
-        jScrollPane1.setViewportView(jtaDescricao);
+        jtfDescricao.setColumns(20);
+        jtfDescricao.setRows(5);
+        jScrollPane1.setViewportView(jtfDescricao);
 
         jLabel2.setText("Descrição");
 
         jLabel1.setText("Nome");
 
         jButton4.setText("...");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -135,11 +170,86 @@ public class JanelaLinhaDialog extends javax.swing.JDialog {
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
 
+        btnNovo.setVisible(true);
         habilitarModo(1);
-        jtfNome.setText("");
-        jtaDescricao.setText("");
+        if((jtfNome.getText().trim().equals("")) && (jtfDescricao.getText().trim().equals(""))){
+            this.setVisible(false); 
+        }else{
+            jtfNome.setText("");
+            jtfDescricao.setText("");
+        }
         
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
+        // TODO add your handling code here:
+
+        try {
+                control.inserirLinha(jtfNome.getText(), jtfDescricao.getText());
+                jtfNome.setText("");
+                jtfDescricao.setText("");
+                
+            
+                JOptionPane.showMessageDialog(this, "Linha inserida com sucesso.");
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(this, "Erro desconhecimento. " + 
+                    erro.getMessage() + erro.getClass() );            
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(this, "Erro desconhecimento. " + 
+                    erro.getMessage() + erro.getClass() );
+        }
+        
+    }//GEN-LAST:event_btnNovoActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+
+        JanelaLinhaPesqDialog linPesq;
+        try {
+            linPesq = new JanelaLinhaPesqDialog(null, true);
+            linPesq.setVisible(true); 
+//            
+            lin = linPesq.getLinha();
+//            
+            if ( lin != null ){
+                jtfNome.setText( lin.getNome()  );
+                jtfDescricao.setText(lin.getDescricao());
+                habilitarModo(2);
+            }
+//            
+//            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "ERRO ao PESQUISAR. " + ex.getMessage() );
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "ERRO ao PESQUISAR. " + ex.getMessage() );
+        }  
+//        
+//        public Linha getLinha() {
+//            return linSelecionada;
+//        }
+//
+//        
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        // TODO add your handling code here:
+        try{
+            if ( lin != null ) {
+                control.alterarLinha(lin.getIdLinha(), jtfNome.getText(), jtfDescricao.getText());
+                JOptionPane.showMessageDialog(this, "Linha " + lin.getNome() + " alterada com sucesso."  );
+                
+                // Limpa a janela
+                jtfNome.setText("");
+                jtfDescricao.setText("");
+                habilitarModo(1);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "ERRO ao ALTERAR. " + ex.getMessage() );
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "ERRO ao ALTERAR. " + ex.getMessage() );
+        }                  
+
+    }//GEN-LAST:event_btnAlterarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -192,7 +302,7 @@ public class JanelaLinhaDialog extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jtaDescricao;
+    private javax.swing.JTextArea jtfDescricao;
     private javax.swing.JTextField jtfNome;
     // End of variables declaration//GEN-END:variables
 }

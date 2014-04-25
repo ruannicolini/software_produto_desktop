@@ -44,7 +44,7 @@ public class CidadeDAO {
         List lista = new ArrayList();
         
         // Consulta no banco
-        rs = stmt.executeQuery("SELECT * from Cidade WHERE Cidade.nome LIKE '" + pesqNome + "%' ");
+        rs = stmt.executeQuery("SELECT * from Cidade WHERE Cidade.nome LIKE '%" + pesqNome + "%' ");
         
         // Transformar RS em List
         
@@ -53,8 +53,7 @@ public class CidadeDAO {
            
            lista.add(cid);                        
         }
-        
-        
+                
         return lista;
     }
     public List pesquisarUf(String pesqUf) throws Exception, SQLException{

@@ -256,6 +256,11 @@ public class JanelaClienteDialog extends javax.swing.JDialog {
 
         cmbCidade.setBackground(new java.awt.Color(241, 240, 240));
         cmbCidade.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " " }));
+        cmbCidade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbCidadeActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("CEP");
 
@@ -586,6 +591,10 @@ public class JanelaClienteDialog extends javax.swing.JDialog {
         jtfCnpj.setEnabled(true);
         jtfIe.setEnabled(true);
     }//GEN-LAST:event_rbJuridicaActionPerformed
+
+    private void cmbCidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCidadeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbCidadeActionPerformed
 
     /**
      * @param args the command line arguments

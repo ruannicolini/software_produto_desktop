@@ -11,9 +11,17 @@ package negocio;
  * @author Ruan
  */
 public class Linha {
+    int idLinha;
     String nome;
     String descricao;
 
+    public Linha(int idLinha, String nome, String descricao) {
+        this.idLinha = idLinha;
+        this.nome = nome;
+        this.descricao = descricao;
+    }
+
+    
     public Linha(String nome, String descricao) {
         this.nome = nome;
         this.descricao = descricao;
@@ -33,6 +41,21 @@ public class Linha {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+    @Override
+    public String toString() {
+        return nome;
+    }
+    public Object[] toArray() {
+        return new Object[]{this, getDescricao()};
+    }
+
+    public int getIdLinha() {
+        return idLinha;
+    }
+
+    public void setIdLinha(int idLinha) {
+        this.idLinha = idLinha;
     }
     
 }

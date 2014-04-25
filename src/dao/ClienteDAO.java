@@ -163,8 +163,8 @@ public class ClienteDAO {
         
         
         return lista;
-    }    
-
+    }
+    
     public List pesquisar ( String pesqNome ) throws Exception, SQLException {
         ResultSet rs;
         List lista = new ArrayList();
