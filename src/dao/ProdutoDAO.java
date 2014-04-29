@@ -126,4 +126,27 @@ public class ProdutoDAO {
                 
         return lista;
     }
+    
+    public void excluir ( Produto prod ) throws Exception, SQLException {
+        
+        String sql = "DELETE FROM produto WHERE id_produto = " + prod.getId();
+        stmt.execute(sql);
+        
+    }
+    
+    public void alterar(Produto novoProd)  throws Exception, SQLException {
+        String sql = "UPDATE produto SET descricao = ?, preco = ?, HABILITADO_VENDA = ?, id_linha = ?, ID_TIPOPRODUTO = ? WHERE id_produto = " + novoProd.getId();                
+        
+        PreparedStatement pst = ConexaoMySQL.obterConexao().prepareStatement( sql ) ;
+        pst.setString(1, novoProd.getDescricao() );
+        pst.setFloat(2, novoProd.getPreco());
+        pst.setBoolean(3, novoProd.getStatus());
+        pst.setInt(4, novoProd.getLinha().getIdLinha());
+        pst.setInt(5, novoProd.getTipo().getId());
+        
+        pst.execute();
+        
+       
+        
+    }
 }

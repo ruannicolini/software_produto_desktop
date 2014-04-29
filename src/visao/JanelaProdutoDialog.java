@@ -33,8 +33,6 @@ public class JanelaProdutoDialog extends javax.swing.JDialog {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "ERRO de conexão com o BANCO. Procure o suporte. " + 
                         e.getMessage() );
-
-            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "ERRO não esperado. " + 
                         e.getMessage() );
@@ -258,8 +256,26 @@ public class JanelaProdutoDialog extends javax.swing.JDialog {
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         // TODO add your handling code here:
-        
-        
+        try{
+                if ( prod != null ) {
+                    control.alterarProduto(prod.getId(), jtfDescricao.getText(),(Linha) cmbLinha.getSelectedItem(), (Tipo)cmbTipo.getSelectedItem(), jtfPreco.getText(), (char) (bGrupStatusProd.getSelection().getMnemonic()));
+                    JOptionPane.showMessageDialog(this, "Produto " + prod.getDescricao()+ " alterado com sucesso."  );
+
+                    // Limpa a janela
+                    jtfCod.setText("");
+                    jtfDescricao.setText("");
+                    jtfPreco.setText("");
+                    cmbLinha.setSelectedIndex(0);
+                    cmbTipo.setSelectedIndex(0);
+                    rbAtivo.setSelected(true);
+
+                    habilitarModo(1);
+                }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "ERRO ao ALTERAR. " + ex.getMessage() );
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "ERRO ao ALTERAR. " + ex.getMessage() );
+        }
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -311,13 +327,7 @@ public class JanelaProdutoDialog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Erro desconhecimento. " + 
                     erro.getMessage() + erro.getClass() );
         }   
-        
-        
-        
         limpaDados();  // Limpa os campos para que na proxima vez que a janela for chamada não apareça os ultimos dados cadastrados.
-       
-
-
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -327,20 +337,26 @@ public class JanelaProdutoDialog extends javax.swing.JDialog {
             prodPesq = new JanelaProdutoPesqDialog(null, true);
             prodPesq.setVisible(true); 
             
-           prod = prodPesq.getProduto();
+            prod = prodPesq.getProduto();
             
             if ( prod != null ){
                 jtfCod.setText(String.valueOf(prod.getId()));
                 jtfDescricao.setText(prod.getDescricao());
                 jtfPreco.setText(String.valueOf(prod.getPreco()));
-                cmbLinha.setSelectedItem(prod.getLinha().getNome());
-                cmbTipo.setSelectedItem(prod.getTipo().getDescricao());
-                bGrupStatusProd.setSelected(bGrupStatusProd.getSelection(), true);
 
+                cmbLinha.setSelectedItem(prod.getLinha());                     // ERRO AQUI!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                
+                cmbTipo.setSelectedItem(prod.getTipo());                       // ERRO AQUI!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                
+                if(prod.getStatus() == true){
+                    rbAtivo.setSelected(true);
+                }else{
+                    if(prod.getStatus() == false){
+                        rbInativo.setSelected(true);
+                    }
+                }
                 habilitarModo(2);
             }
-            
-            
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "ERRO ao PESQUISAR. " + ex.getMessage() );
         } catch (Exception ex) {

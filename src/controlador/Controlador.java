@@ -53,9 +53,7 @@ public class Controlador {
         }
         
         cliDAO.inserir(cli);
-        
         return cli.getIdCliente();
-        
     }
     
     public void excluirCliente(Cliente cli) throws SQLException, Exception{
@@ -78,14 +76,12 @@ public class Controlador {
     public void carregarComboTipo(JComboBox combo) throws Exception, SQLException  {
         
         List lista = produtoDAO.listarTipos();
-        
         combo.setModel( new DefaultComboBoxModel( lista.toArray() ) );
     }
     
     public void carregarComboLinhas(JComboBox combo) throws Exception, SQLException  {
         
         List lista = linhaDAO.listarLinhas();
-        
         combo.setModel( new DefaultComboBoxModel( lista.toArray() ) );
     }
 
@@ -101,17 +97,13 @@ public class Controlador {
             case 1: // Pesquisar ID
                 lista = cidDAO.pesquisarUf(pesq);
                 break;
-            
         }
         
-        
         // PERCORRE A LISTA E COLOCA NA TABELA
-        
         Cidade cid;
 
         // Apagar as linhas da tabela
         ((DefaultTableModel) tabela.getModel()).setRowCount(0);
-        
         Iterator<Cidade> ite = lista.iterator();
         while ( ite.hasNext() ) {
             cid = ite.next();
@@ -127,13 +119,11 @@ public class Controlador {
     }
     
     public void alterarCidade(int id, String nome, String uf) throws Exception, SQLException {
-     
         Cidade cid = new Cidade( id, nome, uf );
         cidDAO.alterar(cid);
     }
     
     public void pesquisarCliente( JTable tabela, int tipo, String pesq ) throws Exception, SQLException {
-        
         List lista = null;
         
         switch (tipo) {
@@ -148,25 +138,18 @@ public class Controlador {
                 lista = cliDAO.pesquisarCidade(pesq);
                 break;
             
-        }
-        
-        
-        // PERCORRE A LISTA E COLOCA NA TABELA
-        
+        }    
+        // PERCORRE A LISTA E COLOCA NA TABELA      
         Cliente cli;
-
         // Apagar as linhas da tabela
         ((DefaultTableModel) tabela.getModel()).setRowCount(0);
-        
         Iterator<Cliente> ite = lista.iterator();
         while ( ite.hasNext() ) {
             cli = ite.next();
             
             ((DefaultTableModel) tabela.getModel()).addRow( cli.toArray() );                        
 
-        }
-        
-                               
+        }                      
     }
     
     public int alterarCliente(int id, String nome, String endereco, String numero, String bairro, String complemento,
@@ -194,12 +177,9 @@ public class Controlador {
     public void pesquisarLinha( JTable tabela, int tipo, String pesq ) throws Exception, SQLException {
         
         List lista = null;
-        
         lista = linhaDAO.pesquisar(pesq);
         
-        
         // PERCORRE A LISTA E COLOCA NA TABELA
-        
         Linha lin;
 
         // Apagar as linhas da tabela
@@ -208,9 +188,7 @@ public class Controlador {
         Iterator<Linha> ite = lista.iterator();
         while ( ite.hasNext() ) {
             lin = ite.next();
-            
             ((DefaultTableModel) tabela.getModel()).addRow( lin.toArray() );                        
-
         }                          
     }
     
@@ -219,26 +197,22 @@ public class Controlador {
     }
     
     public void alterarLinha(int id, String nome, String descricao) throws Exception, SQLException {
-     
         Linha lin = new Linha( id, nome, descricao );
         linhaDAO.alterar(lin);
     }
     
-    public void inserirProduto(String descricao, Linha linha, Tipo tipo, float preco, char status)
-            throws Exception, SQLException {
+    public void inserirProduto(String descricao, Linha linha, Tipo tipo, float preco, char status) throws Exception, SQLException {
         
         if(status == 'T'){ prod = new Produto(descricao, linha, tipo, preco, true);     
         }else{
             if(status == 'F'){ prod = new Produto(descricao, linha, tipo, preco, false);}
         }
         produtoDAO.inserir(prod);
-        
     }
     
     public void pesquisarProdutos( JTable tabela, int tipo, String pesq ) throws Exception, SQLException {
-        
         List lista = null;
-        
+      
         switch (tipo) {
             case 0: // Pesquisar NOME
                 lista = produtoDAO.pesquisarProduto(pesq);
@@ -248,25 +222,34 @@ public class Controlador {
                 break;
             case 2: // Pesquisar Tipo
                 lista = produtoDAO.pesquisarProdutoPorTipo(pesq);
-                break;
-            
+                break;      
         }
-        
-        
         // PERCORRE A LISTA E COLOCA NA TABELA
-        
         Produto prod;
-
+        
         // Apagar as linhas da tabela
         ((DefaultTableModel) tabela.getModel()).setRowCount(0);
-        
         Iterator<Produto> ite = lista.iterator();
         while ( ite.hasNext() ) {
             prod = ite.next();
-            
             ((DefaultTableModel) tabela.getModel()).addRow( prod.toArray() );                        
 
         }
     }
     
+    public void excluirProduto(Produto prod) throws SQLException, Exception{
+        produtoDAO.excluir(prod);        
+    }
+    
+    public void alterarProduto(int id, String descricao, Linha linha, Tipo tipo, String preco, char habilitar_venda) throws Exception, SQLException {
+        if(habilitar_venda == 'T'){
+            prod = new Produto(id, descricao, linha, tipo, Float.parseFloat(preco), true);
+        }else{
+            if(habilitar_venda == 'F'){
+                prod = new Produto(id, descricao, linha, tipo, Float.parseFloat(preco), false);
+            }
+        } 
+        produtoDAO.alterar(prod);
+    }
+
 }

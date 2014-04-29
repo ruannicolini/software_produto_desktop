@@ -29,7 +29,6 @@ public class ClienteDAO {
     public ClienteDAO() throws Exception, SQLException {
         
         stmt = ConexaoMySQL.obterConexao().createStatement();
-        
     }   
     
     
@@ -141,7 +140,6 @@ public class ClienteDAO {
     
     
     public List listarCidades() throws Exception, SQLException {
-        
         ResultSet rs;
         List lista = new ArrayList();
         
@@ -149,14 +147,11 @@ public class ClienteDAO {
         rs = stmt.executeQuery("SELECT * from Cidade");
         
         // Transformar RS em List
-        
         while ( rs.next() ) {
            int id = rs.getInt(1);
            String nome = rs.getString("nome");
            String uf = rs.getString("uf");
-           
            Cidade cid = new Cidade(id, nome,uf);
-           
            lista.add(cid);            
             
         }
@@ -174,10 +169,8 @@ public class ClienteDAO {
                 + "Cliente.nome LIKE '" + pesqNome + "%' ");
         
         // Transformar RS em List
-        
         while ( rs.next() ) {
             if(((rs.getString("tipo_cliente")).charAt(0)) == 'F'){
-                    
                     Cidade cid = new Cidade(rs.getInt("id_Cidade"), rs.getString("Cidade.nome"), rs.getString("Cidade.uf"));
            
                     Cliente cli = new PessoaFisica ( rs.getInt("id_Cliente"), rs.getString("nome"), rs.getString("endereco"),
@@ -200,7 +193,6 @@ public class ClienteDAO {
     } 
     
     public List pesquisar ( int id ) throws Exception, SQLException {
-
         ResultSet rs;
         List lista = new ArrayList();
         
@@ -209,7 +201,6 @@ public class ClienteDAO {
                 + "Cliente.id_cliente = " + id);
         
         // Transformar RS em List
-        
         while ( rs.next() ) {
             if(((rs.getString("tipo_cliente")).charAt(0)) == 'F'){
                     
@@ -235,10 +226,6 @@ public class ClienteDAO {
         
         return lista;
     }
-
-//    public List pesquisar ( Date dt ) {
-//        return null;
-//    } 
     
     public List pesquisarCidade ( String cidade )  throws Exception, SQLException {
         ResultSet rs;
@@ -248,8 +235,7 @@ public class ClienteDAO {
         rs = stmt.executeQuery("SELECT * from cliente, Cidade WHERE Cliente.id_Cidade = Cidade.id_Cidade AND "
                 + "Cidade.nome LIKE '" + cidade + "%' ");
         
-        // Transformar RS em List
-        
+        // Transformar RS em List   
         while ( rs.next() ) {
             if(((rs.getString("tipo_cliente")).charAt(0)) == 'F'){
                     
@@ -277,5 +263,4 @@ public class ClienteDAO {
     public List pesquisar () {
         return null;
     }      
-    
 }

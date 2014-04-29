@@ -20,7 +20,6 @@ public class Linha {
         this.nome = nome;
         this.descricao = descricao;
     }
-
     
     public Linha(String nome, String descricao) {
         this.nome = nome;
@@ -42,10 +41,12 @@ public class Linha {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
+
     @Override
     public String toString() {
         return nome;
     }
+    
     public Object[] toArray() {
         return new Object[]{this, getDescricao()};
     }

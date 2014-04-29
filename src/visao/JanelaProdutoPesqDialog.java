@@ -166,7 +166,7 @@ public class JanelaProdutoPesqDialog extends javax.swing.JDialog {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-//        prodSelecionado = null;
+        prodSelecionado = null;
         this.setVisible(false);
 
     }//GEN-LAST:event_btnCancelarActionPerformed
@@ -174,33 +174,32 @@ public class JanelaProdutoPesqDialog extends javax.swing.JDialog {
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         // TODO add your handling code here:
 
-//        try{
-//            int linha = tblProdutos.getSelectedRow();
-//            if ( linha >= 0 ) {
-//                prodSelecionado = (Cliente) tblProdutos.getValueAt(linha, 0);
-//                control.excluirCliente(prodSelecionado);
-//                ((DefaultTableModel) tblProdutos.getModel()).removeRow(linha);
-//                JOptionPane.showMessageDialog(this, "CLIENTE excluido.");
-//            } else {
-//                JOptionPane.showMessageDialog(this, "Selecione um CLIENTE.");
-//            }
-//        } catch (SQLException ex) {
-//            JOptionPane.showMessageDialog(this, "ERRO ao EXCLUIR no BANCO. " + ex.getMessage() );
-//        } catch (Exception ex) {
-//            JOptionPane.showMessageDialog(this, "ERRO ao EXCLUIR. " + ex.getMessage() );
-//        }
+        try{
+            int linha = tblProdutos.getSelectedRow();
+            if ( linha >= 0 ) {
+                prodSelecionado = (Produto) tblProdutos.getValueAt(linha, 0);
+                control.excluirProduto(prodSelecionado);
+                ((DefaultTableModel) tblProdutos.getModel()).removeRow(linha);
+                JOptionPane.showMessageDialog(this, "Produto excluido.");
+            } else {
+                JOptionPane.showMessageDialog(this, "Selecione um Produto.");
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "ERRO ao EXCLUIR no BANCO. " + ex.getMessage() );
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "ERRO ao EXCLUIR. " + ex.getMessage() );
+        }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionarActionPerformed
         // TODO add your handling code here:
-//
-//        int linha = tblProdutos.getSelectedRow();
-//        if ( linha >= 0 ) {
-//            prodSelecionado = (Cliente) tblProdutos.getValueAt(linha, 0);
-//            setVisible(false);
-//        } else {
-//            JOptionPane.showMessageDialog(this, "Selecione um CLIENTE.");
-//        }
+        int linh = tblProdutos.getSelectedRow();
+        if ( linh >= 0 ) {
+            prodSelecionado = (Produto) tblProdutos.getValueAt(linh, 0);
+            setVisible(false);
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecione um Produto.");
+        }
 
     }//GEN-LAST:event_btnSelecionarActionPerformed
 

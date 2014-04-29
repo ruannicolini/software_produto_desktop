@@ -26,7 +26,6 @@ public class LinhaDAO {
         
     }
     
-    
     public void inserir(Linha linha) throws Exception, SQLException{
         String sql = "INSERT INTO LINHA (nome, DESCRICAO)VALUES (?,?) ";
         
@@ -38,7 +37,7 @@ public class LinhaDAO {
         
     }
     
-        public List pesquisar ( String pesqNome ) throws Exception, SQLException {
+    public List pesquisar ( String pesqNome ) throws Exception, SQLException {
         ResultSet rs;
         List lista = new ArrayList();
         
@@ -46,14 +45,11 @@ public class LinhaDAO {
         rs = stmt.executeQuery("SELECT * from Linha WHERE Linha.nome LIKE '%" + pesqNome + "%' ");
         
         // Transformar RS em List
-        
         while ( rs.next() ) {           
            Linha lin = new Linha ( rs.getInt("id_linha"), rs.getString("Linha.nome"), rs.getString("descricao"));
            
            lista.add(lin);                        
-        }
-        
-        
+        }    
         return lista;
     }
         
@@ -65,16 +61,11 @@ public class LinhaDAO {
         pst.setString(2, novoLin.getDescricao() );
         
         pst.execute();
-        
-       
-        
     }    
         
     public void excluir ( Linha lin ) throws Exception, SQLException {
-        
         String sql = "DELETE FROM linha WHERE id_linha = " + lin.getIdLinha();
         stmt.execute(sql);
-        
     }
     
     public List listarLinhas() throws Exception, SQLException {
@@ -86,16 +77,12 @@ public class LinhaDAO {
         rs = stmt.executeQuery("SELECT * from LINHA");
         
         // Transformar RS em List
-        
         while ( rs.next() ) {
            int id = rs.getInt(1);
            String nome = rs.getString("NOME");
            String descricao = rs.getString("DESCRICAO");
-           
            Linha lin = new Linha(id, nome, descricao);
-           
            lista.add(lin);            
-            
         }
         return lista;
     }
