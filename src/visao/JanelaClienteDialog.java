@@ -17,8 +17,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import negocio.Cidade;
 import negocio.Cliente;
-import negocio.PessoaFisica;
-import negocio.PessoaJuridica;
+import negocio.Pessoafisica;
+import negocio.Pessoajuridica;
 
 /**
  *
@@ -501,48 +501,35 @@ public class JanelaClienteDialog extends javax.swing.JDialog {
             
           cli = cliPesq.getCliente();
             
-            if ( cli != null ){
-                if(cli.getTipo_cliente() == 'F'){
-                    
+            if ( cli != null ){                 
+                jtfNome.setText( cli.getNome()  );
+                jtfEndereco.setText( cli.getEndereco()  );
+                jtfBairro.setText( cli.getBairro()  );
+                jtfNumero.setText(cli.getNumero());
+                jtfComplemento.setText(cli.getComplemento());
+                jtfCep.setText(cli.getCep());
+                jtfTel.setText(cli.getTelFixo());
+                jtfCel.setText(cli.getTelCel());
+                jtfEmail.setText(cli.getEmail());
+                cmbCidade.setSelectedItem(cli.getCidade());
+                
+                if(cli.getTipoCliente() == 'F'){
+                    Pessoafisica cliF = control.pesquisarClienteF(cli);
+
                     jtfCpf.setEnabled(true);
-                    
-                    jtfNome.setText( cli.getNome()  );
-                    jtfEndereco.setText( cli.geteEdereco()  );
-                    jtfBairro.setText( cli.getBairro()  );
-                    jtfNumero.setText(cli.getNumero());
-                    jtfComplemento.setText(cli.getComplemento());
-                    jtfCep.setText(cli.getCep());
-                    jtfTel.setText(cli.getTelFixo());
-                    jtfCel.setText(cli.getTelCel());
-                    jtfEmail.setText(cli.getEmail());
-                    cmbCidade.setSelectedItem(cli.getCidade());
+                    jtfCpf.setText(cliF.getCpf()); 
                     rbFisica.setSelected(true);
-                    
-                    jtfCpf.setText(((PessoaFisica)cli).getCpf()); 
-                    
                     jtfCnpj.setEnabled(false);
                     jtfIe.setEnabled(false);
                 }else{
-                    if(cli.getTipo_cliente() == 'J'){
+                    if(cli.getTipoCliente() == 'J'){
+                        Pessoajuridica cliJ = control.pesquisarClienteJ(cli);
                         
                         jtfCnpj.setEnabled(true);
                         jtfIe.setEnabled(true);
-                        
-                                                
-                        jtfNome.setText( cli.getNome()  );
-                        jtfEndereco.setText( cli.geteEdereco()  );
-                        jtfBairro.setText( cli.getBairro()  );
-                        jtfNumero.setText(cli.getNumero());
-                        jtfComplemento.setText(cli.getComplemento());
-                        jtfCep.setText(cli.getCep());
-                        jtfTel.setText(cli.getTelFixo());
-                        jtfCel.setText(cli.getTelCel());
-                        jtfEmail.setText(cli.getEmail());
-                        cmbCidade.setSelectedItem(cli.getCidade());
                         rbJuridica.setSelected(true);
-
-                        jtfCnpj.setText(((PessoaJuridica)cli).getCnpj());
-                        jtfIe.setText(((PessoaJuridica)cli).getIe()); 
+                        jtfCnpj.setText(cliJ.getCnpj());
+                        jtfIe.setText(cliJ.getIe()); 
                         
                         jtfCpf.setEnabled(false);
                     }

@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import negocio.Linha;
 import negocio.Produto;
-import negocio.Tipo;
+import negocio.Tipoproduto;
 
 /**
  *
@@ -258,7 +258,7 @@ public class JanelaProdutoDialog extends javax.swing.JDialog {
         // TODO add your handling code here:
         try{
                 if ( prod != null ) {
-                    control.alterarProduto(prod.getId(), jtfDescricao.getText(),(Linha) cmbLinha.getSelectedItem(), (Tipo)cmbTipo.getSelectedItem(), jtfPreco.getText(), (char) (bGrupStatusProd.getSelection().getMnemonic()));
+                    control.alterarProduto(prod.getIdProduto(), jtfDescricao.getText(),(Linha) cmbLinha.getSelectedItem(), (Tipoproduto)cmbTipo.getSelectedItem(), jtfPreco.getText(), (char) (bGrupStatusProd.getSelection().getMnemonic()));
                     JOptionPane.showMessageDialog(this, "Produto " + prod.getDescricao()+ " alterado com sucesso."  );
 
                     // Limpa a janela
@@ -318,7 +318,7 @@ public class JanelaProdutoDialog extends javax.swing.JDialog {
         // TODO add your handling code here:
         
         try {
-                control.inserirProduto(jtfDescricao.getText(), (Linha) cmbLinha.getSelectedItem(), (Tipo) cmbTipo.getSelectedItem(), Float.parseFloat(jtfPreco.getText()), (char) bGrupStatusProd.getSelection().getMnemonic());
+                control.inserirProduto(jtfDescricao.getText(), (Linha) cmbLinha.getSelectedItem(), (Tipoproduto) cmbTipo.getSelectedItem(), Float.parseFloat(jtfPreco.getText()), (char) bGrupStatusProd.getSelection().getMnemonic());
                 JOptionPane.showMessageDialog(this, "Produto '" + jtfDescricao.getText() + "' inserido com sucesso.");
         } catch (SQLException erro) {
             JOptionPane.showMessageDialog(this, "Erro desconhecimento. " + 
@@ -340,18 +340,18 @@ public class JanelaProdutoDialog extends javax.swing.JDialog {
             prod = prodPesq.getProduto();
             
             if ( prod != null ){
-                jtfCod.setText(String.valueOf(prod.getId()));
+                jtfCod.setText(String.valueOf(prod.getIdProduto()));
                 jtfDescricao.setText(prod.getDescricao());
                 jtfPreco.setText(String.valueOf(prod.getPreco()));
 
                 cmbLinha.setSelectedItem(prod.getLinha());                     // ERRO AQUI!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 
-                cmbTipo.setSelectedItem(prod.getTipo());                       // ERRO AQUI!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                cmbTipo.setSelectedItem(prod.getTipoproduto());                       // ERRO AQUI!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 
-                if(prod.getStatus() == true){
+                if(prod.isStatusVenda() == true){
                     rbAtivo.setSelected(true);
                 }else{
-                    if(prod.getStatus() == false){
+                    if(prod.isStatusVenda() == false){
                         rbInativo.setSelected(true);
                     }
                 }

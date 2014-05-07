@@ -13,78 +13,126 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import negocio.Linha;
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
 
 /**
  *
  * @author Ruan
  */
 public class LinhaDAO {
-    Statement stmt;
 
     public LinhaDAO() throws Exception, SQLException{
-        stmt = ConexaoMySQL.obterConexao().createStatement();
+        
         
     }
     
-    public void inserir(Linha linha) throws Exception, SQLException{
-        String sql = "INSERT INTO LINHA (nome, DESCRICAO)VALUES (?,?) ";
-        
-        PreparedStatement pst = ConexaoMySQL.obterConexao().prepareStatement( sql, PreparedStatement.RETURN_GENERATED_KEYS ) ;
-        pst.setString(1, linha.getNome() );
-        pst.setString(2, linha.getDescricao());
-        
-        pst.execute();
+    public void inserir(Linha lin) throws Exception, SQLException{
+        Session sessao = null;
+        try {
+            sessao = dao.HibernateUtil.getSessionFactory().openSession();
+            sessao.beginTransaction();
+                                  
+            sessao.save(lin);
+            
+            sessao.getTransaction().commit();            
+        } catch (HibernateException he) {
+            sessao.getTransaction().rollback();
+        }
+        finally {
+            if ( sessao != null ) {
+                sessao.close();
+            }            
+        }
         
     }
     
     public List pesquisar ( String pesqNome ) throws Exception, SQLException {
-        ResultSet rs;
-        List lista = new ArrayList();
-        
-        // Consulta no banco
-        rs = stmt.executeQuery("SELECT * from Linha WHERE Linha.nome LIKE '%" + pesqNome + "%' ");
-        
-        // Transformar RS em List
-        while ( rs.next() ) {           
-           Linha lin = new Linha ( rs.getInt("id_linha"), rs.getString("Linha.nome"), rs.getString("descricao"));
-           
-           lista.add(lin);                        
-        }    
-        return lista;
+         Session sessao = null;
+        List lista = null;
+        try {
+            sessao = dao.HibernateUtil.getSessionFactory().openSession();
+            sessao.beginTransaction();
+            
+            // Usando HQL
+            Query consulta = sessao.createQuery("from Linha lin where lin.nome LIKE '%" +
+                    pesqNome + "%' ");
+            lista = consulta.list();
+            
+            sessao.getTransaction().commit(); 
+                       
+        } catch (HibernateException he) {
+            sessao.getTransaction().rollback();
+        }
+        finally {
+            if ( sessao != null ) {
+               sessao.close();
+            } 
+            return lista;
+        }
     }
         
     public void alterar(Linha novoLin)  throws Exception, SQLException {
-        String sql = "UPDATE linha SET nome = ?, descricao = ? WHERE id_linha = " + novoLin.getIdLinha();                
-        
-        PreparedStatement pst = ConexaoMySQL.obterConexao().prepareStatement( sql ) ;
-        pst.setString(1, novoLin.getNome() );
-        pst.setString(2, novoLin.getDescricao() );
-        
-        pst.execute();
+        Session sessao = null;
+        try {
+            sessao = dao.HibernateUtil.getSessionFactory().openSession();
+            sessao.beginTransaction();
+                                  
+            sessao.update(novoLin);
+            
+            sessao.getTransaction().commit();            
+        } catch (HibernateException he) {
+            sessao.getTransaction().rollback();
+        }
+        finally {
+            if ( sessao != null ) {
+                sessao.close();
+            }            
+        }
     }    
         
     public void excluir ( Linha lin ) throws Exception, SQLException {
-        String sql = "DELETE FROM linha WHERE id_linha = " + lin.getIdLinha();
-        stmt.execute(sql);
+        Session sessao = null;
+        try {
+            sessao = dao.HibernateUtil.getSessionFactory().openSession();
+            sessao.beginTransaction();
+                                  
+            sessao.delete(lin);
+            
+            sessao.getTransaction().commit();            
+        } catch (HibernateException he) {
+            sessao.getTransaction().rollback();
+        }
+        finally {
+            if ( sessao != null ) {
+                sessao.close();
+            }            
+        }
     }
     
     public List listarLinhas() throws Exception, SQLException {
-        
-        ResultSet rs;
-        List lista = new ArrayList();
-        
-        // Consulta no banco
-        rs = stmt.executeQuery("SELECT * from LINHA");
-        
-        // Transformar RS em List
-        while ( rs.next() ) {
-           int id = rs.getInt(1);
-           String nome = rs.getString("NOME");
-           String descricao = rs.getString("DESCRICAO");
-           Linha lin = new Linha(id, nome, descricao);
-           lista.add(lin);            
+        Session sessao = null;
+        List<Linha> lista = null;
+        try {
+            sessao = dao.HibernateUtil.getSessionFactory().openSession();
+            sessao.beginTransaction();
+            
+            // Usando HQL
+            Query consulta = sessao.createQuery("from Linha");
+            lista = consulta.list();
+            
+            sessao.getTransaction().commit(); 
+                       
+        } catch (HibernateException he) {
+            sessao.getTransaction().rollback();
         }
-        return lista;
+        finally {
+            if ( sessao != null ) {
+                sessao.close();
+            } 
+            return lista;
+        }
     }
     
 }

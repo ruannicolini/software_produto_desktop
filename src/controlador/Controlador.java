@@ -7,6 +7,7 @@
 package controlador;
 
 import dao.*;
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.List;
@@ -25,9 +26,13 @@ public class Controlador {
     
     CidadeDAO cidDAO;
     ClienteDAO cliDAO;
+    PessoafisicaDAO pfDAO;
+    PessoajuridicaDAO pjDAO;
     LinhaDAO linhaDAO;
     ProdutoDAO produtoDAO;
     Cliente cli;
+    Pessoafisica cliF;
+    Pessoajuridica cliJ;
     Produto prod;
 
     public Controlador() throws Exception, SQLException {
@@ -35,6 +40,8 @@ public class Controlador {
         cliDAO = new ClienteDAO();
         linhaDAO = new LinhaDAO();
         produtoDAO = new ProdutoDAO();
+        pjDAO = new PessoajuridicaDAO();
+        pfDAO = new PessoafisicaDAO();
         
     }
     
@@ -42,17 +49,19 @@ public class Controlador {
     public int inserirCliente(String nome, String endereco, String numero, String bairro, String complemento, 
             String tel, String cel, Cidade cidade, String cep, char tipo_cliente,String email, String cpf, String cnpj, String ie)
             throws Exception, SQLException {
-      
-        if(tipo_cliente == 'J'){
-            cli = new PessoaJuridica(nome, endereco, numero, bairro, complemento, tel, cel, cidade, cep, tipo_cliente,email, cnpj, ie);
-        }else{
-            if(tipo_cliente == 'F'){
-                cli = new PessoaFisica(nome, endereco, numero, bairro, complemento, tel, cel, cidade, cep, tipo_cliente, email, cpf);
-                
-             }
-        }
+        cli = new Cliente(cidade, nome, endereco, numero, bairro, complemento,tel, cel,cep, tipo_cliente, email);
         
         cliDAO.inserir(cli);
+        if(tipo_cliente == 'J'){
+            cliJ = new Pessoajuridica(cli,cnpj, ie);
+            pjDAO.inserir(cliJ);
+
+        }else{
+            if(tipo_cliente == 'F'){
+                cliF = new Pessoafisica(cli,cpf);
+                pfDAO.inserir(cliF);
+             }
+        }
         return cli.getIdCliente();
     }
     
@@ -68,7 +77,7 @@ public class Controlador {
     
     public void carregarComboCidade(JComboBox combo) throws Exception, SQLException  {
         
-        List lista = cliDAO.listarCidades();
+        List<Cidade> lista = cliDAO.listarCidades();
         
         combo.setModel( new DefaultComboBoxModel( lista.toArray() ) );
     }
@@ -119,7 +128,9 @@ public class Controlador {
     }
     
     public void alterarCidade(int id, String nome, String uf) throws Exception, SQLException {
-        Cidade cid = new Cidade( id, nome, uf );
+        Cidade cid = new Cidade(nome, uf );
+        cid.setIdCidade(id);
+        
         cidDAO.alterar(cid);
     }
     
@@ -152,20 +163,29 @@ public class Controlador {
         }                      
     }
     
+    public Pessoafisica pesquisarClienteF( Cliente cli ) throws Exception, SQLException {
+        return pfDAO.pesquisar(cli.getIdCliente());
+    }
+    
+    public Pessoajuridica pesquisarClienteJ( Cliente cli ) throws Exception, SQLException {
+        return pjDAO.pesquisar(cli.getIdCliente());
+    }
+    
     public int alterarCliente(int id, String nome, String endereco, String numero, String bairro, String complemento,
                     String telFixo, String telCel, Cidade cidade, String cep, char tipo_cliente, String email,
                     String cpf, String cnpj, String ie) throws SQLException, ClienteException, Exception{
-                    Cliente cli = null;
+        
+                    Cliente cli = new Cliente(cidade, nome, endereco, numero, bairro, complemento,telFixo, telCel,cep, tipo_cliente, email);
+                    cliDAO.alterar(cli);
+                    
                     if( tipo_cliente == 'F'){
-                       cli = new PessoaFisica( id, nome, endereco, numero, bairro, complemento, telFixo, telCel, cidade, cep, tipo_cliente, email, cpf);
+                        cliF = new Pessoafisica(cli,cpf);
+                        pfDAO.alterar(cliF);                    
                     }else{
                         if(tipo_cliente == 'J'){
-                            cli = new PessoaJuridica( id, nome, endereco, numero, bairro, complemento, telFixo, telCel, cidade, cep, tipo_cliente, email, cnpj, ie);
-                        }
-                    }
-        
-                    cliDAO.alterar(cli);
-             
+                            cliJ = new Pessoajuridica(cli,cnpj, ie);
+                            pjDAO.alterar(cliJ);                        }
+                    }             
                     return cli.getIdCliente();
         
     }
@@ -197,17 +217,18 @@ public class Controlador {
     }
     
     public void alterarLinha(int id, String nome, String descricao) throws Exception, SQLException {
-        Linha lin = new Linha( id, nome, descricao );
+        Linha lin = new Linha(nome, descricao);
+        lin.setIdLinha(id);
         linhaDAO.alterar(lin);
     }
     
-    public void inserirProduto(String descricao, Linha linha, Tipo tipo, float preco, char status) throws Exception, SQLException {
-        
-        if(status == 'T'){ prod = new Produto(descricao, linha, tipo, preco, true);     
-        }else{
-            if(status == 'F'){ prod = new Produto(descricao, linha, tipo, preco, false);}
-        }
-        produtoDAO.inserir(prod);
+    public void inserirProduto(String descricao, Linha linha, Tipoproduto tipo, float preco, char status) throws Exception, SQLException {
+//        
+//        if(status == 'T'){ prod = new Produto(descricao, linha, tipo, preco, true);     
+//        }else{
+//            if(status == 'F'){ prod = new Produto(descricao, linha, tipo, preco, false);}
+//        }
+//        produtoDAO.inserir(prod);
     }
     
     public void pesquisarProdutos( JTable tabela, int tipo, String pesq ) throws Exception, SQLException {
@@ -241,12 +262,14 @@ public class Controlador {
         produtoDAO.excluir(prod);        
     }
     
-    public void alterarProduto(int id, String descricao, Linha linha, Tipo tipo, String preco, char habilitar_venda) throws Exception, SQLException {
+    public void alterarProduto(int id, String descricao, Linha linha, Tipoproduto tipo, String preco, char habilitar_venda) throws Exception, SQLException {
         if(habilitar_venda == 'T'){
-            prod = new Produto(id, descricao, linha, tipo, Float.parseFloat(preco), true);
+            prod = new Produto(tipo, linha, descricao, Float.parseFloat(preco), true);
+            prod.setIdProduto(id);
         }else{
             if(habilitar_venda == 'F'){
-                prod = new Produto(id, descricao, linha, tipo, Float.parseFloat(preco), false);
+                prod = new Produto(tipo, linha, descricao, Float.parseFloat(preco), false);
+                prod.setIdProduto(id);
             }
         } 
         produtoDAO.alterar(prod);

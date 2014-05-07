@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 05/05/2014 19:12:49 by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="negocio.Cliente" table="cliente" catalog="bioextratus1">
+        <id name="idCliente" type="java.lang.Integer">
+            <column name="idCliente" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="cidade" class="negocio.Cidade" fetch="select">
+            <column name="idCidade" />
+        </many-to-one>
+        <property name="nome" type="string">
+            <column name="nome" length="60" />
+        </property>
+        <property name="endereco" type="string">
+            <column name="endereco" length="60" />
+        </property>
+        <property name="numero" type="string">
+            <column name="numero" length="7" />
+        </property>
+        <property name="bairro" type="string">
+            <column name="bairro" length="60" />
+        </property>
+        <property name="complemento" type="string">
+            <column name="complemento" length="60" />
+        </property>
+        <property name="telFixo" type="string">
+            <column name="telFixo" length="15" />
+        </property>
+        <property name="telCel" type="string">
+            <column name="telCel" length="15" />
+        </property>
+        <property name="cep" type="string">
+            <column name="cep" length="9" />
+        </property>
+        <property name="tipoCliente" type="java.lang.Character">
+            <column name="tipoCliente" length="1" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" length="40" />
+        </property>
+        <set name="pedidos" table="pedido" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idCliente" />
+            </key>
+            <one-to-many class="negocio.Pedido" />
+        </set>
+        <set name="pessoafisicas" table="pessoafisica" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idCliente" />
+            </key>
+            <one-to-many class="negocio.Pessoafisica" />
+        </set>
+        <set name="pessoajuridicas" table="pessoajuridica" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idCliente" />
+            </key>
+            <one-to-many class="negocio.Pessoajuridica" />
+        </set>
+    </class>
+</hibernate-mapping>
