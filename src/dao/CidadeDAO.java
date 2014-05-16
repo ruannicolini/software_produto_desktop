@@ -134,4 +134,28 @@ public class CidadeDAO {
         }
     }
     
+    public List listarCidades() throws Exception, SQLException {
+      Session sessao = null;
+      List<Cidade> lista = null;
+        try {
+            sessao = dao.HibernateUtil.getSessionFactory().openSession();
+            sessao.beginTransaction();
+            
+            // Usando HQL
+            Query consulta = sessao.createQuery("from Cidade");
+            lista = consulta.list();
+            
+            sessao.getTransaction().commit(); 
+                       
+        } catch (HibernateException he) {
+            sessao.getTransaction().rollback();
+        }
+        finally {
+            if ( sessao != null ) {
+                sessao.close();
+            } 
+            return lista;
+        }
+    }
+    
 }

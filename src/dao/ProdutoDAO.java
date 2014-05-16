@@ -29,10 +29,7 @@ public class ProdutoDAO {
     }
     
     
-    public List listarTipos() throws Exception, SQLException {
-                return null;
-    }
-    
+        
     public void inserir(Produto prod) throws Exception, SQLException{
        
     }

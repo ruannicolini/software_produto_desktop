@@ -34,6 +34,7 @@ public class Controlador {
     Pessoafisica cliF;
     Pessoajuridica cliJ;
     Produto prod;
+    TipoProdutoDAO tipoProdutoDAO;
 
     public Controlador() throws Exception, SQLException {
         cidDAO = new CidadeDAO();
@@ -42,7 +43,7 @@ public class Controlador {
         produtoDAO = new ProdutoDAO();
         pjDAO = new PessoajuridicaDAO();
         pfDAO = new PessoafisicaDAO();
-        
+        tipoProdutoDAO = new TipoProdutoDAO();
     }
     
   
@@ -77,14 +78,14 @@ public class Controlador {
     
     public void carregarComboCidade(JComboBox combo) throws Exception, SQLException  {
         
-        List<Cidade> lista = cliDAO.listarCidades();
+        List<Cidade> lista = cidDAO.listarCidades();
         
         combo.setModel( new DefaultComboBoxModel( lista.toArray() ) );
     }
     
     public void carregarComboTipo(JComboBox combo) throws Exception, SQLException  {
         
-        List lista = produtoDAO.listarTipos();
+        List lista = tipoProdutoDAO.listarTipos();
         combo.setModel( new DefaultComboBoxModel( lista.toArray() ) );
     }
     
@@ -164,7 +165,8 @@ public class Controlador {
     }
     
     public Pessoafisica pesquisarClienteF( Cliente cli ) throws Exception, SQLException {
-        return pfDAO.pesquisar(cli.getIdCliente());
+        Pessoafisica pf =  pfDAO.pesquisar(cli.getIdCliente());
+        return pf;
     }
     
     public Pessoajuridica pesquisarClienteJ( Cliente cli ) throws Exception, SQLException {

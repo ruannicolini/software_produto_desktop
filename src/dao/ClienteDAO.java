@@ -97,31 +97,7 @@ public class ClienteDAO {
         
     }
     
-    
-    public List listarCidades() throws Exception, SQLException {
-      Session sessao = null;
-      List<Cidade> lista = null;
-        try {
-            sessao = dao.HibernateUtil.getSessionFactory().openSession();
-            sessao.beginTransaction();
-            
-            // Usando HQL
-            Query consulta = sessao.createQuery("from Cidade");
-            lista = consulta.list();
-            
-            sessao.getTransaction().commit(); 
-                       
-        } catch (HibernateException he) {
-            sessao.getTransaction().rollback();
-        }
-        finally {
-            if ( sessao != null ) {
-                sessao.close();
-            } 
-            return lista;
-        }
-    }
-    
+       
     public List pesquisar ( String pesqNome ) throws Exception, SQLException {
         Session sessao = null;
         List lista = null;
@@ -129,7 +105,7 @@ public class ClienteDAO {
             sessao = dao.HibernateUtil.getSessionFactory().openSession();
             sessao.beginTransaction();
             
-            // Usando HQL
+            // Usando HQL           
             Query consulta = sessao.createQuery("from Cliente cli JOIN FETCH cli.cidade  where cli.nome LIKE '" +
                     pesqNome + "%' ");
             lista = consulta.list();

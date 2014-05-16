@@ -500,21 +500,33 @@ public class JanelaClienteDialog extends javax.swing.JDialog {
             cliPesq.setVisible(true); 
             
           cli = cliPesq.getCliente();
-            
+
+          
             if ( cli != null ){                 
-                jtfNome.setText( cli.getNome()  );
-                jtfEndereco.setText( cli.getEndereco()  );
-                jtfBairro.setText( cli.getBairro()  );
-                jtfNumero.setText(cli.getNumero());
-                jtfComplemento.setText(cli.getComplemento());
-                jtfCep.setText(cli.getCep());
-                jtfTel.setText(cli.getTelFixo());
-                jtfCel.setText(cli.getTelCel());
-                jtfEmail.setText(cli.getEmail());
-                cmbCidade.setSelectedItem(cli.getCidade());
+//                jtfNome.setText( cli.getNome()  );
+//                jtfEndereco.setText( cli.getEndereco()  );
+//                jtfBairro.setText( cli.getBairro()  );
+//                jtfNumero.setText(cli.getNumero());
+//                jtfComplemento.setText(cli.getComplemento());
+//                jtfCep.setText(cli.getCep());
+//                jtfTel.setText(cli.getTelFixo());
+//                jtfCel.setText(cli.getTelCel());
+//                jtfEmail.setText(cli.getEmail());
+//                cmbCidade.setSelectedItem(cli.getCidade());
                 
                 if(cli.getTipoCliente() == 'F'){
                     Pessoafisica cliF = control.pesquisarClienteF(cli);
+                    
+                jtfNome.setText( cliF.getCliente().getNome()  );
+                jtfEndereco.setText( cliF.getCliente().getEndereco()  );
+                jtfBairro.setText( cliF.getCliente().getBairro()  );
+                jtfNumero.setText(cliF.getCliente().getNumero());
+                jtfComplemento.setText(cliF.getCliente().getComplemento());
+                jtfCep.setText(cliF.getCliente().getCep());
+                jtfTel.setText(cliF.getCliente().getTelFixo());
+                jtfCel.setText(cliF.getCliente().getTelCel());
+                jtfEmail.setText(cliF.getCliente().getEmail());
+                cmbCidade.setSelectedItem(cliF.getCliente().getCidade());
 
                     jtfCpf.setEnabled(true);
                     jtfCpf.setText(cliF.getCpf()); 

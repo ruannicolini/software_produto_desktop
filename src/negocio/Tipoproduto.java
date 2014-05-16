@@ -3,6 +3,7 @@ package negocio;
 
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -16,8 +17,6 @@ public class Tipoproduto  implements java.io.Serializable {
      private String unVenda;
      private Set produtos = new HashSet(0);
 
-    public Tipoproduto() {
-    }
 
     public Tipoproduto(String descricao, String unVenda, Set produtos) {
        this.descricao = descricao;
@@ -54,6 +53,14 @@ public class Tipoproduto  implements java.io.Serializable {
         this.produtos = produtos;
     }
 
+    @Override
+    public String toString() {
+        return descricao;
+    }
+    
+    public Object[] toArray() {
+        return new Object[]{this, getUnVenda()};
+    }
 
 
 

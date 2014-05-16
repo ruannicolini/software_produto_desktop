@@ -7,6 +7,7 @@
 package dao;
 
 import java.sql.SQLException;
+import java.util.List;
 import negocio.Pessoafisica;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -84,16 +85,16 @@ public class PessoafisicaDAO {
     
     public Pessoafisica pesquisar ( int id ) throws Exception, SQLException {
         Session sessao = null;
-        Pessoafisica cliF = null;
+        List<Pessoafisica> lista = null;
         try {
             sessao = dao.HibernateUtil.getSessionFactory().openSession();
             sessao.beginTransaction();
+            Query consulta = sessao.createQuery("from Pessoafisica");
             
-            // Usando HQL
-            Query consulta = sessao.createQuery("from PESSOAFISICA where PESSOAFISICA.IDCLIENTE = "+ id);
-            cliF = (Pessoafisica) consulta.list();
             
-            sessao.getTransaction().commit(); 
+            lista = consulta.list();
+            
+            sessao.getTransaction().commit();
                        
         } catch (HibernateException he) {
             sessao.getTransaction().rollback();
@@ -102,7 +103,8 @@ public class PessoafisicaDAO {
             if ( sessao != null ) {
                sessao.close();
             } 
-            return cliF;
+            return lista.get(0);
         }
+    
     }
 }
