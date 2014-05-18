@@ -102,7 +102,7 @@
                                                       <Component id="jtfEndereco" max="32767" attributes="1"/>
                                                   </Group>
                                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                                  <Component id="jPanel2" max="32767" attributes="0"/>
+                                                  <Component id="PanelPessoa" max="32767" attributes="0"/>
                                               </Group>
                                               <Group type="102" attributes="0">
                                                   <Group type="103" groupAlignment="0" attributes="0">
@@ -168,7 +168,7 @@
                               <Component id="jtfEndereco" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <Component id="jPanel2" pref="0" max="32767" attributes="0"/>
+                      <Component id="PanelPessoa" pref="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -346,7 +346,7 @@
             <Property name="text" type="java.lang.String" value="IE"/>
           </Properties>
         </Component>
-        <Container class="javax.swing.JPanel" name="jPanel2">
+        <Container class="javax.swing.JPanel" name="PanelPessoa">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="f0" green="f0" red="f1" type="rgb"/>

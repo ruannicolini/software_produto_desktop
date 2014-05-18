@@ -1,5 +1,5 @@
 package negocio;
-// Generated 05/05/2014 19:12:47 by Hibernate Tools 3.6.0
+// Generated 18/05/2014 14:44:29 by Hibernate Tools 3.6.0
 
 
 import java.util.HashSet;
@@ -28,14 +28,14 @@ public class Linha  implements java.io.Serializable {
        this.descricao = descricao;
        this.produtos = produtos;
     }
-
+    
+    //
     public Linha(String nome, String descricao) {
         this.nome = nome;
         this.descricao = descricao;
     }
+    //
    
-    
-    
     public Integer getIdLinha() {
         return this.idLinha;
     }
@@ -64,7 +64,7 @@ public class Linha  implements java.io.Serializable {
     public void setProdutos(Set produtos) {
         this.produtos = produtos;
     }
-    
+
     @Override
     public String toString() {
         return nome;
@@ -73,4 +73,8 @@ public class Linha  implements java.io.Serializable {
     public Object[] toArray() {
         return new Object[]{this, getDescricao()};
     }
+
+
 }
+
+

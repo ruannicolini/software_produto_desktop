@@ -121,7 +121,7 @@ public class JanelaClienteDialog extends javax.swing.JDialog {
         jtfCnpj = new javax.swing.JTextField();
         jtfIe = new javax.swing.JTextField();
         lblCGC1 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
+        PanelPessoa = new javax.swing.JPanel();
         rbFisica = new javax.swing.JRadioButton();
         rbJuridica = new javax.swing.JRadioButton();
         jLabel1 = new javax.swing.JLabel();
@@ -211,8 +211,8 @@ public class JanelaClienteDialog extends javax.swing.JDialog {
 
         lblCGC1.setText("IE");
 
-        jPanel2.setBackground(new java.awt.Color(241, 240, 240));
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Pessoa"));
+        PanelPessoa.setBackground(new java.awt.Color(241, 240, 240));
+        PanelPessoa.setBorder(javax.swing.BorderFactory.createTitledBorder("Pessoa"));
 
         bGroupTipo.add(rbFisica);
         rbFisica.setMnemonic('f');
@@ -232,21 +232,21 @@ public class JanelaClienteDialog extends javax.swing.JDialog {
             }
         });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout PanelPessoaLayout = new javax.swing.GroupLayout(PanelPessoa);
+        PanelPessoa.setLayout(PanelPessoaLayout);
+        PanelPessoaLayout.setHorizontalGroup(
+            PanelPessoaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelPessoaLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(rbFisica)
                 .addGap(18, 18, 18)
                 .addComponent(rbJuridica)
                 .addGap(33, 33, 33))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        PanelPessoaLayout.setVerticalGroup(
+            PanelPessoaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelPessoaLayout.createSequentialGroup()
+                .addGroup(PanelPessoaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(rbFisica)
                     .addComponent(rbJuridica))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -315,7 +315,7 @@ public class JanelaClienteDialog extends javax.swing.JDialog {
                                                         .addComponent(btnPesqCli, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                     .addComponent(jtfEndereco))
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                .addComponent(PanelPessoa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                             .addGroup(jPanel1Layout.createSequentialGroup()
                                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                     .addComponent(jtfBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -360,7 +360,7 @@ public class JanelaClienteDialog extends javax.swing.JDialog {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblEnder)
                             .addComponent(jtfEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(PanelPessoa, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblEnder2)
@@ -441,6 +441,8 @@ public class JanelaClienteDialog extends javax.swing.JDialog {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
+        rbFisica.setEnabled(true);
+        rbJuridica.setEnabled(true);
         btnNovo.setVisible(true);
         habilitarModo(1);
         if((jtfNome.getText().trim().equals(""))&& (jtfEndereco.getText().trim().equals("")) && (jtfBairro.getText().trim().equals("")
@@ -495,6 +497,7 @@ public class JanelaClienteDialog extends javax.swing.JDialog {
     private void btnPesqCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesqCliActionPerformed
         // TODO add your handling code here:
         JanelaClientePesqDialog cliPesq;
+        
         try {
             cliPesq = new JanelaClientePesqDialog(null, true);
             cliPesq.setVisible(true); 
@@ -502,50 +505,44 @@ public class JanelaClienteDialog extends javax.swing.JDialog {
           cli = cliPesq.getCliente();
 
           
-            if ( cli != null ){                 
-//                jtfNome.setText( cli.getNome()  );
-//                jtfEndereco.setText( cli.getEndereco()  );
-//                jtfBairro.setText( cli.getBairro()  );
-//                jtfNumero.setText(cli.getNumero());
-//                jtfComplemento.setText(cli.getComplemento());
-//                jtfCep.setText(cli.getCep());
-//                jtfTel.setText(cli.getTelFixo());
-//                jtfCel.setText(cli.getTelCel());
-//                jtfEmail.setText(cli.getEmail());
-//                cmbCidade.setSelectedItem(cli.getCidade());
+            if ( cli != null ){
+                
+                
+                jtfNome.setText( cli.getNome()  );
+                jtfEndereco.setText( cli.getEndereco()  );
+                jtfBairro.setText( cli.getBairro()  );
+                jtfNumero.setText(cli.getNumero());
+                jtfComplemento.setText(cli.getComplemento());
+                jtfCep.setText(cli.getCep());
+                jtfTel.setText(cli.getTelFixo());
+                jtfCel.setText(cli.getTelCel());
+                jtfEmail.setText(cli.getEmail());
+                cmbCidade.setSelectedItem(cli.getCidade());
                 
                 if(cli.getTipoCliente() == 'F'){
-                    Pessoafisica cliF = control.pesquisarClienteF(cli);
                     
-                jtfNome.setText( cliF.getCliente().getNome()  );
-                jtfEndereco.setText( cliF.getCliente().getEndereco()  );
-                jtfBairro.setText( cliF.getCliente().getBairro()  );
-                jtfNumero.setText(cliF.getCliente().getNumero());
-                jtfComplemento.setText(cliF.getCliente().getComplemento());
-                jtfCep.setText(cliF.getCliente().getCep());
-                jtfTel.setText(cliF.getCliente().getTelFixo());
-                jtfCel.setText(cliF.getCliente().getTelCel());
-                jtfEmail.setText(cliF.getCliente().getEmail());
-                cmbCidade.setSelectedItem(cliF.getCliente().getCidade());
-
                     jtfCpf.setEnabled(true);
-                    jtfCpf.setText(cliF.getCpf()); 
+                    jtfCpf.setText(cli.getPessoafisica().getCpf()); 
                     rbFisica.setSelected(true);
                     jtfCnpj.setEnabled(false);
                     jtfIe.setEnabled(false);
                 }else{
                     if(cli.getTipoCliente() == 'J'){
-                        Pessoajuridica cliJ = control.pesquisarClienteJ(cli);
+                       
                         
                         jtfCnpj.setEnabled(true);
                         jtfIe.setEnabled(true);
                         rbJuridica.setSelected(true);
-                        jtfCnpj.setText(cliJ.getCnpj());
-                        jtfIe.setText(cliJ.getIe()); 
+                        jtfCnpj.setText(cli.getPessoajuridica().getCnpj());
+                        jtfIe.setText(cli.getPessoajuridica().getIe()); 
                         
                         jtfCpf.setEnabled(false);
                     }
                 }
+                
+                rbFisica.setEnabled(false);
+                rbJuridica.setEnabled(false);
+                
                 btnNovo.setVisible(false);
                 btnAlterar.setVisible(true);
                 btnAlterar.setEnabled(true);
@@ -562,6 +559,9 @@ public class JanelaClienteDialog extends javax.swing.JDialog {
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         // TODO add your handling code here:
+        
+        
+        
         try{
             if ( cli != null ) {   
                 control.alterarCliente(cli.getIdCliente(),jtfNome.getText(), jtfEndereco.getText(), jtfNumero.getText(), jtfBairro.getText(), jtfComplemento.getText(),
@@ -569,6 +569,13 @@ public class JanelaClienteDialog extends javax.swing.JDialog {
                     jtfCpf.getText(), jtfCnpj.getText(), jtfIe.getText());
                         
                 JOptionPane.showMessageDialog(this, "Cliente " + cli.getNome() + " alterado com sucesso."  );
+                
+                rbFisica.setEnabled(true);
+                rbJuridica.setEnabled(true);
+                jtfCnpj.setEnabled(true);
+                jtfIe.setEnabled(true);
+                jtfCpf.setEnabled(false);
+                
                 limpaDados();
                 btnNovo.setVisible(true);
                 habilitarModo(1);
@@ -638,6 +645,7 @@ public class JanelaClienteDialog extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel PanelPessoa;
     private javax.swing.ButtonGroup bGroupTipo;
     private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnCancelar;
@@ -647,7 +655,6 @@ public class JanelaClienteDialog extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField jtfBairro;
     private javax.swing.JTextField jtfCel;
     private javax.swing.JTextField jtfCep;

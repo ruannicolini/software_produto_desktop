@@ -1,5 +1,5 @@
 package negocio;
-// Generated 05/05/2014 19:12:47 by Hibernate Tools 3.6.0
+// Generated 18/05/2014 14:44:29 by Hibernate Tools 3.6.0
 
 
 
@@ -9,7 +9,7 @@ package negocio;
 public class Pessoajuridica  implements java.io.Serializable {
 
 
-     private Integer idPessoaJuridica;
+     private int idCliente;
      private Cliente cliente;
      private String cnpj;
      private String ie;
@@ -17,18 +17,22 @@ public class Pessoajuridica  implements java.io.Serializable {
     public Pessoajuridica() {
     }
 
+	
+    public Pessoajuridica(Cliente cliente) {
+        this.cliente = cliente;
+    }
     public Pessoajuridica(Cliente cliente, String cnpj, String ie) {
        this.cliente = cliente;
        this.cnpj = cnpj;
        this.ie = ie;
     }
    
-    public Integer getIdPessoaJuridica() {
-        return this.idPessoaJuridica;
+    public int getIdCliente() {
+        return this.idCliente;
     }
     
-    public void setIdPessoaJuridica(Integer idPessoaJuridica) {
-        this.idPessoaJuridica = idPessoaJuridica;
+    public void setIdCliente(int idCliente) {
+        this.idCliente = idCliente;
     }
     public Cliente getCliente() {
         return this.cliente;

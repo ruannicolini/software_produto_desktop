@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 05/05/2014 19:12:49 by Hibernate Tools 3.6.0 -->
+<!-- Generated 18/05/2014 14:44:32 by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
     <class name="negocio.Cliente" table="cliente" catalog="bioextratus1">
         <id name="idCliente" type="java.lang.Integer">
@@ -47,17 +47,7 @@
             </key>
             <one-to-many class="negocio.Pedido" />
         </set>
-        <set name="pessoafisicas" table="pessoafisica" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="idCliente" />
-            </key>
-            <one-to-many class="negocio.Pessoafisica" />
-        </set>
-        <set name="pessoajuridicas" table="pessoajuridica" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="idCliente" />
-            </key>
-            <one-to-many class="negocio.Pessoajuridica" />
-        </set>
+        <one-to-one name="pessoafisica" class="negocio.Pessoafisica"></one-to-one>
+        <one-to-one name="pessoajuridica" class="negocio.Pessoajuridica"></one-to-one>
     </class>
 </hibernate-mapping>

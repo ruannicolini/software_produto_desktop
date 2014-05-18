@@ -7,7 +7,11 @@
 package dao;
 
 import java.sql.SQLException;
+import java.util.List;
+import javax.persistence.EntityManager;
 import negocio.Pessoajuridica;
+import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -82,28 +86,29 @@ public class PessoajuridicaDAO {
         
     }
     
-    public Pessoajuridica pesquisar ( int id ) throws Exception, SQLException {
-        Session sessao = null;
-        Pessoajuridica cliJ = null;
-        try {
-            sessao = dao.HibernateUtil.getSessionFactory().openSession();
-            sessao.beginTransaction();
-            
-            // Usando HQL
-            Query consulta = sessao.createQuery("from PESSOAJURIDICA where PESSOAJURIDICA.IDCLIENTE = "+ id);
-            cliJ = (Pessoajuridica) consulta.list();
-            
-            sessao.getTransaction().commit(); 
-                       
-        } catch (HibernateException he) {
-            sessao.getTransaction().rollback();
-        }
-        finally {
-            if ( sessao != null ) {
-               sessao.close();
-            } 
-            return cliJ;
-        }
-    }
+//    public Pessoajuridica pesquisar ( int id ) throws Exception, SQLException {
+//        Session sessao = null;
+//        List<Pessoajuridica> lista = null;
+//        try {
+//            sessao = dao.HibernateUtil.getSessionFactory().openSession();
+//            sessao.beginTransaction();
+//            Query consulta = sessao.createQuery("FROM Pessoajuridica pj JOIN FETCH pj.cliente where pj.idCliente = :id");
+//            consulta.setParameter("id", id);
+//            lista = consulta.list();
+//            
+//            lista = consulta.list();
+//            
+//            sessao.getTransaction().commit();
+//                       
+//        } catch (HibernateException he) {
+//            sessao.getTransaction().rollback();
+//        }
+//        finally {
+//            if ( sessao != null ) {
+//               sessao.close();
+//            } 
+//            return lista.get(0);
+//        }
+//    }
     
 }

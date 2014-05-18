@@ -1,16 +1,16 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 05/05/2014 19:12:49 by Hibernate Tools 3.6.0 -->
+<!-- Generated 18/05/2014 14:44:32 by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
     <class name="negocio.Pessoajuridica" table="pessoajuridica" catalog="bioextratus1">
-        <id name="idPessoaJuridica" type="java.lang.Integer">
-            <column name="idPessoaJuridica" />
-            <generator class="identity" />
-        </id>
-        <many-to-one name="cliente" class="negocio.Cliente" fetch="select">
+        <id name="idCliente" type="int">
             <column name="idCliente" />
-        </many-to-one>
+            <generator class="foreign">
+                <param name="property">cliente</param>
+            </generator>
+        </id>
+        <one-to-one name="cliente" class="negocio.Cliente" constrained="true"></one-to-one>
         <property name="cnpj" type="string">
             <column name="cnpj" length="15" />
         </property>

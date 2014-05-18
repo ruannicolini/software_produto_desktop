@@ -1,5 +1,5 @@
 package negocio;
-// Generated 05/05/2014 19:12:47 by Hibernate Tools 3.6.0
+// Generated 18/05/2014 14:44:29 by Hibernate Tools 3.6.0
 
 
 import java.util.HashSet;
@@ -24,13 +24,13 @@ public class Cliente  implements java.io.Serializable {
      private Character tipoCliente;
      private String email;
      private Set pedidos = new HashSet(0);
-     private Set pessoafisicas = new HashSet(0);
-     private Set pessoajuridicas = new HashSet(0);
+     private Pessoafisica pessoafisica;
+     private Pessoajuridica pessoajuridica;
 
     public Cliente() {
     }
 
-    public Cliente(Cidade cidade, String nome, String endereco, String numero, String bairro, String complemento, String telFixo, String telCel, String cep, Character tipoCliente, String email, Set pedidos, Set pessoafisicas, Set pessoajuridicas) {
+    public Cliente(Cidade cidade, String nome, String endereco, String numero, String bairro, String complemento, String telFixo, String telCel, String cep, Character tipoCliente, String email, Set pedidos, Pessoafisica pessoafisica, Pessoajuridica pessoajuridica) {
        this.cidade = cidade;
        this.nome = nome;
        this.endereco = endereco;
@@ -43,10 +43,10 @@ public class Cliente  implements java.io.Serializable {
        this.tipoCliente = tipoCliente;
        this.email = email;
        this.pedidos = pedidos;
-       this.pessoafisicas = pessoafisicas;
-       this.pessoajuridicas = pessoajuridicas;
+       this.pessoafisica = pessoafisica;
+       this.pessoajuridica = pessoajuridica;
     }
-   
+    //
     public Cliente(Cidade cidade, String nome, String endereco, String numero, String bairro, String complemento, String telFixo, String telCel, String cep, Character tipoCliente, String email) {
        this.cidade = cidade;
        this.nome = nome;
@@ -60,6 +60,7 @@ public class Cliente  implements java.io.Serializable {
        this.tipoCliente = tipoCliente;
        this.email = email;
     }
+   //
     public Integer getIdCliente() {
         return this.idCliente;
     }
@@ -151,21 +152,21 @@ public class Cliente  implements java.io.Serializable {
     public void setPedidos(Set pedidos) {
         this.pedidos = pedidos;
     }
-    public Set getPessoafisicas() {
-        return this.pessoafisicas;
+    public Pessoafisica getPessoafisica() {
+        return this.pessoafisica;
     }
     
-    public void setPessoafisicas(Set pessoafisicas) {
-        this.pessoafisicas = pessoafisicas;
+    public void setPessoafisica(Pessoafisica pessoafisica) {
+        this.pessoafisica = pessoafisica;
     }
-    public Set getPessoajuridicas() {
-        return this.pessoajuridicas;
-    }
-    
-    public void setPessoajuridicas(Set pessoajuridicas) {
-        this.pessoajuridicas = pessoajuridicas;
+    public Pessoajuridica getPessoajuridica() {
+        return this.pessoajuridica;
     }
     
+    public void setPessoajuridica(Pessoajuridica pessoajuridica) {
+        this.pessoajuridica = pessoajuridica;
+    }
+
     @Override
     public String toString() {
         return nome;
@@ -173,8 +174,7 @@ public class Cliente  implements java.io.Serializable {
 
     public Object[] toArray() {
             return new Object[]{this, bairro, cidade, telFixo, telCel};
-        }  
-
+        }
 
 
 }

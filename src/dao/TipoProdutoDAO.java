@@ -34,7 +34,7 @@ public class TipoProdutoDAO {
               sessao.beginTransaction();
 
               // Usando HQL
-              Query consulta = sessao.createQuery("from TIPOPRODUTO");
+              Query consulta = sessao.createQuery("from Tipoproduto");
               lista = consulta.list();
 
               sessao.getTransaction().commit(); 

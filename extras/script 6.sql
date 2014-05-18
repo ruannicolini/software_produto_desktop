@@ -1,9 +1,7 @@
 CREATE DATABASE bioextratus1;
 
 USE bioextratus1;
-show tables;
 
-select* from tipoproduto;
 
 CREATE TABLE cidade(idCidade INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT, 
 					nome VARCHAR(30) NOT NULL,
@@ -45,6 +43,7 @@ CREATE TABLE TIPOPRODUTO(
 					idTIPO INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
 					descricao VARCHAR(60),
 					unVenda VARCHAR(10));
+
 
 CREATE TABLE produto(idProduto INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT, 
 					descricao VARCHAR(100),
@@ -132,5 +131,4 @@ SELECT * from cliente;
 SELECT * from cidade;
 SELECT * FROM PESSOAFISICA;
 SELECT * FROM PESSOAJURIDICA;
-
-delete  from cliente where idCliente = 2;
+SELECT * FROM TIPOPRODUTO;

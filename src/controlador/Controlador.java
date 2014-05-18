@@ -85,7 +85,8 @@ public class Controlador {
     
     public void carregarComboTipo(JComboBox combo) throws Exception, SQLException  {
         
-        List lista = tipoProdutoDAO.listarTipos();
+        List<Tipoproduto> lista = tipoProdutoDAO.listarTipos();
+        
         combo.setModel( new DefaultComboBoxModel( lista.toArray() ) );
     }
     
@@ -164,30 +165,35 @@ public class Controlador {
         }                      
     }
     
-    public Pessoafisica pesquisarClienteF( Cliente cli ) throws Exception, SQLException {
-        Pessoafisica pf =  pfDAO.pesquisar(cli.getIdCliente());
-        return pf;
-    }
-    
-    public Pessoajuridica pesquisarClienteJ( Cliente cli ) throws Exception, SQLException {
-        return pjDAO.pesquisar(cli.getIdCliente());
-    }
+//    public Pessoafisica pesquisarClienteF( Cliente cli ) throws Exception, SQLException {
+//        Pessoafisica pf =  pfDAO.pesquisar(cli.getIdCliente());
+//        return pf;
+//    }
+//    
+//    public Pessoajuridica pesquisarClienteJ( Cliente cli ) throws Exception, SQLException {
+//        return pjDAO.pesquisar(cli.getIdCliente());
+//    }
     
     public int alterarCliente(int id, String nome, String endereco, String numero, String bairro, String complemento,
                     String telFixo, String telCel, Cidade cidade, String cep, char tipo_cliente, String email,
                     String cpf, String cnpj, String ie) throws SQLException, ClienteException, Exception{
         
                     Cliente cli = new Cliente(cidade, nome, endereco, numero, bairro, complemento,telFixo, telCel,cep, tipo_cliente, email);
-                    cliDAO.alterar(cli);
-                    
+                    cli.setIdCliente(id);
+                                        
                     if( tipo_cliente == 'F'){
                         cliF = new Pessoafisica(cli,cpf);
-                        pfDAO.alterar(cliF);                    
+                        cliF.setIdCliente(cli.getIdCliente());
+                        
+                        cli.setPessoafisica(cliF);
                     }else{
                         if(tipo_cliente == 'J'){
                             cliJ = new Pessoajuridica(cli,cnpj, ie);
-                            pjDAO.alterar(cliJ);                        }
-                    }             
+                            cliJ.setIdCliente(cli.getIdCliente());
+                            cli.setPessoajuridica(cliJ);
+                        }
+                    }     
+                    cliDAO.alterar(cli);
                     return cli.getIdCliente();
         
     }
@@ -225,12 +231,14 @@ public class Controlador {
     }
     
     public void inserirProduto(String descricao, Linha linha, Tipoproduto tipo, float preco, char status) throws Exception, SQLException {
-//        
-//        if(status == 'T'){ prod = new Produto(descricao, linha, tipo, preco, true);     
-//        }else{
-//            if(status == 'F'){ prod = new Produto(descricao, linha, tipo, preco, false);}
-//        }
-//        produtoDAO.inserir(prod);
+        
+        if(status == 'T'){ 
+            prod = new Produto(tipo, linha, descricao , preco, true);     
+        }else{
+            if(status == 'F'){ 
+                prod = new Produto(tipo, linha, descricao , preco, false);}
+        }
+        produtoDAO.inserir(prod);
     }
     
     public void pesquisarProdutos( JTable tabela, int tipo, String pesq ) throws Exception, SQLException {
@@ -249,15 +257,14 @@ public class Controlador {
         }
         // PERCORRE A LISTA E COLOCA NA TABELA
         Produto prod;
-        
-        // Apagar as linhas da tabela
         ((DefaultTableModel) tabela.getModel()).setRowCount(0);
         Iterator<Produto> ite = lista.iterator();
         while ( ite.hasNext() ) {
             prod = ite.next();
-            ((DefaultTableModel) tabela.getModel()).addRow( prod.toArray() );                        
-
+            ((DefaultTableModel) tabela.getModel()).addRow( prod.toArray() );
         }
+
+        
     }
     
     public void excluirProduto(Produto prod) throws SQLException, Exception{

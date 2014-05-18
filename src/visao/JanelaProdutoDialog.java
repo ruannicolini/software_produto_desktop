@@ -344,9 +344,9 @@ public class JanelaProdutoDialog extends javax.swing.JDialog {
                 jtfDescricao.setText(prod.getDescricao());
                 jtfPreco.setText(String.valueOf(prod.getPreco()));
 
-                cmbLinha.setSelectedItem(prod.getLinha());                     // ERRO AQUI!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                cmbLinha.setSelectedItem(prod.getLinha());                     
                 
-                cmbTipo.setSelectedItem(prod.getTipoproduto());                       // ERRO AQUI!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                cmbTipo.setSelectedItem(prod.getTipoproduto());                      
                 
                 if(prod.isStatusVenda() == true){
                     rbAtivo.setSelected(true);

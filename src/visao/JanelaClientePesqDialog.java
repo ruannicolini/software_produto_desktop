@@ -193,7 +193,7 @@ public class JanelaClientePesqDialog extends javax.swing.JDialog {
 
     private void btnSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionarActionPerformed
         // TODO add your handling code here:
-
+                
         int linha = tblClientes.getSelectedRow();
         if ( linha >= 0 ) {
             cliSelecionado = (Cliente) tblClientes.getValueAt(linha, 0);

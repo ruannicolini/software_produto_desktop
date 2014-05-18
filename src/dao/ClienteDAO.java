@@ -61,6 +61,14 @@ public class ClienteDAO {
         try {
             sessao = dao.HibernateUtil.getSessionFactory().openSession();
             sessao.beginTransaction();
+            
+            if(cli.getTipoCliente() == 'F'){
+                sessao.delete(cli.getPessoafisica());
+            }else{
+                if(cli.getTipoCliente() == 'J'){
+                    sessao.delete(cli.getPessoajuridica());
+                }
+            }
                                   
             sessao.delete(cli);
             
@@ -82,7 +90,15 @@ public class ClienteDAO {
         try {
             sessao = dao.HibernateUtil.getSessionFactory().openSession();
             sessao.beginTransaction();
-                                  
+                        
+            if(cli.getTipoCliente() == 'F'){
+                sessao.update(cli.getPessoafisica());
+            }else{
+                if(cli.getTipoCliente() == 'J'){
+                    sessao.update(cli.getPessoajuridica());
+                }
+            }
+            
             sessao.update(cli);
             
             sessao.getTransaction().commit();            

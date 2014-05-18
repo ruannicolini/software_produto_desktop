@@ -9,9 +9,12 @@ package dao;
 import java.sql.SQLException;
 import java.util.List;
 import negocio.Pessoafisica;
+import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
@@ -82,29 +85,34 @@ public class PessoafisicaDAO {
         }
         
     }
-    
-    public Pessoafisica pesquisar ( int id ) throws Exception, SQLException {
-        Session sessao = null;
-        List<Pessoafisica> lista = null;
-        try {
-            sessao = dao.HibernateUtil.getSessionFactory().openSession();
-            sessao.beginTransaction();
-            Query consulta = sessao.createQuery("from Pessoafisica");
-            
-            
-            lista = consulta.list();
-            
-            sessao.getTransaction().commit();
-                       
-        } catch (HibernateException he) {
-            sessao.getTransaction().rollback();
-        }
-        finally {
-            if ( sessao != null ) {
-               sessao.close();
-            } 
-            return lista.get(0);
-        }
-    
-    }
+// =============EXEMPLO UTILIZANDO CRITÉRIA ==============================    
+//    public Pessoafisica pesquisar (int id) throws Exception, SQLException {
+//        Session sessao = null;
+//        List<Pessoafisica> lista = null;
+//        
+//        try {
+//            sessao = dao.HibernateUtil.getSessionFactory().openSession();
+//            sessao.beginTransaction();
+//            
+//            // Usando Criteria
+//            Criteria cri = sessao.createCriteria(Pessoafisica.class);
+//            cri.setFetchMode("cliente", FetchMode.JOIN);
+//            cri.add( Restrictions.like("idCliente", id));
+//            cri.addOrder( Order.asc("nome") );
+//            
+//            lista = cri.list();
+//            
+//            sessao.getTransaction().commit(); 
+//                       
+//        } catch (HibernateException he) {
+//            sessao.getTransaction().rollback();
+//        }
+//        finally {
+//            if ( sessao != null ) {
+//               sessao.close();
+//            } 
+//            return lista.get(0);
+//        }
+//    
+//    }
 }
