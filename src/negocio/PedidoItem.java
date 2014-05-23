@@ -24,6 +24,14 @@ public class PedidoItem  implements java.io.Serializable {
        this.quantidade = quantidade;
        this.precoTotal = precoTotal;
     }
+    //
+    public PedidoItem(Produto produto, Integer quantidade, Float precoTotal) {
+        this.produto = produto;
+        this.quantidade = quantidade;
+        this.precoTotal = precoTotal;
+    }
+    //
+    
    
     public Integer getIdPedidoItem() {
         return this.idPedidoItem;
@@ -61,7 +69,13 @@ public class PedidoItem  implements java.io.Serializable {
         this.precoTotal = precoTotal;
     }
 
-
+    @Override
+    public String toString() {
+        return produto.getDescricao();
+    }
+    public Object[] toArray() {
+        return new Object[]{this, produto.getLinha().getDescricao(), produto.getTipoproduto().getDescricao(), produto.getPreco(), quantidade};
+    }
 
 
 }

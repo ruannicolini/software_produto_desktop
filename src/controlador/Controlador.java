@@ -9,6 +9,7 @@ package controlador;
 import dao.*;
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -263,7 +264,6 @@ public class Controlador {
             prod = ite.next();
             ((DefaultTableModel) tabela.getModel()).addRow( prod.toArray() );
         }
-
         
     }
     

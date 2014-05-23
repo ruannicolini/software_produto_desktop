@@ -327,8 +327,8 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
         // TODO add your handling code here:
-        JanelaPedidoDialog1 janelaPedido;
-        janelaPedido = new JanelaPedidoDialog1(this, true);
+        JanelaPedidoDialog janelaPedido;
+        janelaPedido = new JanelaPedidoDialog(this, true);
         janelaPedido.setLocationRelativeTo(null); // Faz com que a janela apareça no meio da tela
         janelaPedido.setVisible(true);
     }//GEN-LAST:event_jMenuItem10ActionPerformed
