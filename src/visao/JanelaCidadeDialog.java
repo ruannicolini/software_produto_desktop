@@ -10,7 +10,7 @@ import controlador.Controlador;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import negocio.Cidade;
-import negocio.Linha;
+//import negocio.Linha;
 
 /**
  *

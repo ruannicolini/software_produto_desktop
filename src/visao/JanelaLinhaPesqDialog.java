@@ -9,8 +9,6 @@ import controlador.Controlador;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import negocio.Cidade;
-import negocio.Cliente;
 import negocio.Linha;
 
 /**

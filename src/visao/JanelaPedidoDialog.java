@@ -26,8 +26,8 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
     Controlador control;
     Produto prodSelecionado;
     Cliente cli = null;
-    List<Produto> listaProdSelecionados;
-    List<PedidoItem> listaPedidoItem;
+    //List<Produto> listaProdSelecionados;
+//    List<PedidoItem> listaPedidoItem;
     Map<Integer, String> mapProdutos;
 
     /**
@@ -63,6 +63,8 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
 
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        mnuPedido = new javax.swing.JPopupMenu();
+        mnuExcluir = new javax.swing.JMenuItem();
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jtfNomeCliente = new javax.swing.JTextField();
@@ -82,6 +84,7 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
         tblProdSelecionado = new javax.swing.JTable();
         btnEncerrarPedido = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
+        jPanel6 = new javax.swing.JPanel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -95,6 +98,14 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
             }
         ));
         jScrollPane3.setViewportView(jTable1);
+
+        mnuExcluir.setText("Excluir");
+        mnuExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuExcluirActionPerformed(evt);
+            }
+        });
+        mnuPedido.add(mnuExcluir);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Pedido");
@@ -252,6 +263,7 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
+        tblProdSelecionado.setComponentPopupMenu(mnuPedido);
         jScrollPane4.setViewportView(tblProdSelecionado);
 
         btnEncerrarPedido.setText("Encerrar Pedido");
@@ -276,16 +288,31 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
                 .addComponent(btnEncerrarPedido))
         );
 
+        jPanel3.setBackground(new java.awt.Color(240, 240, 241));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Comissão Prevista"));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 108, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        jPanel6.setBackground(new java.awt.Color(240, 240, 241));
+        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder("Valor Total Pedido"));
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 140, Short.MAX_VALUE)
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
@@ -299,8 +326,10 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(PanelItensVenda, javax.swing.GroupLayout.DEFAULT_SIZE, 816, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(20, 20, 20))
@@ -311,7 +340,8 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
                 .addGap(13, 13, 13)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -355,18 +385,38 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
 
     private void btnSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionarActionPerformed
         // TODO add your handling code here:
+        String descricaoProdSelec;
+        int eIgual = 0;
         int linh = tblProdutos.getSelectedRow();
-
+        descricaoProdSelec = (String) ((Produto)tblProdutos.getValueAt(linh, 0)).getDescricao();
+        int qtn; 
+        qtn = Integer.parseInt(tblProdutos.getValueAt(linh, 4).toString());
+        
         if (linh >= 0) {
-            Produto p = (Produto) tblProdutos.getValueAt(linh, 0);
-            mapProdutos.put(p.getIdProduto(), tblProdutos.getValueAt(linh, 4).toString());
-            ((DefaultTableModel) tblProdSelecionado.getModel()).addRow(p.toArray());
-            int lastLine = tblProdSelecionado.getRowCount() - 1;
-            tblProdSelecionado.setValueAt(mapProdutos.get(p.getIdProduto()), lastLine, 4);
-
-        } else {
-            JOptionPane.showMessageDialog(this, "Selecione um Produto.");
-        }
+            // O For pecorre toda Jtable tblProdSelecionado procurando se o produto a ser inserido já esta na tabela. 
+            for (int i = 0; i < tblProdSelecionado.getRowCount(); i++) {
+                if( descricaoProdSelec.equals((String) ((Produto)tblProdSelecionado.getValueAt(i, 0)).getDescricao())){
+                    eIgual = 1;
+                }   
+            }
+            if(eIgual == 0){ // SE eIgual == 0, o produto não estava na tabela, então vai ser inserido.
+                if(qtn != 0){
+                    Produto p = (Produto) tblProdutos.getValueAt(linh, 0);
+                    mapProdutos.put(p.getIdProduto(), tblProdutos.getValueAt(linh, 4).toString());
+                    ((DefaultTableModel) tblProdSelecionado.getModel()).addRow(p.toArray());
+                    int lastLine = tblProdSelecionado.getRowCount() - 1;
+                    tblProdSelecionado.setValueAt(mapProdutos.get(p.getIdProduto()), lastLine, 4);
+                }else{
+                    JOptionPane.showMessageDialog(this, "Po mano, quantidade zero. Ta de Brincation with me?");
+                    tblProdutos.setValueAt(null, linh, 4);
+                }
+            } else { // se eIgual == 1
+                JOptionPane.showMessageDialog(this, "Opa! Este produto já esta Inserido No Pedido.");
+            }
+            
+        }else { 
+                JOptionPane.showMessageDialog(this, "Selecione um Produto.");
+            }
     }//GEN-LAST:event_btnSelecionarActionPerformed
 
     private void cmbTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTipoActionPerformed
@@ -400,6 +450,12 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
         int qtnLinha = tblProdSelecionado.getModel().getRowCount();
         
     }//GEN-LAST:event_btnEncerrarPedidoActionPerformed
+
+    private void mnuExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuExcluirActionPerformed
+        // TODO add your handling code here:
+        int linh = tblProdSelecionado.getSelectedRow();
+        ((DefaultTableModel) tblProdSelecionado.getModel()).removeRow(linh);
+    }//GEN-LAST:event_mnuExcluirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -455,6 +511,7 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -462,6 +519,8 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
     private javax.swing.JTable jTable1;
     private javax.swing.JTextArea jtaObservacoes;
     private javax.swing.JTextField jtfNomeCliente;
+    private javax.swing.JMenuItem mnuExcluir;
+    private javax.swing.JPopupMenu mnuPedido;
     private javax.swing.JTable tblProdSelecionado;
     private javax.swing.JTable tblProdutos;
     private javax.swing.JTextField txtPesq;

@@ -17,8 +17,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import negocio.Cidade;
 import negocio.Cliente;
-import negocio.Pessoafisica;
-import negocio.Pessoajuridica;
+
 
 /**
  *
