@@ -1,5 +1,5 @@
 package negocio;
-// Generated 18/05/2014 14:44:29 by Hibernate Tools 3.6.0
+// Generated 26/05/2014 20:36:54 by Hibernate Tools 3.6.0
 
 
 
@@ -13,21 +13,19 @@ public class PedidoItem  implements java.io.Serializable {
      private Pedido pedido;
      private Produto produto;
      private Integer quantidade;
-     private Float precoTotal;
-     // Aqui deveria ter um Float preçoUnitario para saber qual o valor que o usuário colocou na tblProdutosSelecionados
+     private Float precoUnitario;
+     private Float precoParcial;
 
     public PedidoItem() {
     }
 
-    public PedidoItem(Pedido pedido, Produto produto, Integer quantidade, Float precoTotal) {
+    public PedidoItem(Pedido pedido, Produto produto, Integer quantidade, Float precoUnitario, Float precoParcial) {
        this.pedido = pedido;
        this.produto = produto;
        this.quantidade = quantidade;
-       this.precoTotal = precoTotal;
+       this.precoUnitario = precoUnitario;
+       this.precoParcial = precoParcial;
     }
-    //
-    
-    //
     
    
     public Integer getIdPedidoItem() {
@@ -58,21 +56,22 @@ public class PedidoItem  implements java.io.Serializable {
     public void setQuantidade(Integer quantidade) {
         this.quantidade = quantidade;
     }
-    public Float getPrecoTotal() {
-        return this.precoTotal;
+    public Float getPrecoUnitario() {
+        return this.precoUnitario;
     }
     
-    public void setPrecoTotal(Float precoTotal) {
-        this.precoTotal = precoTotal;
+    public void setPrecoUnitario(Float precoUnitario) {
+        this.precoUnitario = precoUnitario;
+    }
+    public Float getPrecoParcial() {
+        return this.precoParcial;
+    }
+    
+    public void setPrecoParcial(Float precoParcial) {
+        this.precoParcial = precoParcial;
     }
 
-    @Override
-    public String toString() {
-        return produto.getDescricao();
-    }
-    public Object[] toArray() {
-        return new Object[]{this, produto.getLinha().getDescricao(), produto.getTipoproduto().getDescricao(), produto.getPreco(), quantidade};
-    }
+
 
 
 }

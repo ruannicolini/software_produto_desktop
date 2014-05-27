@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 18/05/2014 14:44:32 by Hibernate Tools 3.6.0 -->
+<!-- Generated 26/05/2014 20:36:56 by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
-    <class name="negocio.Cliente" table="cliente" catalog="bioextratus1">
+    <class name="negocio.Cliente" table="cliente" catalog="bioextratus">
         <id name="idCliente" type="java.lang.Integer">
             <column name="idCliente" />
             <generator class="identity" />

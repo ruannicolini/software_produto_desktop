@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 
+package Configuracoes;
+
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.SessionFactory;
 

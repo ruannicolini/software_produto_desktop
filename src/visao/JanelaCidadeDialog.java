@@ -214,7 +214,7 @@ public class JanelaCidadeDialog extends javax.swing.JDialog {
             
             if ( cid != null ){
                 jtfNome.setText( cid.getNome()  );
-                cmbUf.setSelectedItem(cid.getUf()  );
+                cmbUf.getModel().setSelectedItem(cid.getUf());
                 habilitarModo(2);
             }
             

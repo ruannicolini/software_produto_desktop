@@ -288,7 +288,7 @@ public class Controlador {
         produtoDAO.alterar(prod);
     }
     public void criarPedido(Cliente cli, String obs, JTable tabela) throws SQLException, Exception {
-        Produto prod;
+        
         PedidoItem item;
         float precoUnitario = 0; // valor do campo Preço da tabela
         float precoParcial = 0; // quantidade * preçoUnitario
@@ -303,7 +303,7 @@ public class Controlador {
         int qtnLinha = tabela.getModel().getRowCount();
         for (int i = 0; i < qtnLinha; i++) {
                   prod = (Produto) tabela.getValueAt(i, 0); // O primeiro registro da tabela é um objeto do tipo Produto
-                  prod.setPreco((float) tabela.getValueAt(i, 3)); // O usuário pode alterar o preço na tabela de produtos Selecionados, por isso não usei o pro.getPreço() direto com o preço que esta no banco de dados;
+                  prod.setPreco( Float.parseFloat(tabela.getValueAt(i, 3).toString())); // O usuário pode alterar o preço na tabela de produtos Selecionados, por isso não usei o pro.getPreço() direto com o preço que esta no banco de dados;
                   quantidade = Integer.parseInt(tabela.getValueAt(i, 4).toString());
                   precoUnitario = prod.getPreco();
                                    
@@ -311,12 +311,18 @@ public class Controlador {
                   valorTotal += precoParcial;
                   
                   // criar registros PedidoItem
-                  item = new PedidoItem(pedido, prod, quantidade, precoParcial);
+                  item = new PedidoItem(pedido, prod, quantidade, precoUnitario, precoParcial);
                   pedidoItemDAO.inserirItem(item);
         }
         pedido.setValorTotal(valorTotal);
         
         // O preço total do Pedido não é alterado pois ele é inserido no banco antes de ter o valor total. 
         pedidoDAO.alterar(pedido);
+        
+        limpaDadosPedido();
+    }
+    public void limpaDadosPedido(){
+        cli = null;
+        prod = null;
     }
 }

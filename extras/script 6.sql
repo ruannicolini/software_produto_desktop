@@ -132,3 +132,5 @@ SELECT * from cidade;
 SELECT * FROM PESSOAFISICA;
 SELECT * FROM PESSOAJURIDICA;
 SELECT * FROM TIPOPRODUTO;
+select * from pedido;
+select * from pedido_item;

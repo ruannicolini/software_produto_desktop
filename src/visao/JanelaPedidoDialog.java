@@ -6,6 +6,7 @@
 package visao;
 
 import controlador.Controlador;
+import java.awt.Color;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -51,6 +52,13 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
         
         // Permite apenas uma linha selecionada por vez na tabela tblProdutos
         tblProdutos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        
+        // Botão Encerar Pedido não disponivel
+        btnEncerrarPedido.setEnabled(false);
+        
+        
+        
+        
     }
 
     /**
@@ -75,7 +83,7 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
         jtaObservacoes = new javax.swing.JTextArea();
         PanelItensVenda = new javax.swing.JPanel();
         cmbTipo = new javax.swing.JComboBox();
-        txtPesq = new javax.swing.JTextField();
+        jtfPesq = new javax.swing.JTextField();
         btnPesquisar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblProdutos = new javax.swing.JTable();
@@ -84,8 +92,8 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
         jScrollPane4 = new javax.swing.JScrollPane();
         tblProdSelecionado = new javax.swing.JTable();
         btnEncerrarPedido = new javax.swing.JButton();
+        btnEncerrarPedido2 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
-        jPanel6 = new javax.swing.JPanel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -172,7 +180,7 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
             }
         });
 
-        txtPesq.setEnabled(false);
+        jtfPesq.setEnabled(false);
 
         btnPesquisar.setText("Pesquisar");
         btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
@@ -220,7 +228,7 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
                     .addGroup(PanelItensVendaLayout.createSequentialGroup()
                         .addComponent(cmbTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtPesq)
+                        .addComponent(jtfPesq)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnPesquisar))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelItensVendaLayout.createSequentialGroup()
@@ -233,11 +241,11 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
             .addGroup(PanelItensVendaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(PanelItensVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtPesq, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtfPesq, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cmbTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnPesquisar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
                 .addGap(1, 1, 1)
                 .addComponent(btnSelecionar)
                 .addGap(2, 2, 2))
@@ -274,23 +282,34 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
             }
         });
 
+        btnEncerrarPedido2.setText("Cancelar");
+        btnEncerrarPedido2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEncerrarPedido2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 804, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(btnEncerrarPedido)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(btnEncerrarPedido2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnEncerrarPedido))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnEncerrarPedido))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnEncerrarPedido)
+                    .addComponent(btnEncerrarPedido2)))
         );
 
         jPanel3.setBackground(new java.awt.Color(240, 240, 241));
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Comissão Prevista"));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -300,21 +319,7 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
-        jPanel6.setBackground(new java.awt.Color(240, 240, 241));
-        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder("Valor Total Pedido"));
-
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 149, Short.MAX_VALUE)
-        );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 163, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -329,10 +334,9 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(20, 20, 20))
         );
         jPanel2Layout.setVerticalGroup(
@@ -340,14 +344,14 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(13, 13, 13)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(PanelItensVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(PanelItensVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -366,7 +370,7 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
         try {
             // TODO add your handling code here:
-            control.pesquisarProdutos(tblProdutos, cmbTipo.getSelectedIndex(), txtPesq.getText());
+            control.pesquisarProdutos(tblProdutos, cmbTipo.getSelectedIndex(), jtfPesq.getText());
             Produto p;
             String qtd;
             if (mapProdutos.size() > 0) {
@@ -394,6 +398,8 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
         qtn = Integer.parseInt(tblProdutos.getValueAt(linh, 4).toString());
         
         if (linh >= 0) {
+            btnEncerrarPedido.setEnabled(true);
+            
             // O For pecorre toda Jtable tblProdSelecionado procurando se o produto a ser inserido já esta na tabela. 
             for (int i = 0; i < tblProdSelecionado.getRowCount(); i++) {
                 if( descricaoProdSelec.equals((String) ((Produto)tblProdSelecionado.getValueAt(i, 0)).getDescricao())){
@@ -436,7 +442,7 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
             if (cli != null) {
                 jtfNomeCliente.setText(cli.getNome());
                 jtaObservacoes.setEnabled(true);
-                txtPesq.setEnabled(true);
+                jtfPesq.setEnabled(true);
             }
 
         } catch (SQLException ex) {
@@ -449,8 +455,15 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
     private void btnEncerrarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEncerrarPedidoActionPerformed
         // TODO add your handling code here:
         try {
-            control.criarPedido(cli, jtaObservacoes.getText(), tblProdSelecionado);
-
+            if(tblProdSelecionado.getRowCount() != 0){
+                control.criarPedido(cli, jtaObservacoes.getText(), tblProdSelecionado);
+                limpaDadosPedido();
+                btnEncerrarPedido.setEnabled(false);
+                JOptionPane.showMessageDialog(this, "Pedido Inserido Com Suceso!");
+            }else{
+                btnEncerrarPedido.setEnabled(false);
+                JOptionPane.showMessageDialog(this, "Acrescente algum Item no Pedido.");
+            }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "ERRO ao inserir novo Pedido no  banco. " + ex.getMessage());
         } catch (Exception ex) {
@@ -466,6 +479,34 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
         ((DefaultTableModel) tblProdSelecionado.getModel()).removeRow(linh);
     }//GEN-LAST:event_mnuExcluirActionPerformed
 
+    private void btnEncerrarPedido2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEncerrarPedido2ActionPerformed
+        // TODO add your handling code here:
+        if(jtfNomeCliente.getText().trim().equals("")){
+            this.setVisible(false);
+        }else{
+            limpaDadosPedido();
+        }
+    }//GEN-LAST:event_btnEncerrarPedido2ActionPerformed
+
+    public void limpaDadosPedido(){
+        jtfNomeCliente.setText(" ");
+        jtfNomeCliente.setEnabled(false);
+        
+        jtaObservacoes.setText(" ");
+        jtaObservacoes.setEnabled(false);
+        
+        jtfPesq.setText(" ");
+        jtfPesq.setEnabled(false);
+        
+        //Limpa Tabela Itens de produtos
+        DefaultTableModel tableModel = (DefaultTableModel) tblProdutos.getModel();
+        tableModel.setNumRows(0);
+        //Limpa Tabela de produtos Selecionados
+        DefaultTableModel tableModel2 = (DefaultTableModel) tblProdSelecionado.getModel();
+        tableModel2.setNumRows(0);
+        control.limpaDadosPedido();
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -511,6 +552,7 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PanelItensVenda;
     private javax.swing.JButton btnEncerrarPedido;
+    private javax.swing.JButton btnEncerrarPedido2;
     private javax.swing.JButton btnPesquisar;
     private javax.swing.JButton btnSelecionar;
     private javax.swing.JComboBox cmbTipo;
@@ -520,7 +562,6 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -528,10 +569,10 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
     private javax.swing.JTable jTable1;
     private javax.swing.JTextArea jtaObservacoes;
     private javax.swing.JTextField jtfNomeCliente;
+    private javax.swing.JTextField jtfPesq;
     private javax.swing.JMenuItem mnuExcluir;
     private javax.swing.JPopupMenu mnuPedido;
     private javax.swing.JTable tblProdSelecionado;
     private javax.swing.JTable tblProdutos;
-    private javax.swing.JTextField txtPesq;
     // End of variables declaration//GEN-END:variables
 }

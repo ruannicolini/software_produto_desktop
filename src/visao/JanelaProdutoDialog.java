@@ -344,10 +344,10 @@ public class JanelaProdutoDialog extends javax.swing.JDialog {
                 jtfDescricao.setText(prod.getDescricao());
                 jtfPreco.setText(String.valueOf(prod.getPreco()));
 
-                cmbLinha.setSelectedItem(prod.getLinha());                     
-                
-                cmbTipo.setSelectedItem(prod.getTipoproduto());                      
-                
+                //cmbLinha.setSelectedItem(prod.getLinha());                     
+                cmbLinha.getModel().setSelectedItem(prod.getLinha());
+                //cmbTipo.setSelectedItem(prod.getTipoproduto());                      
+                cmbTipo.getModel().setSelectedItem(prod.getTipoproduto());
                 if(prod.isStatusVenda() == true){
                     rbAtivo.setSelected(true);
                 }else{

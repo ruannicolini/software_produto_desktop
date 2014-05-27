@@ -501,11 +501,9 @@ public class JanelaClienteDialog extends javax.swing.JDialog {
             cliPesq = new JanelaClientePesqDialog(null, true);
             cliPesq.setVisible(true); 
             
-          cli = cliPesq.getCliente();
+            cli = cliPesq.getCliente();
 
-          
             if ( cli != null ){
-                
                 
                 jtfNome.setText( cli.getNome()  );
                 jtfEndereco.setText( cli.getEndereco()  );
@@ -516,19 +514,15 @@ public class JanelaClienteDialog extends javax.swing.JDialog {
                 jtfTel.setText(cli.getTelFixo());
                 jtfCel.setText(cli.getTelCel());
                 jtfEmail.setText(cli.getEmail());
-                cmbCidade.setSelectedItem(cli.getCidade());
-                
+                cmbCidade.getModel().setSelectedItem(cli.getCidade());
                 if(cli.getTipoCliente() == 'F'){
-                    
                     jtfCpf.setEnabled(true);
                     jtfCpf.setText(cli.getPessoafisica().getCpf()); 
                     rbFisica.setSelected(true);
                     jtfCnpj.setEnabled(false);
                     jtfIe.setEnabled(false);
                 }else{
-                    if(cli.getTipoCliente() == 'J'){
-                       
-                        
+                    if(cli.getTipoCliente() == 'J'){                        
                         jtfCnpj.setEnabled(true);
                         jtfIe.setEnabled(true);
                         rbJuridica.setSelected(true);

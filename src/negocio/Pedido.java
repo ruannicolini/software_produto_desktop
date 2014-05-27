@@ -1,5 +1,5 @@
 package negocio;
-// Generated 18/05/2014 14:44:29 by Hibernate Tools 3.6.0
+// Generated 26/05/2014 20:36:54 by Hibernate Tools 3.6.0
 
 
 import java.util.Date;
@@ -29,14 +29,15 @@ public class Pedido  implements java.io.Serializable {
        this.data = data;
        this.pedidoItems = pedidoItems;
     }
-     //
+   
+    //
     public Pedido(Cliente cliente, String descricao) {
         this.cliente = cliente;
         this.descricao = descricao;
         this.data = new Date(System.currentTimeMillis());
     }
-    //    
-   
+    //  
+    
     public Integer getIdPedido() {
         return this.idPedido;
     }

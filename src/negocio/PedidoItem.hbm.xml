@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 18/05/2014 14:44:32 by Hibernate Tools 3.6.0 -->
+<!-- Generated 26/05/2014 20:36:56 by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
-    <class name="negocio.PedidoItem" table="pedido_item" catalog="bioextratus1">
+    <class name="negocio.PedidoItem" table="pedido_item" catalog="bioextratus">
         <id name="idPedidoItem" type="java.lang.Integer">
             <column name="idPedido_item" />
             <generator class="identity" />
@@ -17,8 +17,11 @@
         <property name="quantidade" type="java.lang.Integer">
             <column name="quantidade" />
         </property>
-        <property name="precoTotal" type="java.lang.Float">
-            <column name="precoTotal" precision="7" />
+        <property name="precoUnitario" type="java.lang.Float">
+            <column name="precoUnitario" precision="7" />
+        </property>
+        <property name="precoParcial" type="java.lang.Float">
+            <column name="precoParcial" precision="7" />
         </property>
     </class>
 </hibernate-mapping>
