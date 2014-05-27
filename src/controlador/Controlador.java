@@ -36,6 +36,8 @@ public class Controlador {
     Pessoajuridica cliJ;
     Produto prod;
     TipoProdutoDAO tipoProdutoDAO;
+    PedidoDAO pedidoDAO;
+    PedidoItemDAO pedidoItemDAO;
 
     public Controlador() throws Exception, SQLException {
         cidDAO = new CidadeDAO();
@@ -45,6 +47,8 @@ public class Controlador {
         pjDAO = new PessoajuridicaDAO();
         pfDAO = new PessoafisicaDAO();
         tipoProdutoDAO = new TipoProdutoDAO();
+        pedidoDAO = new PedidoDAO();
+        pedidoItemDAO = new PedidoItemDAO();
     }
     
   
@@ -283,5 +287,36 @@ public class Controlador {
         } 
         produtoDAO.alterar(prod);
     }
-
+    public void criarPedido(Cliente cli, String obs, JTable tabela) throws SQLException, Exception {
+        Produto prod;
+        PedidoItem item;
+        float precoUnitario = 0; // valor do campo Preço da tabela
+        float precoParcial = 0; // quantidade * preçoUnitario
+        float valorTotal = 0;// Soma de preçoParcial, ou seja o valor final do pedido.
+        int quantidade = 0, id;
+        
+        Pedido pedido = new Pedido(cli, obs);
+        
+        id = pedidoDAO.inserir(pedido);
+        pedido.setIdPedido(id);
+        
+        int qtnLinha = tabela.getModel().getRowCount();
+        for (int i = 0; i < qtnLinha; i++) {
+                  prod = (Produto) tabela.getValueAt(i, 0); // O primeiro registro da tabela é um objeto do tipo Produto
+                  prod.setPreco((float) tabela.getValueAt(i, 3)); // O usuário pode alterar o preço na tabela de produtos Selecionados, por isso não usei o pro.getPreço() direto com o preço que esta no banco de dados;
+                  quantidade = Integer.parseInt(tabela.getValueAt(i, 4).toString());
+                  precoUnitario = prod.getPreco();
+                                   
+                  precoParcial = precoUnitario * quantidade;
+                  valorTotal += precoParcial;
+                  
+                  // criar registros PedidoItem
+                  item = new PedidoItem(pedido, prod, quantidade, precoParcial);
+                  pedidoItemDAO.inserirItem(item);
+        }
+        pedido.setValorTotal(valorTotal);
+        
+        // O preço total do Pedido não é alterado pois ele é inserido no banco antes de ter o valor total. 
+        pedidoDAO.alterar(pedido);
+    }
 }

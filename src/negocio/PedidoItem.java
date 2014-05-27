@@ -14,6 +14,7 @@ public class PedidoItem  implements java.io.Serializable {
      private Produto produto;
      private Integer quantidade;
      private Float precoTotal;
+     // Aqui deveria ter um Float preçoUnitario para saber qual o valor que o usuário colocou na tblProdutosSelecionados
 
     public PedidoItem() {
     }
@@ -25,11 +26,7 @@ public class PedidoItem  implements java.io.Serializable {
        this.precoTotal = precoTotal;
     }
     //
-    public PedidoItem(Produto produto, Integer quantidade, Float precoTotal) {
-        this.produto = produto;
-        this.quantidade = quantidade;
-        this.precoTotal = precoTotal;
-    }
+    
     //
     
    

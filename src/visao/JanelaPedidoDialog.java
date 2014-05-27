@@ -40,12 +40,13 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
         try {
             control = new Controlador();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "ERRO de conexão com o BANCO. Procure o suporte. "
-                    + e.getMessage());
+            JOptionPane.showMessageDialog(null, "ERRO de conexão com o BANCO. Procure o suporte. " + 
+                        e.getMessage() );
 
+            
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "ERRO não esperado. "
-                    + e.getMessage());
+            JOptionPane.showMessageDialog(null, "ERRO não esperado. " + 
+                        e.getMessage() );
         }
         
         // Permite apenas uma linha selecionada por vez na tabela tblProdutos
@@ -309,7 +310,7 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 140, Short.MAX_VALUE)
+            .addGap(0, 149, Short.MAX_VALUE)
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -329,7 +330,7 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
                         .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(20, 20, 20))
@@ -447,7 +448,15 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
 
     private void btnEncerrarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEncerrarPedidoActionPerformed
         // TODO add your handling code here:
-        int qtnLinha = tblProdSelecionado.getModel().getRowCount();
+        try {
+            control.criarPedido(cli, jtaObservacoes.getText(), tblProdSelecionado);
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "ERRO ao inserir novo Pedido no  banco. " + ex.getMessage());
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "ERRO ao criar Pedido. " + ex.getMessage());
+        }
+       
         
     }//GEN-LAST:event_btnEncerrarPedidoActionPerformed
 

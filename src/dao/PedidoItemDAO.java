@@ -7,7 +7,7 @@
 package dao;
 
 import java.sql.SQLException;
-import negocio.Pedido;
+import negocio.PedidoItem;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
@@ -15,19 +15,18 @@ import org.hibernate.Session;
  *
  * @author Ruan
  */
-public class PedidoDAO {
+public class PedidoItemDAO {
 
-    public PedidoDAO()throws Exception, SQLException {
+    public PedidoItemDAO()throws Exception, SQLException {
     }
     
-    
-    public int inserir(Pedido pedido){
+    public void inserirItem(PedidoItem item){
         Session sessao = null;
         try {
             sessao = dao.HibernateUtil.getSessionFactory().openSession();
             sessao.beginTransaction();
                                   
-            sessao.save(pedido);
+            sessao.save(item);
             
             sessao.getTransaction().commit();            
         } catch (HibernateException he) {
@@ -38,27 +37,7 @@ public class PedidoDAO {
                 sessao.close();
             }            
         }
-        return pedido.getIdPedido();
         
-    }
-    
-    public void alterar(Pedido novoPed)  throws Exception, SQLException {
-        Session sessao = null;
-        try {
-            sessao = dao.HibernateUtil.getSessionFactory().openSession();
-            sessao.beginTransaction();
-                                  
-            sessao.update(novoPed);
-            
-            sessao.getTransaction().commit();            
-        } catch (HibernateException he) {
-            sessao.getTransaction().rollback();
-        }
-        finally {
-            if ( sessao != null ) {
-                sessao.close();
-            }            
-        }
     }
     
 }

@@ -29,6 +29,13 @@ public class Pedido  implements java.io.Serializable {
        this.data = data;
        this.pedidoItems = pedidoItems;
     }
+     //
+    public Pedido(Cliente cliente, String descricao) {
+        this.cliente = cliente;
+        this.descricao = descricao;
+        this.data = new Date(System.currentTimeMillis());
+    }
+    //    
    
     public Integer getIdPedido() {
         return this.idPedido;
