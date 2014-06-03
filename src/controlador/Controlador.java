@@ -246,7 +246,7 @@ public class Controlador {
         produtoDAO.inserir(prod);
     }
     
-    public void pesquisarProdutos( JTable tabela, int tipo, String pesq ) throws Exception, SQLException {
+    public void pesquisarProdutos( JTable tabela, int tipo, String pesq, int intuitoPesquisa ) throws Exception, SQLException {
         List lista = null;
       
         switch (tipo) {
@@ -264,9 +264,20 @@ public class Controlador {
         Produto prod;
         ((DefaultTableModel) tabela.getModel()).setRowCount(0);
         Iterator<Produto> ite = lista.iterator();
-        while ( ite.hasNext() ) {
-            prod = ite.next();
-            ((DefaultTableModel) tabela.getModel()).addRow( prod.toArray() );
+        // intuitoPesquisa é para saber onde será apresentado o dado obtido. Se for na contrução de um pedido, os produtos
+        // cujo status está inativo não deverão aparecer na tabela, ja na tabela de produtos, todos deverão aparecer.
+        if(intuitoPesquisa == 2){
+            while ( ite.hasNext() ) {
+                prod = ite.next();
+                if(prod.isStatusVenda() == true){
+                    ((DefaultTableModel) tabela.getModel()).addRow( prod.toArray() );
+                }
+            }
+        }else{
+            while ( ite.hasNext() ) {
+                prod = ite.next();
+                ((DefaultTableModel) tabela.getModel()).addRow( prod.toArray() );
+            }
         }
         
     }

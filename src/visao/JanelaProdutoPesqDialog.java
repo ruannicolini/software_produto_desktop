@@ -153,7 +153,7 @@ public class JanelaProdutoPesqDialog extends javax.swing.JDialog {
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
         try {
             // TODO add your handling code here:
-            control.pesquisarProdutos(tblProdutos, cmbTipo.getSelectedIndex(), txtPesq.getText() );
+            control.pesquisarProdutos(tblProdutos, cmbTipo.getSelectedIndex(), txtPesq.getText(), 1 );
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "ERRO ao PESQUISAR no BANCO. " + ex.getMessage() );
         } catch (Exception ex) {
