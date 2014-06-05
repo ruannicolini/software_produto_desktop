@@ -300,7 +300,7 @@ public class Controlador {
     }
     public void criarPedido(Cliente cli, String obs, JTable tabela) throws SQLException, Exception {
         
-        PedidoItem item;
+        Pedidoitem item;
         float precoUnitario = 0; // valor do campo Preço da tabela
         float precoParcial = 0; // quantidade * preçoUnitario
         float valorTotal = 0;// Soma de preçoParcial, ou seja o valor final do pedido.
@@ -322,7 +322,7 @@ public class Controlador {
                   valorTotal += precoParcial;
                   
                   // criar registros PedidoItem
-                  item = new PedidoItem(pedido, prod, quantidade, precoUnitario, precoParcial);
+                  item = new Pedidoitem(pedido, prod, quantidade, precoUnitario, precoParcial);
                   pedidoItemDAO.inserirItem(item);
         }
         pedido.setValorTotal(valorTotal);

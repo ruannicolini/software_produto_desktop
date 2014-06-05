@@ -1,5 +1,5 @@
 package negocio;
-// Generated 26/05/2014 20:36:54 by Hibernate Tools 3.6.0
+// Generated 04/06/2014 19:48:26 by Hibernate Tools 3.6.0
 
 
 import java.util.HashSet;
@@ -17,7 +17,7 @@ public class Produto  implements java.io.Serializable {
      private String descricao;
      private float preco;
      private boolean statusVenda;
-     private Set pedidoItems = new HashSet(0);
+     private Set pedidoitems = new HashSet(0);
 
     public Produto() {
     }
@@ -27,15 +27,14 @@ public class Produto  implements java.io.Serializable {
         this.preco = preco;
         this.statusVenda = statusVenda;
     }
-    public Produto(Tipoproduto tipoproduto, Linha linha, String descricao, float preco, boolean statusVenda, Set pedidoItems) {
+    public Produto(Tipoproduto tipoproduto, Linha linha, String descricao, float preco, boolean statusVenda, Set pedidoitems) {
        this.tipoproduto = tipoproduto;
        this.linha = linha;
        this.descricao = descricao;
        this.preco = preco;
        this.statusVenda = statusVenda;
-       this.pedidoItems = pedidoItems;
+       this.pedidoitems = pedidoitems;
     }
-   
     //
     public Produto(Tipoproduto tipoproduto, Linha linha, String descricao, float preco, boolean statusVenda) {
         this.tipoproduto = tipoproduto;
@@ -45,7 +44,6 @@ public class Produto  implements java.io.Serializable {
         this.statusVenda = statusVenda;
     }
     //
-    
     public Integer getIdProduto() {
         return this.idProduto;
     }
@@ -88,14 +86,13 @@ public class Produto  implements java.io.Serializable {
     public void setStatusVenda(boolean statusVenda) {
         this.statusVenda = statusVenda;
     }
-    public Set getPedidoItems() {
-        return this.pedidoItems;
+    public Set getPedidoitems() {
+        return this.pedidoitems;
     }
     
-    public void setPedidoItems(Set pedidoItems) {
-        this.pedidoItems = pedidoItems;
+    public void setPedidoitems(Set pedidoitems) {
+        this.pedidoitems = pedidoitems;
     }
-
     @Override
     public String toString() {
         return descricao;
@@ -103,6 +100,7 @@ public class Produto  implements java.io.Serializable {
     public Object[] toArray() {
         return new Object[]{this, linha.getNome(), tipoproduto.getDescricao(), this.getPreco()};
     }
+
 
 
 }

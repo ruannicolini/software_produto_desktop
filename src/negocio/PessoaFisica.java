@@ -1,5 +1,5 @@
 package negocio;
-// Generated 26/05/2014 20:36:54 by Hibernate Tools 3.6.0
+// Generated 04/06/2014 19:48:26 by Hibernate Tools 3.6.0
 
 
 

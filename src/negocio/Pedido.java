@@ -1,5 +1,5 @@
 package negocio;
-// Generated 26/05/2014 20:36:54 by Hibernate Tools 3.6.0
+// Generated 04/06/2014 19:48:26 by Hibernate Tools 3.6.0
 
 
 import java.util.Date;
@@ -17,27 +17,25 @@ public class Pedido  implements java.io.Serializable {
      private String descricao;
      private Float valorTotal;
      private Date data;
-     private Set pedidoItems = new HashSet(0);
+     private Set pedidoitems = new HashSet(0);
 
     public Pedido() {
     }
 
-    public Pedido(Cliente cliente, String descricao, Float valorTotal, Date data, Set pedidoItems) {
+    public Pedido(Cliente cliente, String descricao, Float valorTotal, Date data, Set pedidoitems) {
        this.cliente = cliente;
        this.descricao = descricao;
        this.valorTotal = valorTotal;
        this.data = data;
-       this.pedidoItems = pedidoItems;
+       this.pedidoitems = pedidoitems;
     }
-   
     //
     public Pedido(Cliente cliente, String descricao) {
         this.cliente = cliente;
         this.descricao = descricao;
         this.data = new Date(System.currentTimeMillis());
     }
-    //  
-    
+    //
     public Integer getIdPedido() {
         return this.idPedido;
     }
@@ -73,12 +71,12 @@ public class Pedido  implements java.io.Serializable {
     public void setData(Date data) {
         this.data = data;
     }
-    public Set getPedidoItems() {
-        return this.pedidoItems;
+    public Set getPedidoitems() {
+        return this.pedidoitems;
     }
     
-    public void setPedidoItems(Set pedidoItems) {
-        this.pedidoItems = pedidoItems;
+    public void setPedidoitems(Set pedidoitems) {
+        this.pedidoitems = pedidoitems;
     }
 
 

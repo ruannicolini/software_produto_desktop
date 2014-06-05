@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import negocio.Cliente;
-import negocio.PedidoItem;
+import negocio.Pedidoitem;
 import negocio.Produto;
 
 /**

@@ -1,5 +1,5 @@
 package negocio;
-// Generated 26/05/2014 20:36:54 by Hibernate Tools 3.6.0
+// Generated 04/06/2014 19:48:26 by Hibernate Tools 3.6.0
 
 
 import java.util.HashSet;
@@ -58,7 +58,6 @@ public class Cidade  implements java.io.Serializable {
     public void setClientes(Set clientes) {
         this.clientes = clientes;
     }
-
     @Override
     public String toString() {
         return nome;
@@ -67,6 +66,7 @@ public class Cidade  implements java.io.Serializable {
     public Object[] toArray() {
         return new Object[]{this,this.getUf()};
     }
+
 
 
 }

@@ -7,7 +7,7 @@
 package dao;
 
 import java.sql.SQLException;
-import negocio.PedidoItem;
+import negocio.Pedidoitem;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
@@ -20,7 +20,7 @@ public class PedidoItemDAO {
     public PedidoItemDAO()throws Exception, SQLException {
     }
     
-    public void inserirItem(PedidoItem item){
+    public void inserirItem(Pedidoitem item){
         Session sessao = null;
         try {
             sessao = dao.HibernateUtil.getSessionFactory().openSession();

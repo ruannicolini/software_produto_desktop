@@ -1,5 +1,5 @@
 package negocio;
-// Generated 26/05/2014 20:36:54 by Hibernate Tools 3.6.0
+// Generated 04/06/2014 19:48:26 by Hibernate Tools 3.6.0
 
 
 import java.util.HashSet;
@@ -46,7 +46,6 @@ public class Cliente  implements java.io.Serializable {
        this.pessoafisica = pessoafisica;
        this.pessoajuridica = pessoajuridica;
     }
-   
     //
     public Cliente(Cidade cidade, String nome, String endereco, String numero, String bairro, String complemento, String telFixo, String telCel, String cep, Character tipoCliente, String email) {
        this.cidade = cidade;
@@ -167,7 +166,7 @@ public class Cliente  implements java.io.Serializable {
     public void setPessoajuridica(Pessoajuridica pessoajuridica) {
         this.pessoajuridica = pessoajuridica;
     }
-
+    
     @Override
     public String toString() {
         return nome;
@@ -176,6 +175,7 @@ public class Cliente  implements java.io.Serializable {
     public Object[] toArray() {
             return new Object[]{this, bairro, cidade, telFixo, telCel};
     }
+
 
 
 }
