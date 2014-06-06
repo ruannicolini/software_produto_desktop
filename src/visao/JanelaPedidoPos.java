@@ -72,23 +72,43 @@ public class JanelaPedidoPos extends javax.swing.JDialog {
 
         labelCliente.setText("Cliente: ");
 
+        jtfNomeCliente.setEditable(false);
+
         labelCliente1.setText("Endereço: ");
 
+        jtfEndereco.setEditable(false);
+
         labelCnpjCpf.setText("CNPJ/CPF: ");
+
+        jtfCnpjCpf.setEditable(false);
+
+        jtfIe.setEditable(false);
 
         labelIe.setText("IE");
 
         labelNumero.setText("Número: ");
 
+        jtfCnpjCpf1.setEditable(false);
+
+        jtfCnpjCpf2.setEditable(false);
+
         labelNumero1.setText("Bairro:");
 
         jLabel1.setText("Cidade:");
 
+        jTextField1.setEditable(false);
+
         jLabel2.setText("Email: ");
+
+        jtfEndereco1.setEditable(false);
 
         jLabel3.setText("Tel: ");
 
+        jtfEndereco2.setEditable(false);
+
         jLabel4.setText("Cel: ");
+
+        jtfEndereco3.setEditable(false);
 
         jLabel5.setText("Vendedor: ");
 
@@ -237,6 +257,7 @@ public class JanelaPedidoPos extends javax.swing.JDialog {
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("OBSERVAÇÕES"));
         jPanel4.setLayout(new java.awt.BorderLayout());
 
+        jtaObsrevacoes.setEditable(false);
         jtaObsrevacoes.setColumns(20);
         jtaObsrevacoes.setRows(5);
         jScrollPane1.setViewportView(jtaObsrevacoes);
