@@ -467,21 +467,21 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
 
     private void btnEncerrarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEncerrarPedidoActionPerformed
         // TODO add your handling code here:
-//        try {
-//            if(tblProdSelecionado.getRowCount() != 0){
-//                control.criarPedido(cli, jtaObservacoes.getText(), tblProdSelecionado);
-//                limpaDadosPedido();
-//                btnEncerrarPedido.setEnabled(false);
-//                JOptionPane.showMessageDialog(this, "Pedido Inserido Com Suceso!");
-//            }else{
-//                btnEncerrarPedido.setEnabled(false);
-//                JOptionPane.showMessageDialog(this, "Acrescente algum Item no Pedido.");
-//            }
-//        } catch (SQLException ex) {
-//            JOptionPane.showMessageDialog(this, "ERRO ao inserir novo Pedido no  banco. " + ex.getMessage());
-//        } catch (Exception ex) {
-//            JOptionPane.showMessageDialog(this, "ERRO ao criar Pedido. " + ex.getMessage());
-//        }
+        try {
+            if(tblProdSelecionado.getRowCount() != 0){
+                control.criarPedido(cli, jtaObservacoes.getText(), tblProdSelecionado);
+                limpaDadosPedido();
+                btnEncerrarPedido.setEnabled(false);
+                JOptionPane.showMessageDialog(this, "Pedido Inserido Com Suceso!");
+            }else{
+                btnEncerrarPedido.setEnabled(false);
+                JOptionPane.showMessageDialog(this, "Acrescente algum Item no Pedido.");
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "ERRO ao inserir novo Pedido no  banco. " + ex.getMessage());
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "ERRO ao criar Pedido. " + ex.getMessage());
+        }
        
         JanelaPedidoPos jpp= new JanelaPedidoPos(null, true);
         jpp.setLocationRelativeTo(null); // Faz com que a janela apareça no meio da tela
