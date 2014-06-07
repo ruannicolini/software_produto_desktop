@@ -42,9 +42,7 @@ public class JanelaClienteDialog extends javax.swing.JDialog {
             control = new Controlador();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "ERRO de conexão com o BANCO. Procure o suporte. " + 
-                        e.getMessage() );
-
-            
+                        e.getMessage() );           
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "ERRO não esperado. " + 
                         e.getMessage() );

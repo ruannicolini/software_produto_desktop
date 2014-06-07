@@ -21,6 +21,13 @@ import javax.swing.table.DefaultTableModel;
 import negocio.Cliente;
 import negocio.Pedidoitem;
 import negocio.Produto;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.query.JRHibernateQueryExecuterFactory;
+import net.sf.jasperreports.view.JasperViewer;
+import org.hibernate.SessionFactory;
+import org.hibernate.classic.Session;
 
 
 /**
@@ -99,7 +106,6 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
         btnEncerrarPedido = new javax.swing.JButton();
         btnEncerrarPedido2 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -317,28 +323,15 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
 
         jPanel3.setBackground(new java.awt.Color(240, 240, 241));
 
-        jButton2.setText("jButton2");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(116, 116, 116)
-                .addComponent(jButton2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(46, 46, 46)
-                .addComponent(jButton2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGap(0, 165, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -474,23 +467,25 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
 
     private void btnEncerrarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEncerrarPedidoActionPerformed
         // TODO add your handling code here:
-        try {
-            if(tblProdSelecionado.getRowCount() != 0){
-                control.criarPedido(cli, jtaObservacoes.getText(), tblProdSelecionado);
-                limpaDadosPedido();
-                btnEncerrarPedido.setEnabled(false);
-                JOptionPane.showMessageDialog(this, "Pedido Inserido Com Suceso!");
-            }else{
-                btnEncerrarPedido.setEnabled(false);
-                JOptionPane.showMessageDialog(this, "Acrescente algum Item no Pedido.");
-            }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "ERRO ao inserir novo Pedido no  banco. " + ex.getMessage());
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "ERRO ao criar Pedido. " + ex.getMessage());
-        }
+//        try {
+//            if(tblProdSelecionado.getRowCount() != 0){
+//                control.criarPedido(cli, jtaObservacoes.getText(), tblProdSelecionado);
+//                limpaDadosPedido();
+//                btnEncerrarPedido.setEnabled(false);
+//                JOptionPane.showMessageDialog(this, "Pedido Inserido Com Suceso!");
+//            }else{
+//                btnEncerrarPedido.setEnabled(false);
+//                JOptionPane.showMessageDialog(this, "Acrescente algum Item no Pedido.");
+//            }
+//        } catch (SQLException ex) {
+//            JOptionPane.showMessageDialog(this, "ERRO ao inserir novo Pedido no  banco. " + ex.getMessage());
+//        } catch (Exception ex) {
+//            JOptionPane.showMessageDialog(this, "ERRO ao criar Pedido. " + ex.getMessage());
+//        }
        
-        
+        JanelaPedidoPos jpp= new JanelaPedidoPos(null, true);
+        jpp.setLocationRelativeTo(null); // Faz com que a janela apareça no meio da tela
+        jpp.setVisible(true);
     }//GEN-LAST:event_btnEncerrarPedidoActionPerformed
 
     private void mnuExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuExcluirActionPerformed
@@ -508,24 +503,8 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnEncerrarPedido2ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        try {    
-           URL arquivo = getClass().getResource("../relatorios/relClienteLista.jasper");  
-           
-           // PASSO 2 - Criar parâmetros de Pesquisa - SEMPRE
-            Map parametros = new HashMap();  
-           
-            
-         }catch (Exception ex) {    
-            JOptionPane.showMessageDialog(null, ex);   
-        }
-    }//GEN-LAST:event_jButton2ActionPerformed
-
     public void limpaDadosPedido(){
-        jtfNomeCliente.setText(" ");
-        
-        
+        jtfNomeCliente.setText(" ");        
         jtaObservacoes.setText(" ");
         jtaObservacoes.setEnabled(false);
         
@@ -591,7 +570,6 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
     private javax.swing.JButton btnSelecionar;
     private javax.swing.JComboBox cmbTipo;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
