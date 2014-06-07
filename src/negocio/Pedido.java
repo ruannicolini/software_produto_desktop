@@ -78,7 +78,13 @@ public class Pedido  implements java.io.Serializable {
     public void setPedidoitems(Set pedidoitems) {
         this.pedidoitems = pedidoitems;
     }
-
+    @Override
+    public String toString() {
+        return Integer.toString(idPedido);
+    }
+    public Object[] toArray() {
+        return new Object[]{this, cliente.getNome(), data, valorTotal};
+    }
 
 
 

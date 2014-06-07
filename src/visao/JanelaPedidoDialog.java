@@ -19,6 +19,7 @@ import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import negocio.Cliente;
+import negocio.Pedido;
 import negocio.Pedidoitem;
 import negocio.Produto;
 import net.sf.jasperreports.engine.JRException;
@@ -35,7 +36,7 @@ import org.hibernate.classic.Session;
  * @author Ruan
  */
 public class JanelaPedidoDialog extends javax.swing.JDialog {
-
+    Pedido ped;
     Controlador control;
     Produto prodSelecionado;
     Cliente cli = null;
@@ -106,6 +107,7 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
         btnEncerrarPedido = new javax.swing.JButton();
         btnEncerrarPedido2 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
+        jButton2 = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -323,15 +325,26 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
 
         jPanel3.setBackground(new java.awt.Color(240, 240, 241));
 
+        jButton2.setText("Pesquisar Pedido");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(jButton2)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 165, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(jButton2)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -483,7 +496,7 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "ERRO ao criar Pedido. " + ex.getMessage());
         }
        
-        JanelaPedidoPos jpp= new JanelaPedidoPos(null, true);
+        JanelaPedidoPosDialog jpp= new JanelaPedidoPosDialog(null, true);
         jpp.setLocationRelativeTo(null); // Faz com que a janela apareça no meio da tela
         jpp.setVisible(true);
     }//GEN-LAST:event_btnEncerrarPedidoActionPerformed
@@ -502,6 +515,40 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
             limpaDadosPedido();
         }
     }//GEN-LAST:event_btnEncerrarPedido2ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        try{
+            JanelaPedidoPesqDialog janelaPedidoPesq;
+            janelaPedidoPesq = new JanelaPedidoPesqDialog(null, true);
+            janelaPedidoPesq.setVisible(true);
+            
+            ped = janelaPedidoPesq.getPedido();
+            
+            if ( ped != null ){
+//                jtfCod.setText(String.valueOf(prod.getIdProduto()));
+//                jtfDescricao.setText(prod.getDescricao());
+//                jtfPreco.setText(String.valueOf(prod.getPreco()));
+//
+//                //cmbLinha.setSelectedItem(prod.getLinha());                     
+//                cmbLinha.getModel().setSelectedItem(prod.getLinha());
+//                //cmbTipo.setSelectedItem(prod.getTipoproduto());                      
+//                cmbTipo.getModel().setSelectedItem(prod.getTipoproduto());
+//                if(prod.isStatusVenda() == true){
+//                    rbAtivo.setSelected(true);
+//                }else{
+//                    if(prod.isStatusVenda() == false){
+//                        rbInativo.setSelected(true);
+//                    }
+//                }
+//                habilitarModo(2);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "ERRO ao PESQUISAR. " + ex.getMessage() );
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "ERRO ao PESQUISAR. " + ex.getMessage() );
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     public void limpaDadosPedido(){
         jtfNomeCliente.setText(" ");        
@@ -570,6 +617,7 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
     private javax.swing.JButton btnSelecionar;
     private javax.swing.JComboBox cmbTipo;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

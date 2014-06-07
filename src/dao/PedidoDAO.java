@@ -7,8 +7,10 @@
 package dao;
 
 import java.sql.SQLException;
+import java.util.List;
 import negocio.Pedido;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 /**
@@ -59,6 +61,43 @@ public class PedidoDAO {
                 sessao.close();
             }            
         }
+    }
+
+    public List pesquisarPedidoCliente(String pesqNomeCliente) {
+        Session sessao = null;
+        List lista = null;
+        try {
+            sessao = dao.HibernateUtil.getSessionFactory().openSession();
+            sessao.beginTransaction();
+            
+            // Usando HQL           
+            Query consulta = sessao.createQuery("from Pedido ped JOIN FETCH ped.cliente JOIN FETCH ped.pedidoitems where ped.cliente.nome LIKE '%" +
+                    pesqNomeCliente + "%' AND pedidoitem.pedido.idPedido = ped.idPedido");
+            lista = consulta.list();
+            
+            sessao.getTransaction().commit(); 
+                       
+        } catch (HibernateException he) {
+            sessao.getTransaction().rollback();
+        }
+        finally {
+            if ( sessao != null ) {
+               sessao.close();
+            } 
+            return lista;
+        }
+    }
+
+    public List pesquisarPedidoMes(String pesq) {
+        return null;
+    }
+
+    public List pesquisarPedidoHoje(String pesq) {
+        return null;
+    }
+
+    public void excluir(Pedido ped) {
+
     }
     
 }

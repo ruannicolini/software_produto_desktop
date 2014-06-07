@@ -332,6 +332,38 @@ public class Controlador {
         
         limpaDadosPedido();
     }
+    
+    public void pesquisarPedidos( JTable tabela, int tipo, String pesq ) throws Exception, SQLException {
+        List lista = null;
+      
+        switch (tipo) {
+            case 0: // Pesquisar NOME
+                lista = pedidoDAO.pesquisarPedidoCliente(pesq);
+                break;
+            case 1: // Pesquisar Linha
+                lista = pedidoDAO.pesquisarPedidoMes(pesq);
+                break;
+            case 2: // Pesquisar Tipo
+                lista = pedidoDAO.pesquisarPedidoHoje(pesq);
+                break;      
+        }
+        // PERCORRE A LISTA E COLOCA NA TABELA
+        Pedido ped;
+        ((DefaultTableModel) tabela.getModel()).setRowCount(0);
+        Iterator<Pedido> ite = lista.iterator();
+        while ( ite.hasNext() ) {
+                ped = ite.next();
+                //if(ped.isStatusVenda() == true){
+                    ((DefaultTableModel) tabela.getModel()).addRow( ped.toArray() );
+                //}
+        }
+        
+    }
+    
+    public void excluirPedido(Pedido ped) throws SQLException, Exception{
+        pedidoDAO.excluir(ped);        
+    }
+    
     public void limpaDadosPedido(){
         cli = null;
         prod = null;
