@@ -6,6 +6,7 @@
 
 package dao;
 
+
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -21,7 +22,6 @@ import org.hibernate.Session;
  * @author Ruan
  */
 public class PedidoDAO {
-
     public PedidoDAO()throws Exception, SQLException {
     }
     
@@ -75,7 +75,7 @@ public class PedidoDAO {
             
             // Usando HQL           
             Query consulta = sessao.createQuery("From Pedido p JOIN FETCH p.cliente where p.cliente.nome LIKE '" +
-                    pesqNomeCliente + "%' ");
+                    pesqNomeCliente + "%' ORDER BY data DESC");
             lista = consulta.list();
             
             sessao.getTransaction().commit(); 
@@ -92,11 +92,10 @@ public class PedidoDAO {
     }
 
     public List pesquisarPedidoMes(String pesq) {
-        int numMes = Mes(pesq);
-        
+        int numMes;
+        numMes = Mes(pesq);
         DateFormat dateFormat = new SimpleDateFormat("MM"); 
-         
-        //String dataString = dateFormat.format(date);
+        
         
         Session sessao = null;
         List lista = null;
@@ -105,7 +104,7 @@ public class PedidoDAO {
             sessao.beginTransaction();
             
             // Usando HQL           
-            Query consulta = sessao.createQuery("From Pedido p JOIN FETCH p.cliente where (month(p.data)) = "+numMes);
+            Query consulta = sessao.createQuery("From Pedido p JOIN FETCH p.cliente where (month(p.data)) = "+numMes+" ORDER BY data DESC");
             lista = consulta.list();
             
             sessao.getTransaction().commit(); 
@@ -151,21 +150,54 @@ public class PedidoDAO {
     }
 
     public int Mes(String mes){
-        if((mes.equals("Janeiro"))||(mes.equals("janeiro"))||(mes.equals("JANEIRO"))){
+        if("janeiro".contains(mes.toLowerCase())) {
             return 1;
         }else{
-            if((mes.equals("Fevereiro"))||(mes.equals("fevereiro"))||(mes.equals("FEVEREIRO"))){
+            if("fevereiro".contains(mes.toLowerCase())) {
                 return 2;
             }else{
-                if((mes.equals("Março"))||(mes.equals("Marco"))||(mes.equals("Marco"))||(mes.equals("Março"))){
+                if("marco".contains(mes.toLowerCase()) || "março".contains(mes.toLowerCase())) {
                     return 3;
+                }else{
+                    if("abril".contains(mes.toLowerCase())) {
+                        return 4;
+                    }else{
+                        if("maio".contains(mes.toLowerCase())) {
+                            return 5;
+                        }else{
+                            if("junho".contains(mes.toLowerCase())) {
+                                return 6;
+                            }else{
+                                if("julho".contains(mes.toLowerCase())) {
+                                    return 7;
+                                }else{
+                                    if("agosto".contains(mes.toLowerCase())) {
+                                        return 8;
+                                    }else{
+                                        if("setembro".contains(mes.toLowerCase())) {
+                                            return 9;
+                                        }else{
+                                            if("outubro".contains(mes.toLowerCase())) {
+                                                return 10;
+                                            }else{
+                                                if("novembro".contains(mes.toLowerCase())) {
+                                                     return 11;
+                                                }else{
+                                                    if("dezembro".contains(mes.toLowerCase())) {
+                                                        return 12;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
-        if((mes.equals("Junho"))||(mes.equals("junho"))||(mes.equals("JUNHO"))){
-            return 6;
-        }
-        return 0;
+        return 0; //se o mês não for encontrado, retorna 0
     }
     
     public void excluir(Pedido ped) {
