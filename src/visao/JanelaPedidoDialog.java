@@ -306,7 +306,6 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
         });
 
         btnAlterar.setText("Alterar");
-        btnAlterar.setEnabled(false);
         btnAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAlterarActionPerformed(evt);
@@ -402,6 +401,7 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         // TODO add your handling code here:
         btnSelecionar.setMnemonic('P');
+        btnAlterar.setVisible(false);
         
         //Oculta a Coluna Numero 5 (STATUS) // OBS: Essa coluna é para diferencias os produtos já inseridos dos novos produtos durante uma alteração de Pedido.
         tblProdSelecionado.getColumnModel().getColumn( 5 ).setMaxWidth( 0 );  
@@ -453,7 +453,6 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
                     if( idProd == ((Produto)tblProdSelecionado.getValueAt(i, 0)).getIdProduto()){
                         eIgual = 1;
                     }
-
                 }
                 if(eIgual == 0){ // SE eIgual == 0, o produto não estava na tabela, então vai ser inserido.
                     if(qtn != 0){
@@ -479,10 +478,9 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
                     
                     // O For pecorre toda Jtable tblProdSelecionado procurando se o produto a ser inserido já esta na tabela. 
                     for (int i = 0; i < tblProdSelecionado.getRowCount(); i++) {
-                        if( idProd == ((Produto)tblProdSelecionado.getValueAt(i, 0)).getIdProduto()){
+                        if( idProd == ((Pedidoitem)tblProdSelecionado.getValueAt(i, 0)).getProduto().getIdProduto()){
                             eIgual = 1;
                         }
-
                     }
                     if(eIgual == 0){ // SE eIgual == 0, o produto não estava na tabela, então vai ser inserido.
                         if(qtn != 0){
@@ -582,6 +580,7 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
             if ( ped != null ){
                   limpaDadosPedido();
                   btnSelecionar.setMnemonic('I'); // Dependendo do Mnemonic do botaão selecionar, o evento dele muda.
+                  btnAlterar.setVisible(true);
                   jtaObservacoes.setEnabled(true);
                   jtfPesq.setEnabled(true);
                 
