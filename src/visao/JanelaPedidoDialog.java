@@ -106,6 +106,7 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
         tblProdSelecionado = new javax.swing.JTable();
         btnEncerrarPedido = new javax.swing.JButton();
         btnEncerrarPedido2 = new javax.swing.JButton();
+        btnAlterar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
 
@@ -224,6 +225,7 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
         tblProdutos.setSelectionBackground(new java.awt.Color(0, 153, 0));
         jScrollPane2.setViewportView(tblProdutos);
 
+        btnSelecionar.setMnemonic('P');
         btnSelecionar.setText("Selecionar");
         btnSelecionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -275,11 +277,11 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Produto", "Linha", "Tipo", "Preço", "Quantidade"
+                "Produto", "Linha", "Tipo", "Preço", "Quantidade", "Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, true, true
+                false, false, false, true, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -303,15 +305,25 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
             }
         });
 
+        btnAlterar.setText("Alterar");
+        btnAlterar.setEnabled(false);
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 804, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(btnEncerrarPedido2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnEncerrarPedido)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnEncerrarPedido))
+                .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnEncerrarPedido2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -320,7 +332,8 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEncerrarPedido)
-                    .addComponent(btnEncerrarPedido2)))
+                    .addComponent(btnEncerrarPedido2)
+                    .addComponent(btnAlterar)))
         );
 
         jPanel3.setBackground(new java.awt.Color(240, 240, 241));
@@ -388,7 +401,13 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         // TODO add your handling code here:
+        btnSelecionar.setMnemonic('P');
         
+        //Oculta a Coluna Numero 5 (STATUS) // OBS: Essa coluna é para diferencias os produtos já inseridos dos novos produtos durante uma alteração de Pedido.
+        tblProdSelecionado.getColumnModel().getColumn( 5 ).setMaxWidth( 0 );  
+        tblProdSelecionado.getColumnModel().getColumn( 5 ).setMinWidth( 0 );  
+        tblProdSelecionado.getTableHeader().getColumnModel().getColumn( 5 ).setMaxWidth( 0 );  
+        tblProdSelecionado.getTableHeader().getColumnModel().getColumn( 5 ).setMinWidth( 0 );
 
     }//GEN-LAST:event_formComponentShown
 
@@ -416,40 +435,74 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
 
     private void btnSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionarActionPerformed
         // TODO add your handling code here:
-        String descricaoProdSelec;
+        int idProd;
         int eIgual = 0;
         int linh = tblProdutos.getSelectedRow();
-        descricaoProdSelec = (String) ((Produto)tblProdutos.getValueAt(linh, 0)).getDescricao();
+        idProd =  ((Produto)tblProdutos.getValueAt(linh, 0)).getIdProduto();
         int qtn; 
         qtn = Integer.parseInt(tblProdutos.getValueAt(linh, 4).toString());
         
         if (linh >= 0) {
             btnEncerrarPedido.setEnabled(true);
+            if(btnSelecionar.getMnemonic() == 'P'){ // Mnemonic= P, quer dizer que esta sendo criado um novo Pedido,
+                //Portando, a tabela é comparada pelo Objeto Produto na coluna 0.
             
-            // O For pecorre toda Jtable tblProdSelecionado procurando se o produto a ser inserido já esta na tabela. 
-            for (int i = 0; i < tblProdSelecionado.getRowCount(); i++) {
-                if( descricaoProdSelec.equals((String) ((Produto)tblProdSelecionado.getValueAt(i, 0)).getDescricao())){
-                    eIgual = 1;
-                }   
-            }
-            if(eIgual == 0){ // SE eIgual == 0, o produto não estava na tabela, então vai ser inserido.
-                if(qtn != 0){
-                    Produto p = (Produto) tblProdutos.getValueAt(linh, 0);
-                    mapProdutos.put(p.getIdProduto(), tblProdutos.getValueAt(linh, 4).toString());
-                    ((DefaultTableModel) tblProdSelecionado.getModel()).addRow(p.toArray());
-                    int lastLine = tblProdSelecionado.getRowCount() - 1;
-                    tblProdSelecionado.setValueAt(mapProdutos.get(p.getIdProduto()), lastLine, 4);
-                }else{
-                    JOptionPane.showMessageDialog(this, "Po mano, quantidade zero. Ta de Brincation with me?");
-                    tblProdutos.setValueAt(null, linh, 4);
+
+                // O For pecorre toda Jtable tblProdSelecionado procurando se o produto a ser inserido já esta na tabela. 
+                for (int i = 0; i < tblProdSelecionado.getRowCount(); i++) {
+                    if( idProd == ((Produto)tblProdSelecionado.getValueAt(i, 0)).getIdProduto()){
+                        eIgual = 1;
+                    }
+
                 }
-            } else { // se eIgual == 1
-                JOptionPane.showMessageDialog(this, "Opa! Este produto já esta Inserido No Pedido.");
+                if(eIgual == 0){ // SE eIgual == 0, o produto não estava na tabela, então vai ser inserido.
+                    if(qtn != 0){
+                        Produto p = (Produto) tblProdutos.getValueAt(linh, 0);
+                        mapProdutos.put(p.getIdProduto(), tblProdutos.getValueAt(linh, 4).toString());
+                        ((DefaultTableModel) tblProdSelecionado.getModel()).addRow(p.toArray());
+                        int lastLine = tblProdSelecionado.getRowCount() - 1;
+                        tblProdSelecionado.setValueAt(mapProdutos.get(p.getIdProduto()), lastLine, 4);
+                        
+                        tblProdSelecionado.setValueAt("novoItem", lastLine, 5); 
+                        
+                    }else{
+                        JOptionPane.showMessageDialog(this, "Po mano, quantidade zero. Ta de Brincation with me?");
+                        tblProdutos.setValueAt(null, linh, 4);
+                    }
+                } else { // se eIgual == 1
+                    JOptionPane.showMessageDialog(this, "Opa! Este produto já esta Inserido No Pedido.");
+                }
+            }else{
+                if(btnSelecionar.getMnemonic() == 'I'){ // Mnemonic= I, quer dizer que esta sendo consultado um Pedido
+                                                        //Portando, a tabela é comparada pelo Objeto PedidoItem na coluna 0.
+                    
+                    
+                    // O For pecorre toda Jtable tblProdSelecionado procurando se o produto a ser inserido já esta na tabela. 
+                    for (int i = 0; i < tblProdSelecionado.getRowCount(); i++) {
+                        if( idProd == ((Produto)tblProdSelecionado.getValueAt(i, 0)).getIdProduto()){
+                            eIgual = 1;
+                        }
+
+                    }
+                    if(eIgual == 0){ // SE eIgual == 0, o produto não estava na tabela, então vai ser inserido.
+                        if(qtn != 0){
+                            Produto p = (Produto) tblProdutos.getValueAt(linh, 0);
+                            mapProdutos.put(p.getIdProduto(), tblProdutos.getValueAt(linh, 4).toString());
+                            ((DefaultTableModel) tblProdSelecionado.getModel()).addRow(p.toArray());
+                            int lastLine = tblProdSelecionado.getRowCount() - 1;
+                            tblProdSelecionado.setValueAt(mapProdutos.get(p.getIdProduto()), lastLine, 4);
+                        }else{
+                            JOptionPane.showMessageDialog(this, "Po mano, quantidade zero. Ta de Brincation with me?");
+                            tblProdutos.setValueAt(null, linh, 4);
+                        }
+                    } else { // se eIgual == 1
+                        JOptionPane.showMessageDialog(this, "Opa! Este produto já esta Inserido No Pedido.");
+                    }
+                }
             }
-            
         }else { 
                 JOptionPane.showMessageDialog(this, "Selecione um Produto.");
-            }
+        }
     }//GEN-LAST:event_btnSelecionarActionPerformed
 
     private void cmbTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTipoActionPerformed
@@ -519,6 +572,7 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         try{
+           
             JanelaPedidoPesqDialog janelaPedidoPesq;
             janelaPedidoPesq = new JanelaPedidoPesqDialog(null, true);
             janelaPedidoPesq.setVisible(true);
@@ -526,6 +580,8 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
             ped = janelaPedidoPesq.getPedido();
             
             if ( ped != null ){
+                  limpaDadosPedido();
+                  btnSelecionar.setMnemonic('I'); // Dependendo do Mnemonic do botaão selecionar, o evento dele muda.
                   jtaObservacoes.setEnabled(true);
                   jtfPesq.setEnabled(true);
                 
@@ -535,6 +591,8 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
                   //Busca os itens do Pedido
                   control.pesquisarPedidoItem(tblProdSelecionado, ped.getIdPedido());
 //                habilitarModo(2);
+            }else{
+                btnSelecionar.setMnemonic('P');
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "ERRO ao PESQUISAR. " + ex.getMessage() );
@@ -543,6 +601,10 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAlterarActionPerformed
+
     public void limpaDadosPedido(){
         jtfNomeCliente.setText(" ");        
         jtaObservacoes.setText(" ");
@@ -550,6 +612,8 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
         
         jtfPesq.setText(" ");
         jtfPesq.setEnabled(false);
+        
+        btnSelecionar.setMnemonic('P');
         
         //Limpa Tabela Itens de produtos
         DefaultTableModel tableModel = (DefaultTableModel) tblProdutos.getModel();
@@ -604,6 +668,7 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PanelItensVenda;
+    private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnEncerrarPedido;
     private javax.swing.JButton btnEncerrarPedido2;
     private javax.swing.JButton btnPesquisar;
