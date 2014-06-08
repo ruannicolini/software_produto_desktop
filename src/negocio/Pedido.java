@@ -79,6 +79,7 @@ public class Pedido  implements java.io.Serializable {
     public void setPedidoitems(Set pedidoitems) {
         this.pedidoitems = pedidoitems;
     }
+    //
     @Override
     public String toString() {
         return Integer.toString(idPedido);
@@ -88,11 +89,13 @@ public class Pedido  implements java.io.Serializable {
     }
 
     public String conveteData(Date data){
+        //Cria um formato novo para a data
         SimpleDateFormat dt = new SimpleDateFormat("dd/MM/yyyy");
-
+        //Aplica o novo Formato, transformando em String
         String dataFormatada = dt.format(data);
         return dataFormatada;
     }
+    //
 
 }
 

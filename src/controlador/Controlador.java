@@ -345,7 +345,7 @@ public class Controlador {
                 lista = pedidoDAO.pesquisarPedidoMes(pesq);
                 break;
             case 2: // Pesquisar Tipo
-                lista = pedidoDAO.pesquisarPedidoHoje(pesq);
+                lista = pedidoDAO.pesquisarPedidoHoje();
                 break;      
         }
         // PERCORRE A LISTA E COLOCA NA TABELA
