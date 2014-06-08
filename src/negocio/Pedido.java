@@ -2,6 +2,7 @@ package negocio;
 // Generated 04/06/2014 19:48:26 by Hibernate Tools 3.6.0
 
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -83,10 +84,15 @@ public class Pedido  implements java.io.Serializable {
         return Integer.toString(idPedido);
     }
     public Object[] toArray() {
-        return new Object[]{this, cliente.getNome(), data, valorTotal};
+        return new Object[]{this, cliente.getNome(), conveteData(data), valorTotal};
     }
 
+    public String conveteData(Date data){
+        SimpleDateFormat dt = new SimpleDateFormat("dd/MM/yyyy");
 
+        String dataFormatada = dt.format(data);
+        return dataFormatada;
+    }
 
 }
 

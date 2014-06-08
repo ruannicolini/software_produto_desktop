@@ -9,6 +9,7 @@ package controlador;
 import dao.*;
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -352,10 +353,10 @@ public class Controlador {
         ((DefaultTableModel) tabela.getModel()).setRowCount(0);
         Iterator<Pedido> ite = lista.iterator();
         while ( ite.hasNext() ) {
-                ped = ite.next();
-                //if(ped.isStatusVenda() == true){
-                    ((DefaultTableModel) tabela.getModel()).addRow( ped.toArray() );
-                //}
+                ped = ite.next();        
+                
+                ((DefaultTableModel) tabela.getModel()).addRow( ped.toArray() );
+                
         }
         
     }

@@ -71,8 +71,10 @@ public class PedidoDAO {
             sessao.beginTransaction();
             
             // Usando HQL           
-            Query consulta = sessao.createQuery("from Pedido ped JOIN FETCH ped.cliente JOIN FETCH ped.pedidoitems where ped.cliente.nome LIKE '%" +
-                    pesqNomeCliente + "%' AND pedidoitem.pedido.idPedido = ped.idPedido");
+//            Query consulta = sessao.createQuery("from Pedido ped JOIN FETCH ped.cliente JOIN FETCH ped.pedidoitems where ped.cliente.nome LIKE '%" +
+//                    pesqNomeCliente + "%' AND pedidoitem.pedido.idPedido = ped.idPedido");
+            Query consulta = sessao.createQuery("From Pedido p JOIN FETCH p.cliente where p.cliente.nome LIKE '" +
+                    pesqNomeCliente + "%' ");
             lista = consulta.list();
             
             sessao.getTransaction().commit(); 
