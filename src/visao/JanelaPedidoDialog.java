@@ -526,21 +526,14 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
             ped = janelaPedidoPesq.getPedido();
             
             if ( ped != null ){
-//                jtfCod.setText(String.valueOf(prod.getIdProduto()));
-//                jtfDescricao.setText(prod.getDescricao());
-//                jtfPreco.setText(String.valueOf(prod.getPreco()));
-//
-//                //cmbLinha.setSelectedItem(prod.getLinha());                     
-//                cmbLinha.getModel().setSelectedItem(prod.getLinha());
-//                //cmbTipo.setSelectedItem(prod.getTipoproduto());                      
-//                cmbTipo.getModel().setSelectedItem(prod.getTipoproduto());
-//                if(prod.isStatusVenda() == true){
-//                    rbAtivo.setSelected(true);
-//                }else{
-//                    if(prod.isStatusVenda() == false){
-//                        rbInativo.setSelected(true);
-//                    }
-//                }
+                  jtaObservacoes.setEnabled(true);
+                  jtfPesq.setEnabled(true);
+                
+                // Mostra as informações referentes ao Pedido
+                  jtfNomeCliente.setText(ped.getCliente().getNome());
+                  jtaObservacoes.setText(ped.getDescricao());
+                  //Busca os itens do Pedido
+                  control.pesquisarPedidoItem(tblProdSelecionado, ped.getIdPedido());
 //                habilitarModo(2);
             }
         } catch (SQLException ex) {

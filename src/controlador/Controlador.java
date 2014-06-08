@@ -170,15 +170,7 @@ public class Controlador {
 
         }                      
     }
-    
-//    public Pessoafisica pesquisarClienteF( Cliente cli ) throws Exception, SQLException {
-//        Pessoafisica pf =  pfDAO.pesquisar(cli.getIdCliente());
-//        return pf;
-//    }
-//    
-//    public Pessoajuridica pesquisarClienteJ( Cliente cli ) throws Exception, SQLException {
-//        return pjDAO.pesquisar(cli.getIdCliente());
-//    }
+
     
     public int alterarCliente(int id, String nome, String endereco, String numero, String bairro, String complemento,
                     String telFixo, String telCel, Cidade cidade, String cep, char tipo_cliente, String email,
@@ -324,7 +316,7 @@ public class Controlador {
                   
                   // criar registros PedidoItem
                   item = new Pedidoitem(pedido, prod, quantidade, precoUnitario, precoParcial);
-                  pedidoItemDAO.inserirItem(item);
+                  pedidoItemDAO.inserir(item);
         }
         pedido.setValorTotal(valorTotal);
         
@@ -363,6 +355,21 @@ public class Controlador {
     
     public void excluirPedido(Pedido ped) throws SQLException, Exception{
         pedidoDAO.excluir(ped);        
+    }
+    
+    public void pesquisarPedidoItem( JTable tabela, int idPedido ) throws Exception, SQLException {
+        List lista = null;
+        lista = pedidoItemDAO.pesquisar(idPedido);
+    
+        // PERCORRE A LISTA E COLOCA NA TABELA      
+        Pedidoitem pedItem;
+        // Apagar as linhas da tabela
+        ((DefaultTableModel) tabela.getModel()).setRowCount(0);
+        Iterator<Pedidoitem> ite = lista.iterator();
+        while ( ite.hasNext() ) {
+            pedItem = ite.next();
+            ((DefaultTableModel) tabela.getModel()).addRow( pedItem.toArray() );                        
+        }                      
     }
     
     public void limpaDadosPedido(){

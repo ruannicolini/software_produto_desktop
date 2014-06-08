@@ -69,7 +69,14 @@ public class Pedidoitem  implements java.io.Serializable {
     public void setPrecoParcial(Float precoParcial) {
         this.precoParcial = precoParcial;
     }
-
+    
+    @Override
+    public String toString() {
+        return produto.getDescricao();
+    }
+    public Object[] toArray() {
+        return new Object[]{this, produto.getLinha().getNome(), produto.getTipoproduto().getDescricao(), this.precoUnitario, this.quantidade};
+    }
 
 
 
