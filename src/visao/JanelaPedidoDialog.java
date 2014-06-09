@@ -531,7 +531,8 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
         // TODO add your handling code here:
         int linh = tblProdSelecionado.getSelectedRow();
         try{
-            if(((tblProdSelecionado.getValueAt(linh, 5)).toString()).equals("ItemJaInserido")){
+            String status = (((Object)tblProdSelecionado.getValueAt(linh, 5)).toString());
+            if(status.equals("ItemJaInserido")){
                 Pedidoitem pedIt = (Pedidoitem)(tblProdSelecionado.getValueAt(linh, 0)); 
                 control.excluirPedidoItem(pedIt);
             }
