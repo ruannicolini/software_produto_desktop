@@ -304,8 +304,7 @@ public class Controlador {
         for (int i = 0; i < qtnLinha; i++) {           
                   pedIt = (Pedidoitem) tabela.getValueAt(i, 0); // O primeiro registro da tabela é um objeto do tipo Pedidoitem
                   pedIt.setPedido(pedido);
-                  pedIt.getProduto().setPreco( Float.parseFloat(tabela.getValueAt(i, 3).toString())); // O usuário pode alterar o preço na tabela de produtos Selecionados, por isso não usei o pro.getPreço() direto com o preço que esta no banco de dados;
-                  pedIt.setPrecoUnitario(pedIt.getProduto().getPreco());
+                  pedIt.setPrecoUnitario((Float.parseFloat(tabela.getValueAt(i, 3).toString())));// O usuário pode alterar o preço na tabela de produtos Selecionados, por isso não usei o pro.getPreço() direto com o preço que esta no banco de dados;
                   pedIt.setQuantidade(Integer.parseInt(tabela.getValueAt(i, 4).toString()));            
                   pedIt.setPrecoParcial(pedIt.getPrecoUnitario() * pedIt.getQuantidade());
                   valorTotal += pedIt.getPrecoParcial();
@@ -313,10 +312,8 @@ public class Controlador {
                   pedidoItemDAO.inserir(pedIt);        
         }
         pedido.setValorTotal(valorTotal);
-        
         // O preço total do Pedido não é alterado  automaticamente pois ele é inserido no banco antes de ter o valor total, por isso tenho que alterar. 
-        pedidoDAO.alterar(pedido);
-        
+        pedidoDAO.alterar(pedido);  
         limpaDadosPedido();
     }
     
@@ -364,6 +361,37 @@ public class Controlador {
             int lastLine = tabela.getRowCount() - 1;
             tabela.setValueAt("ItemJaInserido", lastLine, 5);
         }                      
+    }
+    public void alterarPedido(Pedido pedido,Cliente cli, String obs, JTable tabela) throws SQLException, Exception{
+        float valorTotal = 0;
+        Pedidoitem pedIt;
+        
+        //Atribuindo novos Valores ao pedido
+        pedido.setCliente(cli);
+        pedido.setDescricao(obs);
+        
+        
+        
+        int qtnLinha = tabela.getModel().getRowCount();
+        
+        for (int i = 0; i < qtnLinha; i++) { 
+            pedIt = (Pedidoitem) tabela.getValueAt(i, 0); // O primeiro registro da tabela é um objeto do tipo Pedidoitem
+            pedIt.setPedido(pedido);
+            pedIt.setPrecoUnitario((Float.parseFloat(tabela.getValueAt(i, 3).toString())));// O usuário pode alterar o preço na tabela de produtos Selecionados, por isso não usei o pro.getPreço() direto com o preço que esta no banco de dados;
+            pedIt.setQuantidade(Integer.parseInt(tabela.getValueAt(i, 4).toString()));            
+            pedIt.setPrecoParcial(pedIt.getPrecoUnitario() * pedIt.getQuantidade());
+            valorTotal += pedIt.getPrecoParcial();
+            if(((tabela.getValueAt(i, 5)).toString()).equals("novoItem")){
+                pedidoItemDAO.inserir(pedIt);  
+            }else{
+                if(((tabela.getValueAt(i, 5)).toString()).equals("ItemJaInserido")){
+                   pedidoItemDAO.alterar(pedIt); 
+                }
+            }
+        }
+        pedido.setValorTotal(valorTotal);
+        pedidoDAO.alterar(pedido);  
+        limpaDadosPedido();
     }
     
     public void limpaDadosPedido(){

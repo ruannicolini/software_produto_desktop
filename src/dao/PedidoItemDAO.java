@@ -66,5 +66,25 @@ public class PedidoItemDAO {
             return lista;
         }
     }
-    
+
+    public void alterar ( Pedidoitem pedIt ) throws Exception, SQLException {
+ 
+        Session sessao = null;
+        try {
+            sessao = dao.HibernateUtil.getSessionFactory().openSession();
+            sessao.beginTransaction();
+
+            sessao.update(pedIt);
+            
+            sessao.getTransaction().commit();            
+        } catch (HibernateException he) {
+            sessao.getTransaction().rollback();
+        }
+        finally {
+            if ( sessao != null ) {
+                sessao.close();
+            }            
+        }
+        
+    }
 }

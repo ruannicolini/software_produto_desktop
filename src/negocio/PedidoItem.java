@@ -34,7 +34,7 @@ public class Pedidoitem  implements java.io.Serializable {
         this.quantidade = quantidade;
         this.precoUnitario = precoUnitario;
     }
-
+    
     //
     public Integer getIdPedidoItem() {
         return this.idPedidoItem;

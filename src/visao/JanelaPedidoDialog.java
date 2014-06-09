@@ -492,8 +492,8 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
 //                            tblProdSelecionado.setValueAt(mapProdutos.get(p.getIdProduto()), lastLine, 4);
                             
                               Produto p = (Produto) tblProdutos.getValueAt(linh, 0);
-                              Pedidoitem pi = new Pedidoitem(ped, p,qtn, p.getPreco());
-                              ((DefaultTableModel) tblProdSelecionado.getModel()).addRow(pi.toArray());
+                              Pedidoitem pedIt = new Pedidoitem(ped,p,qtn, p.getPreco());
+                              ((DefaultTableModel) tblProdSelecionado.getModel()).addRow(pedIt.toArray());
                               int lastLine = tblProdSelecionado.getRowCount() - 1;
                               
                               //OBS : Falta fazer com que a quantidade fique registrada nas consultas da tabela tblProdutos
@@ -595,6 +595,8 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
                   jtaObservacoes.setEnabled(true);
                   jtfPesq.setEnabled(true);
                 
+                  cli = ped.getCliente();
+                  
                 // Mostra as informações referentes ao Pedido
                   jtfNomeCliente.setText(ped.getCliente().getNome());
                   jtaObservacoes.setText(ped.getDescricao());
@@ -613,6 +615,20 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         // TODO add your handling code here:
+        try{
+            if ( ped != null ) {   
+                control.alterarPedido(ped, cli, jtaObservacoes.getText(),tblProdSelecionado);
+                JOptionPane.showMessageDialog(this, "Pedido alterado com sucesso."  );                
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "ERRO ao ALTERAR. " + ex.getMessage() );
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "ERRO ao ALTERAR. " + ex.getMessage() );
+        }
+       
+        JanelaPedidoPosDialog jpp= new JanelaPedidoPosDialog(null, true);
+        jpp.setLocationRelativeTo(null); // Faz com que a janela apareça no meio da tela
+        jpp.setVisible(true);
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     public void limpaDadosPedido(){
