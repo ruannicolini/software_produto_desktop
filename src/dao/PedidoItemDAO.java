@@ -22,7 +22,7 @@ public class PedidoItemDAO {
     public PedidoItemDAO()throws Exception, SQLException {
     }
     
-    public void inserir(Pedidoitem item){
+    public void inserir(Pedidoitem item) throws Exception, SQLException{
         Session sessao = null;
         try {
             sessao = dao.HibernateUtil.getSessionFactory().openSession();
@@ -42,7 +42,7 @@ public class PedidoItemDAO {
         
     }
     
-    public List pesquisar(int codPedido) {
+    public List pesquisar(int codPedido) throws Exception, SQLException{
         Session sessao = null;
         List lista = null;
         try {
@@ -87,4 +87,26 @@ public class PedidoItemDAO {
         }
         
     }
+    
+    public void excluir ( Pedidoitem pedIt ) throws Exception, SQLException {
+ 
+        Session sessao = null;
+        try {
+            sessao = dao.HibernateUtil.getSessionFactory().openSession();
+            sessao.beginTransaction();
+                                             
+            sessao.delete(pedIt);
+            
+            sessao.getTransaction().commit();            
+        } catch (HibernateException he) {
+            sessao.getTransaction().rollback();
+        }
+        finally {
+            if ( sessao != null ) {
+                sessao.close();
+            }            
+        }
+        
+    }
+    
 }

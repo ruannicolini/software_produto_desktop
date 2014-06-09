@@ -346,6 +346,10 @@ public class Controlador {
         pedidoDAO.excluir(ped);        
     }
     
+    public void excluirPedidoItem(Pedidoitem pedIt) throws SQLException, Exception{
+        pedidoItemDAO.excluir(pedIt);
+    }
+    
     public void pesquisarPedidoItem( JTable tabela, int idPedido ) throws Exception, SQLException {
         List lista = null;
         lista = pedidoItemDAO.pesquisar(idPedido);
@@ -369,9 +373,7 @@ public class Controlador {
         //Atribuindo novos Valores ao pedido
         pedido.setCliente(cli);
         pedido.setDescricao(obs);
-        
-        
-        
+
         int qtnLinha = tabela.getModel().getRowCount();
         
         for (int i = 0; i < qtnLinha; i++) { 

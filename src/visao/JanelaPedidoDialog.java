@@ -530,7 +530,18 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
     private void mnuExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuExcluirActionPerformed
         // TODO add your handling code here:
         int linh = tblProdSelecionado.getSelectedRow();
-        ((DefaultTableModel) tblProdSelecionado.getModel()).removeRow(linh);
+        try{
+            if(((tblProdSelecionado.getValueAt(linh, 5)).toString()).equals("ItemJaInserido")){
+                Pedidoitem pedIt = (Pedidoitem)(tblProdSelecionado.getValueAt(linh, 0)); 
+                control.excluirPedidoItem(pedIt);
+            }
+            ((DefaultTableModel) tblProdSelecionado.getModel()).removeRow(linh);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "ERRO ao EXCLUIR no BANCO. " + ex.getMessage() );
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "ERRO ao EXCLUIR. " + ex.getMessage() );
+        }
+
     }//GEN-LAST:event_mnuExcluirActionPerformed
 
     private void btnEncerrarPedido2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEncerrarPedido2ActionPerformed

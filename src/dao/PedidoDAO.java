@@ -26,7 +26,7 @@ public class PedidoDAO {
     }
     
     
-    public int inserir(Pedido pedido){
+    public int inserir(Pedido pedido) throws Exception, SQLException{
         Session sessao = null;
         try {
             sessao = dao.HibernateUtil.getSessionFactory().openSession();
@@ -66,7 +66,7 @@ public class PedidoDAO {
         }
     }
 
-    public List pesquisarPedidoCliente(String pesqNomeCliente) {
+    public List pesquisarPedidoCliente(String pesqNomeCliente)  throws Exception, SQLException {
         Session sessao = null;
         List lista = null;
         try {
@@ -91,7 +91,7 @@ public class PedidoDAO {
         }
     }
 
-    public List pesquisarPedidoMes(String pesq) {
+    public List pesquisarPedidoMes(String pesq) throws Exception, SQLException{
         int numMes;
         numMes = Mes(pesq);
         DateFormat dateFormat = new SimpleDateFormat("MM"); 
@@ -120,7 +120,7 @@ public class PedidoDAO {
         }
     }
 
-    public List pesquisarPedidoHoje() {
+    public List pesquisarPedidoHoje() throws Exception, SQLException {
         Session sessao = null;
         List lista = null;
         DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd"); 
@@ -200,7 +200,7 @@ public class PedidoDAO {
         return 0; //se o mês não for encontrado, retorna 0
     }
     
-    public void excluir(Pedido ped) {
+    public void excluir(Pedido ped)  throws Exception, SQLException{
 
     }
     
