@@ -444,35 +444,35 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
         
         if (linh >= 0) {
             btnEncerrarPedido.setEnabled(true);
-            if(btnSelecionar.getMnemonic() == 'N'){ // Mnemonic= N, quer dizer que esta sendo criado um novo Pedido,
-                //Portando, a tabela é comparada pelo Objeto Produto na coluna 0.
-            
-
-                // O For pecorre toda Jtable tblProdSelecionado procurando se o produto a ser inserido já esta na tabela. 
-                for (int i = 0; i < tblProdSelecionado.getRowCount(); i++) {
-                    if( idProd == ((Produto)tblProdSelecionado.getValueAt(i, 0)).getIdProduto()){
-                        eIgual = 1;
-                    }
-                }
-                if(eIgual == 0){ // SE eIgual == 0, o produto não estava na tabela, então vai ser inserido.
-                    if(qtn != 0){
-                        Produto p = (Produto) tblProdutos.getValueAt(linh, 0);
-                        mapProdutos.put(p.getIdProduto(), tblProdutos.getValueAt(linh, 4).toString());
-                        ((DefaultTableModel) tblProdSelecionado.getModel()).addRow(p.toArray());
-                        int lastLine = tblProdSelecionado.getRowCount() - 1;
-                        tblProdSelecionado.setValueAt(mapProdutos.get(p.getIdProduto()), lastLine, 4);
-                        
-                        tblProdSelecionado.setValueAt("novoItem", lastLine, 5); 
-                        
-                    }else{
-                        JOptionPane.showMessageDialog(this, "Po mano, quantidade zero. Ta de Brincation with me?");
-                        tblProdutos.setValueAt(null, linh, 4);
-                    }
-                } else { // se eIgual == 1
-                    JOptionPane.showMessageDialog(this, "Opa! Este produto já esta Inserido No Pedido.");
-                }
-            }else{
-                if(btnSelecionar.getMnemonic() == 'P'){ // Mnemonic= P, quer dizer que esta sendo consultado um Pedido
+//            if(btnSelecionar.getMnemonic() == 'N'){ // Mnemonic= N, quer dizer que esta sendo criado um novo Pedido,
+//                //Portando, a tabela é comparada pelo Objeto Produto na coluna 0.
+//            
+//
+//                // O For pecorre toda Jtable tblProdSelecionado procurando se o produto a ser inserido já esta na tabela. 
+//                for (int i = 0; i < tblProdSelecionado.getRowCount(); i++) {
+//                    if( idProd == ((Produto)tblProdSelecionado.getValueAt(i, 0)).getIdProduto()){
+//                        eIgual = 1;
+//                    }
+//                }
+//                if(eIgual == 0){ // SE eIgual == 0, o produto não estava na tabela, então vai ser inserido.
+//                    if(qtn != 0){
+//                        Produto p = (Produto) tblProdutos.getValueAt(linh, 0);
+//                        mapProdutos.put(p.getIdProduto(), tblProdutos.getValueAt(linh, 4).toString());
+//                        ((DefaultTableModel) tblProdSelecionado.getModel()).addRow(p.toArray());
+//                        int lastLine = tblProdSelecionado.getRowCount() - 1;
+//                        tblProdSelecionado.setValueAt(mapProdutos.get(p.getIdProduto()), lastLine, 4);
+//                        
+//                        tblProdSelecionado.setValueAt("novoItem", lastLine, 5); 
+//                        
+//                    }else{
+//                        JOptionPane.showMessageDialog(this, "Po mano, quantidade zero. Ta de Brincation with me?");
+//                        tblProdutos.setValueAt(null, linh, 4);
+//                    }
+//                } else { // se eIgual == 1
+//                    JOptionPane.showMessageDialog(this, "Opa! Este produto já esta Inserido No Pedido.");
+//                }
+//            }else{
+//                if(btnSelecionar.getMnemonic() == 'P'){ // Mnemonic= P, quer dizer que esta sendo consultado um Pedido
                                                         //Portando, a tabela é comparada pelo Objeto PedidoItem na coluna 0.
                     
                     
@@ -496,6 +496,8 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
                               ((DefaultTableModel) tblProdSelecionado.getModel()).addRow(pi.toArray());
                               int lastLine = tblProdSelecionado.getRowCount() - 1;
                               
+                              //OBS : Falta fazer com que a quantidade fique registrada nas consultas da tabela tblProdutos
+                              
                               tblProdSelecionado.setValueAt("novoItem", lastLine, 5);
                               
                         }else{
@@ -505,8 +507,8 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
                     } else { // se eIgual == 1
                         JOptionPane.showMessageDialog(this, "Opa! Este produto já esta Inserido No Pedido.");
                     }
-                }
-            }
+//                }
+//            }
         }else { 
                 JOptionPane.showMessageDialog(this, "Selecione um Produto.");
         }

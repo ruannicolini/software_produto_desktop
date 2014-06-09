@@ -50,6 +50,7 @@ public class Controlador {
         tipoProdutoDAO = new TipoProdutoDAO();
         pedidoDAO = new PedidoDAO();
         pedidoItemDAO = new PedidoItemDAO();
+        //pedIt = new Pedidoitem();
     }
     
   
@@ -124,11 +125,8 @@ public class Controlador {
         Iterator<Cidade> ite = lista.iterator();
         while ( ite.hasNext() ) {
             cid = ite.next();
-            
             ((DefaultTableModel) tabela.getModel()).addRow( cid.toArray() );                        
-
-        } 
-                               
+        }                          
     }
     
     public void excluirCidade(Cidade cid) throws SQLException, Exception{
@@ -293,34 +291,30 @@ public class Controlador {
     }
     public void criarPedido(Cliente cli, String obs, JTable tabela) throws SQLException, Exception {
         
-        Pedidoitem item;
-        float precoUnitario = 0; // valor do campo Preço da tabela
-        float precoParcial = 0; // quantidade * preçoUnitario
         float valorTotal = 0;// Soma de preçoParcial, ou seja o valor final do pedido.
-        int quantidade = 0, id;
-        
+        int id;
+        Pedidoitem pedIt;
         Pedido pedido = new Pedido(cli, obs);
         
         id = pedidoDAO.inserir(pedido);
         pedido.setIdPedido(id);
         
         int qtnLinha = tabela.getModel().getRowCount();
-        for (int i = 0; i < qtnLinha; i++) {
-                  prod = (Produto) tabela.getValueAt(i, 0); // O primeiro registro da tabela é um objeto do tipo Produto
-                  prod.setPreco( Float.parseFloat(tabela.getValueAt(i, 3).toString())); // O usuário pode alterar o preço na tabela de produtos Selecionados, por isso não usei o pro.getPreço() direto com o preço que esta no banco de dados;
-                  quantidade = Integer.parseInt(tabela.getValueAt(i, 4).toString());
-                  precoUnitario = prod.getPreco();
-                                   
-                  precoParcial = precoUnitario * quantidade;
-                  valorTotal += precoParcial;
+        
+        for (int i = 0; i < qtnLinha; i++) {           
+                  pedIt = (Pedidoitem) tabela.getValueAt(i, 0); // O primeiro registro da tabela é um objeto do tipo Pedidoitem
+                  pedIt.setPedido(pedido);
+                  pedIt.getProduto().setPreco( Float.parseFloat(tabela.getValueAt(i, 3).toString())); // O usuário pode alterar o preço na tabela de produtos Selecionados, por isso não usei o pro.getPreço() direto com o preço que esta no banco de dados;
+                  pedIt.setPrecoUnitario(pedIt.getProduto().getPreco());
+                  pedIt.setQuantidade(Integer.parseInt(tabela.getValueAt(i, 4).toString()));            
+                  pedIt.setPrecoParcial(pedIt.getPrecoUnitario() * pedIt.getQuantidade());
+                  valorTotal += pedIt.getPrecoParcial();
                   
-                  // criar registros PedidoItem
-                  item = new Pedidoitem(pedido, prod, quantidade, precoUnitario, precoParcial);
-                  pedidoItemDAO.inserir(item);
+                  pedidoItemDAO.inserir(pedIt);        
         }
         pedido.setValorTotal(valorTotal);
         
-        // O preço total do Pedido não é alterado pois ele é inserido no banco antes de ter o valor total. 
+        // O preço total do Pedido não é alterado  automaticamente pois ele é inserido no banco antes de ter o valor total, por isso tenho que alterar. 
         pedidoDAO.alterar(pedido);
         
         limpaDadosPedido();
@@ -346,9 +340,7 @@ public class Controlador {
         Iterator<Pedido> ite = lista.iterator();
         while ( ite.hasNext() ) {
                 ped = ite.next();        
-                
                 ((DefaultTableModel) tabela.getModel()).addRow( ped.toArray() );
-                
         }
         
     }
@@ -368,7 +360,9 @@ public class Controlador {
         Iterator<Pedidoitem> ite = lista.iterator();
         while ( ite.hasNext() ) {
             pedItem = ite.next();
-            ((DefaultTableModel) tabela.getModel()).addRow( pedItem.toArray() );                        
+            ((DefaultTableModel) tabela.getModel()).addRow( pedItem.toArray() );
+            int lastLine = tabela.getRowCount() - 1;
+            tabela.setValueAt("ItemJaInserido", lastLine, 5);
         }                      
     }
     
