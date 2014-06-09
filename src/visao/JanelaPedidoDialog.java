@@ -400,7 +400,7 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         // TODO add your handling code here:
-        btnSelecionar.setMnemonic('P');
+        btnSelecionar.setMnemonic('N');
         btnAlterar.setVisible(false);
         
         //Oculta a Coluna Numero 5 (STATUS) // OBS: Essa coluna é para diferencias os produtos já inseridos dos novos produtos durante uma alteração de Pedido.
@@ -444,7 +444,7 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
         
         if (linh >= 0) {
             btnEncerrarPedido.setEnabled(true);
-            if(btnSelecionar.getMnemonic() == 'P'){ // Mnemonic= P, quer dizer que esta sendo criado um novo Pedido,
+            if(btnSelecionar.getMnemonic() == 'N'){ // Mnemonic= N, quer dizer que esta sendo criado um novo Pedido,
                 //Portando, a tabela é comparada pelo Objeto Produto na coluna 0.
             
 
@@ -472,7 +472,7 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
                     JOptionPane.showMessageDialog(this, "Opa! Este produto já esta Inserido No Pedido.");
                 }
             }else{
-                if(btnSelecionar.getMnemonic() == 'I'){ // Mnemonic= I, quer dizer que esta sendo consultado um Pedido
+                if(btnSelecionar.getMnemonic() == 'P'){ // Mnemonic= P, quer dizer que esta sendo consultado um Pedido
                                                         //Portando, a tabela é comparada pelo Objeto PedidoItem na coluna 0.
                     
                     
@@ -484,11 +484,20 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
                     }
                     if(eIgual == 0){ // SE eIgual == 0, o produto não estava na tabela, então vai ser inserido.
                         if(qtn != 0){
-                            Produto p = (Produto) tblProdutos.getValueAt(linh, 0);
-                            mapProdutos.put(p.getIdProduto(), tblProdutos.getValueAt(linh, 4).toString());
-                            ((DefaultTableModel) tblProdSelecionado.getModel()).addRow(p.toArray());
-                            int lastLine = tblProdSelecionado.getRowCount() - 1;
-                            tblProdSelecionado.setValueAt(mapProdutos.get(p.getIdProduto()), lastLine, 4);
+                            
+//                            Produto p = (Produto) tblProdutos.getValueAt(linh, 0);
+//                            mapProdutos.put(p.getIdProduto(), tblProdutos.getValueAt(linh, 4).toString());
+//                            ((DefaultTableModel) tblProdSelecionado.getModel()).addRow(p.toArray());
+//                            int lastLine = tblProdSelecionado.getRowCount() - 1;
+//                            tblProdSelecionado.setValueAt(mapProdutos.get(p.getIdProduto()), lastLine, 4);
+                            
+                              Produto p = (Produto) tblProdutos.getValueAt(linh, 0);
+                              Pedidoitem pi = new Pedidoitem(ped, p,qtn, p.getPreco());
+                              ((DefaultTableModel) tblProdSelecionado.getModel()).addRow(pi.toArray());
+                              int lastLine = tblProdSelecionado.getRowCount() - 1;
+                              
+                              tblProdSelecionado.setValueAt("novoItem", lastLine, 5);
+                              
                         }else{
                             JOptionPane.showMessageDialog(this, "Po mano, quantidade zero. Ta de Brincation with me?");
                             tblProdutos.setValueAt(null, linh, 4);
@@ -579,7 +588,7 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
             
             if ( ped != null ){
                   limpaDadosPedido();
-                  btnSelecionar.setMnemonic('I'); // Dependendo do Mnemonic do botaão selecionar, o evento dele muda.
+                  btnSelecionar.setMnemonic('P'); // Dependendo do Mnemonic do botaão selecionar, o evento dele muda.
                   btnAlterar.setVisible(true);
                   jtaObservacoes.setEnabled(true);
                   jtfPesq.setEnabled(true);
@@ -612,7 +621,7 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
         jtfPesq.setText(" ");
         jtfPesq.setEnabled(false);
         
-        btnSelecionar.setMnemonic('P');
+        btnSelecionar.setMnemonic('N');
         
         //Limpa Tabela Itens de produtos
         DefaultTableModel tableModel = (DefaultTableModel) tblProdutos.getModel();

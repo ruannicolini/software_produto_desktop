@@ -26,7 +26,16 @@ public class Pedidoitem  implements java.io.Serializable {
        this.precoUnitario = precoUnitario;
        this.precoParcial = precoParcial;
     }
-   
+
+    //
+    public Pedidoitem(Pedido pedido, Produto produto, Integer quantidade, Float precoUnitario) {    
+        this.pedido = pedido;
+        this.produto = produto;
+        this.quantidade = quantidade;
+        this.precoUnitario = precoUnitario;
+    }
+
+    //
     public Integer getIdPedidoItem() {
         return this.idPedidoItem;
     }
