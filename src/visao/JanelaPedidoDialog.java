@@ -487,6 +487,7 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
         JanelaClientePesqDialog cliPesq;
         try {
             cliPesq = new JanelaClientePesqDialog(null, true);
+            
             cliPesq.setVisible(true);
 
             cli = cliPesq.getCliente();
@@ -575,9 +576,11 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
                 // Mostra as informações referentes ao Pedido
                   jtfNomeCliente.setText(ped.getCliente().getNome());
                   jtaObservacoes.setText(ped.getDescricao());
-                  //Busca os itens do Pedido
+                  //Busca e preenche na tabela os itens do Pedido
                   control.pesquisarPedidoItem(tblProdSelecionado, ped.getIdPedido());
-//                habilitarModo(2);
+                  
+                  btnEncerrarPedido.setVisible(false);
+//                
             }else{
                 
             }
@@ -614,6 +617,9 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
         jtfPesq.setText(" ");
         jtfPesq.setEnabled(false);
         
+        btnEncerrarPedido.setVisible(true);
+        btnEncerrarPedido.setEnabled(true);
+        btnAlterar.setVisible(false);
         
         //Limpa Tabela Itens de produtos
         DefaultTableModel tableModel = (DefaultTableModel) tblProdutos.getModel();
