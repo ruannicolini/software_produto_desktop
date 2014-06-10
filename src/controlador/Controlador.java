@@ -237,8 +237,9 @@ public class Controlador {
         produtoDAO.inserir(prod);
     }
     
-    public void pesquisarProdutos( JTable tabela, int tipo, String pesq, int intuitoPesquisa ) throws Exception, SQLException {
+    public void pesquisarProdutos( JTable tabela, int tipo, String pesq, int intuitoPesquisa,JTable tblProdSelecionado) throws Exception, SQLException {
         List lista = null;
+        int idProd, eIgual = 0;
       
         switch (tipo) {
             case 0: // Pesquisar NOME
@@ -255,13 +256,24 @@ public class Controlador {
         Produto prod;
         ((DefaultTableModel) tabela.getModel()).setRowCount(0);
         Iterator<Produto> ite = lista.iterator();
+        
         // intuitoPesquisa é para saber onde será apresentado o dado obtido. Se for na contrução de um pedido, os produtos
         // cujo status está inativo não deverão aparecer na tabela, ja na tabela de produtos, todos deverão aparecer.
         if(intuitoPesquisa == 2){
             while ( ite.hasNext() ) {
                 prod = ite.next();
                 if(prod.isStatusVenda() == true){
-                    ((DefaultTableModel) tabela.getModel()).addRow( prod.toArray() );
+                    // O For pecorre toda Jtable tblProdSelecionado procurando se o produto a ser inserido já esta na tabela. 
+                    for (int i = 0; i < tblProdSelecionado.getRowCount(); i++) {
+                        idProd = prod.getIdProduto() ;
+                        if(idProd == ((Pedidoitem)tblProdSelecionado.getValueAt(i, 0)).getProduto().getIdProduto()){
+                            eIgual =1; // Se eIgual == 1, o produto já esta selecionado, não aparecerá na consulta.  
+                        }
+                    }
+                    if(eIgual == 0){ // SE eIgual == 0, o produto não estava na tabela, então vai ser inserido.
+                        ((DefaultTableModel) tabela.getModel()).addRow( prod.toArray() );
+                    }
+                    eIgual = 0;
                 }
             }
         }else{

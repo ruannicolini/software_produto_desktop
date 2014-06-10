@@ -40,9 +40,7 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
     Controlador control;
     Produto prodSelecionado;
     Cliente cli = null;
-    //List<Produto> listaProdSelecionados;
-//    List<PedidoItem> listaPedidoItem;
-    Map<Integer, String> mapProdutos;
+    //Map<Integer, String> mapProdutos;
 
     /**
      * Creates new form JanelaPedidoDialog
@@ -50,7 +48,7 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
     public JanelaPedidoDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        mapProdutos = new HashMap<Integer, String>();
+        //mapProdutos = new HashMap<Integer, String>();
         try {
             control = new Controlador();
         } catch (SQLException e) {
@@ -64,14 +62,7 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
         }
         
         // Permite apenas uma linha selecionada por vez na tabela tblProdutos
-        tblProdutos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        
-        // Botão Encerar Pedido não disponivel
-        btnEncerrarPedido.setEnabled(false);
-        
-        jtfNomeCliente.setEditable(false);
-        
-        
+        tblProdutos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); 
     }
 
     /**
@@ -108,7 +99,7 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
         btnEncerrarPedido2 = new javax.swing.JButton();
         btnAlterar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
+        btnPesquisarPedido = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -337,10 +328,10 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
 
         jPanel3.setBackground(new java.awt.Color(240, 240, 241));
 
-        jButton2.setText("Pesquisar Pedido");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnPesquisarPedido.setText("Pesquisar Pedido");
+        btnPesquisarPedido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnPesquisarPedidoActionPerformed(evt);
             }
         });
 
@@ -349,13 +340,13 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jButton2)
+                .addComponent(btnPesquisarPedido)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jButton2)
+                .addComponent(btnPesquisarPedido)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -401,6 +392,10 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         // TODO add your handling code here:
         btnAlterar.setVisible(false);
+        btnEncerrarPedido.setEnabled(false);
+        btnPesquisar.setEnabled(false);
+        jtfNomeCliente.setEditable(false);
+        btnSelecionar.setEnabled(false);
         
         //Oculta a Coluna Numero 5 (STATUS) // OBS: Essa coluna é para diferencias os produtos já inseridos dos novos produtos durante uma alteração de Pedido.
         tblProdSelecionado.getColumnModel().getColumn( 5 ).setMaxWidth( 0 );  
@@ -412,23 +407,22 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
         try {
             // TODO add your handling code here:
-            control.pesquisarProdutos(tblProdutos, cmbTipo.getSelectedIndex(), jtfPesq.getText(),2);
-            Produto p;
-            String qtd;
-            if (mapProdutos.size() > 0) {
-                for (int i = 0; i < tblProdutos.getRowCount(); i++) {
-                    
-                    p = (Produto) tblProdutos.getValueAt(i, 0);
-                    qtd = mapProdutos.get(p.getIdProduto());
-                    tblProdutos.setValueAt(qtd, i, 4);
-                }
-            }
+            control.pesquisarProdutos(tblProdutos, cmbTipo.getSelectedIndex(), jtfPesq.getText(),2, tblProdSelecionado);
+//            Produto p;
+//            String qtd;
+//            if (mapProdutos.size() > 0) {
+//                for (int i = 0; i < tblProdutos.getRowCount(); i++) {
+//                    
+//                    p = (Produto) tblProdutos.getValueAt(i, 0);
+//                    qtd = mapProdutos.get(p.getIdProduto());
+//                    tblProdutos.setValueAt(qtd, i, 4);
+//                }
+//            }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "ERRO ao PESQUISAR no BANCO. " + ex.getMessage());
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "ERRO ao PESQUISAR. " + ex.getMessage());
         }
-
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
     private void btnSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionarActionPerformed
@@ -461,10 +455,11 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
                               Pedidoitem pedIt = new Pedidoitem(ped,p,qtn, p.getPreco());
                               ((DefaultTableModel) tblProdSelecionado.getModel()).addRow(pedIt.toArray());
                               int lastLine = tblProdSelecionado.getRowCount() - 1;
-                              
-                              //OBS : Falta fazer com que a quantidade fique registrada nas consultas da tabela tblProdutos
-                              
+                                                            
                               tblProdSelecionado.setValueAt("novoItem", lastLine, 5);
+                              
+                              //Remove o produto Selecionado da tabela de Pesquisa
+                              ((DefaultTableModel) tblProdutos.getModel()).removeRow(linh); 
                               
                 }else{
                     JOptionPane.showMessageDialog(this, "Po mano, quantidade zero. Ta de Brincation with me?");
@@ -496,6 +491,8 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
                 jtfNomeCliente.setText(cli.getNome());
                 jtaObservacoes.setEnabled(true);
                 jtfPesq.setEnabled(true);
+                btnPesquisar.setEnabled(true);
+                btnSelecionar.setEnabled(true);
             }
 
         } catch (SQLException ex) {
@@ -555,7 +552,7 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnEncerrarPedido2ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnPesquisarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarPedidoActionPerformed
         // TODO add your handling code here:
         try{
            
@@ -580,7 +577,6 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
                   control.pesquisarPedidoItem(tblProdSelecionado, ped.getIdPedido());
                   
                   btnEncerrarPedido.setVisible(false);
-//                
             }else{
                 
             }
@@ -589,7 +585,7 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "ERRO ao PESQUISAR. " + ex.getMessage() );
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnPesquisarPedidoActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         // TODO add your handling code here:
@@ -678,10 +674,10 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
     private javax.swing.JButton btnEncerrarPedido;
     private javax.swing.JButton btnEncerrarPedido2;
     private javax.swing.JButton btnPesquisar;
+    private javax.swing.JButton btnPesquisarPedido;
     private javax.swing.JButton btnSelecionar;
     private javax.swing.JComboBox cmbTipo;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
