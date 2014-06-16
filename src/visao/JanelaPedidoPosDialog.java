@@ -6,18 +6,50 @@
 
 package visao;
 
+import controlador.Controlador;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import negocio.Pedido;
+
 /**
  *
  * @author Ruan
  */
 public class JanelaPedidoPosDialog extends javax.swing.JDialog {
-
+    Controlador control;
+    Pedido ped;
     /**
      * Creates new form JanelaPedidoPos
      */
     public JanelaPedidoPosDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        try {
+            control = new Controlador();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "ERRO de conexão com o BANCO. Procure o suporte. " + 
+                        e.getMessage() );
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ERRO não esperado. " + 
+                        e.getMessage() );
+        }
+    }
+
+    JanelaPedidoPosDialog(java.awt.Frame parent, boolean modal, Pedido pedido) {
+        super(parent, modal);
+        initComponents();
+        ped = pedido;
+        try {
+            control = new Controlador();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "ERRO de conexão com o BANCO. Procure o suporte. " + 
+                        e.getMessage() );
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ERRO não esperado. " + 
+                        e.getMessage() );
+        }    
     }
 
     /**
@@ -40,21 +72,21 @@ public class JanelaPedidoPosDialog extends javax.swing.JDialog {
         jtfIe = new javax.swing.JTextField();
         labelIe = new javax.swing.JLabel();
         labelNumero = new javax.swing.JLabel();
-        jtfCnpjCpf1 = new javax.swing.JTextField();
-        jtfCnpjCpf2 = new javax.swing.JTextField();
+        jtfNumero = new javax.swing.JTextField();
+        jtfBairro = new javax.swing.JTextField();
         labelNumero1 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jftCidadeCliente = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jtfEndereco1 = new javax.swing.JTextField();
+        jtfEmail = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jtfEndereco2 = new javax.swing.JTextField();
+        jtfTelCliente = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jtfEndereco3 = new javax.swing.JTextField();
+        jtfCelCliente = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jtfEndereco4 = new javax.swing.JTextField();
+        jtfNomeVendedor = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        jtfEmailVendedor = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         tblProdutosVendidos = new javax.swing.JTable();
@@ -65,6 +97,12 @@ public class JanelaPedidoPosDialog extends javax.swing.JDialog {
         btnGerarPdf = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
+        getContentPane().setLayout(new java.awt.BorderLayout());
 
         jPanel1.setBackground(new java.awt.Color(240, 240, 241));
 
@@ -88,27 +126,27 @@ public class JanelaPedidoPosDialog extends javax.swing.JDialog {
 
         labelNumero.setText("Número: ");
 
-        jtfCnpjCpf1.setEditable(false);
+        jtfNumero.setEditable(false);
 
-        jtfCnpjCpf2.setEditable(false);
+        jtfBairro.setEditable(false);
 
         labelNumero1.setText("Bairro:");
 
         jLabel1.setText("Cidade:");
 
-        jTextField1.setEditable(false);
+        jftCidadeCliente.setEditable(false);
 
         jLabel2.setText("Email: ");
 
-        jtfEndereco1.setEditable(false);
+        jtfEmail.setEditable(false);
 
         jLabel3.setText("Tel: ");
 
-        jtfEndereco2.setEditable(false);
+        jtfTelCliente.setEditable(false);
 
         jLabel4.setText("Cel: ");
 
-        jtfEndereco3.setEditable(false);
+        jtfCelCliente.setEditable(false);
 
         jLabel5.setText("Vendedor: ");
 
@@ -130,11 +168,11 @@ public class JanelaPedidoPosDialog extends javax.swing.JDialog {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jtfNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jtfEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtfEndereco1, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jtfEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtfEndereco4, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jtfNomeVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(29, 29, 29)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -142,7 +180,7 @@ public class JanelaPedidoPosDialog extends javax.swing.JDialog {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addGap(38, 38, 38)
-                                .addComponent(jtfEndereco2))
+                                .addComponent(jtfTelCliente))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(labelCnpjCpf)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -150,11 +188,11 @@ public class JanelaPedidoPosDialog extends javax.swing.JDialog {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(labelNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jtfCnpjCpf1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jtfNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(10, 10, 10)
                                 .addComponent(labelNumero1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jtfCnpjCpf2, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jtfBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -164,15 +202,15 @@ public class JanelaPedidoPosDialog extends javax.swing.JDialog {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField1))
+                                .addComponent(jftCidadeCliente))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addGap(18, 18, 18)
-                                .addComponent(jtfEndereco3))))
+                                .addComponent(jtfCelCliente))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField2)))
+                        .addComponent(jtfEmailVendedor)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -191,25 +229,25 @@ public class JanelaPedidoPosDialog extends javax.swing.JDialog {
                     .addComponent(labelCliente1)
                     .addComponent(jtfEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelNumero)
-                    .addComponent(jtfCnpjCpf1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtfNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelNumero1)
-                    .addComponent(jtfCnpjCpf2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtfBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jftCidadeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jtfEndereco1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtfEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(jtfEndereco2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtfTelCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
-                    .addComponent(jtfEndereco3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jtfCelCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jtfEndereco4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtfNomeVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jtfEmailVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
@@ -309,6 +347,37 @@ public class JanelaPedidoPosDialog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        // TODO add your handling code here:
+        jtfNomeCliente.setText(ped.getCliente().getNome());
+        jtfEndereco.setText(ped.getCliente().getEndereco());
+        jftCidadeCliente.setText((String)ped.getCliente().getCidade().getNome());
+        jtfNumero.setText(ped.getCliente().getNumero());
+        jtfBairro.setText(ped.getCliente().getBairro());
+        jtfCelCliente.setText(ped.getCliente().getTelCel());
+        jtfTelCliente.setText(ped.getCliente().getTelFixo());
+        jtfEmail.setText(ped.getCliente().getEmail());
+        if(ped.getCliente().getTipoCliente() == 'F'){
+            jtfCnpjCpf.setText(ped.getCliente().getPessoafisica().getCpf());
+        }else{
+            if(ped.getCliente().getTipoCliente() == 'J'){
+                jtfCnpjCpf.setText(ped.getCliente().getPessoajuridica().getCnpj());
+                jtfIe.setText(ped.getCliente().getPessoajuridica().getIe());
+            }
+        }
+        
+        try {
+            control.pesquisarPedidoItem(tblProdutosVendidos, ped.getIdPedido());
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "ERRO no BANCO ao pesquisarPedidoItem." + 
+                        e.getMessage() );
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ERRO não esperado. " + 
+                        e.getMessage() );
+        }
+        
+    }//GEN-LAST:event_formComponentShown
+
     /**
      * @param args the command line arguments
      */
@@ -366,19 +435,19 @@ public class JanelaPedidoPosDialog extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jftCidadeCliente;
     private javax.swing.JTextArea jtaObsrevacoes;
+    private javax.swing.JTextField jtfBairro;
+    private javax.swing.JTextField jtfCelCliente;
     private javax.swing.JTextField jtfCnpjCpf;
-    private javax.swing.JTextField jtfCnpjCpf1;
-    private javax.swing.JTextField jtfCnpjCpf2;
+    private javax.swing.JTextField jtfEmail;
+    private javax.swing.JTextField jtfEmailVendedor;
     private javax.swing.JTextField jtfEndereco;
-    private javax.swing.JTextField jtfEndereco1;
-    private javax.swing.JTextField jtfEndereco2;
-    private javax.swing.JTextField jtfEndereco3;
-    private javax.swing.JTextField jtfEndereco4;
     private javax.swing.JTextField jtfIe;
     private javax.swing.JTextField jtfNomeCliente;
+    private javax.swing.JTextField jtfNomeVendedor;
+    private javax.swing.JTextField jtfNumero;
+    private javax.swing.JTextField jtfTelCliente;
     private javax.swing.JLabel labelCliente;
     private javax.swing.JLabel labelCliente1;
     private javax.swing.JLabel labelCnpjCpf;

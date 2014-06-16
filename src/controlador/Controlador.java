@@ -39,6 +39,7 @@ public class Controlador {
     TipoProdutoDAO tipoProdutoDAO;
     PedidoDAO pedidoDAO;
     PedidoItemDAO pedidoItemDAO;
+    Pedido PedSelecionado;
 
     public Controlador() throws Exception, SQLException {
         cidDAO = new CidadeDAO();
@@ -325,7 +326,8 @@ public class Controlador {
         }
         pedido.setValorTotal(valorTotal);
         // O preço total do Pedido não é alterado  automaticamente pois ele é inserido no banco antes de ter o valor total, por isso tenho que alterar. 
-        pedidoDAO.alterar(pedido);  
+        pedidoDAO.alterar(pedido);
+        PedSelecionado = pedido;
         limpaDadosPedido();
     }
     
@@ -375,7 +377,12 @@ public class Controlador {
             pedItem = ite.next();
             ((DefaultTableModel) tabela.getModel()).addRow( pedItem.toArray() );
             int lastLine = tabela.getRowCount() - 1;
-            tabela.setValueAt("ItemJaInserido", lastLine, 5);
+            
+            
+            if(tabela.getModel().getColumnCount()>5){ // Diferença entre a quantidade de colunas em pedidoDialog e PedidoPosDialog
+                tabela.setValueAt("ItemJaInserido", lastLine, 5);
+            }
+            
         }                      
     }
     public void alterarPedido(Pedido pedido,Cliente cli, String obs, JTable tabela) throws SQLException, Exception{
@@ -404,8 +411,12 @@ public class Controlador {
             }
         }
         pedido.setValorTotal(valorTotal);
-        pedidoDAO.alterar(pedido);  
+        pedidoDAO.alterar(pedido);
+        PedSelecionado = pedido;
         limpaDadosPedido();
+    }
+    public Pedido getPedSelecionado(){
+        return PedSelecionado;
     }
     
     public void limpaDadosPedido(){

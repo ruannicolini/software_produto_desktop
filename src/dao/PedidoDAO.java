@@ -74,7 +74,7 @@ public class PedidoDAO {
             sessao.beginTransaction();
             
             // Usando HQL           
-            Query consulta = sessao.createQuery("From Pedido p JOIN FETCH p.cliente where p.cliente.nome LIKE '" +
+            Query consulta = sessao.createQuery("From Pedido p JOIN FETCH p.cliente JOIN FETCH p.cliente.cidade where p.cliente.nome LIKE '" +
                     pesqNomeCliente + "%' ORDER BY data DESC");
             lista = consulta.list();
             
@@ -104,7 +104,7 @@ public class PedidoDAO {
             sessao.beginTransaction();
             
             // Usando HQL           
-            Query consulta = sessao.createQuery("From Pedido p JOIN FETCH p.cliente where (month(p.data)) = "+numMes+" ORDER BY data DESC");
+            Query consulta = sessao.createQuery("From Pedido p JOIN FETCH p.cliente JOIN FETCH p.cliente.cidade where (month(p.data)) = "+numMes+" ORDER BY data DESC");
             lista = consulta.list();
             
             sessao.getTransaction().commit(); 
@@ -132,7 +132,7 @@ public class PedidoDAO {
             sessao.beginTransaction();
             
             // Usando HQL           
-            Query consulta = sessao.createQuery("From Pedido p JOIN FETCH p.cliente where p.data = "+
+            Query consulta = sessao.createQuery("From Pedido p JOIN FETCH p.cliente JOIN FETCH p.cliente.cidade where p.data = "+
                     dataString+"");
             lista = consulta.list();
             

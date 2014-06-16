@@ -408,16 +408,8 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
         try {
             // TODO add your handling code here:
             control.pesquisarProdutos(tblProdutos, cmbTipo.getSelectedIndex(), jtfPesq.getText(),2, tblProdSelecionado);
-//            Produto p;
-//            String qtd;
-//            if (mapProdutos.size() > 0) {
-//                for (int i = 0; i < tblProdutos.getRowCount(); i++) {
-//                    
-//                    p = (Produto) tblProdutos.getValueAt(i, 0);
-//                    qtd = mapProdutos.get(p.getIdProduto());
-//                    tblProdutos.setValueAt(qtd, i, 4);
-//                }
-//            }
+            
+            btnSelecionar.setEnabled(true);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "ERRO ao PESQUISAR no BANCO. " + ex.getMessage());
         } catch (Exception ex) {
@@ -520,7 +512,7 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "ERRO ao criar Pedido. " + ex.getMessage());
         }
        
-        JanelaPedidoPosDialog jpp= new JanelaPedidoPosDialog(null, true);
+        JanelaPedidoPosDialog jpp= new JanelaPedidoPosDialog(null, true, ped);
         jpp.setLocationRelativeTo(null); // Faz com que a janela apareça no meio da tela
         jpp.setVisible(true);
     }//GEN-LAST:event_btnEncerrarPedidoActionPerformed
@@ -577,6 +569,8 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
                   control.pesquisarPedidoItem(tblProdSelecionado, ped.getIdPedido());
                   
                   btnEncerrarPedido.setVisible(false);
+                  btnPesquisar.setEnabled(true);
+                  
             }else{
                 
             }
@@ -592,7 +586,8 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
         try{
             if ( ped != null ) {   
                 control.alterarPedido(ped, cli, jtaObservacoes.getText(),tblProdSelecionado);
-                JOptionPane.showMessageDialog(this, "Pedido alterado com sucesso."  );                
+                JOptionPane.showMessageDialog(this, "Pedido alterado com sucesso."  );
+                this.setVisible(false);
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "ERRO ao ALTERAR. " + ex.getMessage() );
@@ -600,13 +595,15 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "ERRO ao ALTERAR. " + ex.getMessage() );
         }
        
-        JanelaPedidoPosDialog jpp= new JanelaPedidoPosDialog(null, true);
+        JanelaPedidoPosDialog jpp= new JanelaPedidoPosDialog(null, true, ped);
         jpp.setLocationRelativeTo(null); // Faz com que a janela apareça no meio da tela
         jpp.setVisible(true);
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     public void limpaDadosPedido(){
-        jtfNomeCliente.setText(" ");        
+        jtfNomeCliente.setText(" ");     
+        btnPesquisar.setEnabled(false);
+        btnSelecionar.setEnabled(false);
         jtaObservacoes.setText(" ");
         jtaObservacoes.setEnabled(false);
         
