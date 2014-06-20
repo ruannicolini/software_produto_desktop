@@ -50,7 +50,7 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
         initComponents();
         //mapProdutos = new HashMap<Integer, String>();
         try {
-            control = new Controlador();
+            control = Controlador.getInstance();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "ERRO de conexão com o BANCO. Procure o suporte. " + 
                         e.getMessage() );

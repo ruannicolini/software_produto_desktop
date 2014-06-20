@@ -27,7 +27,7 @@ public class JanelaCidadePesqDialog extends javax.swing.JDialog {
     public JanelaCidadePesqDialog(java.awt.Frame parent, boolean modal) throws Exception, SQLException  {
         super(parent, modal);
         initComponents();
-        control = new Controlador();
+        control = Controlador.getInstance();
         cidSelecionada = null;
     }
 

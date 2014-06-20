@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package controlador;
 
 import dao.*;
@@ -22,9 +16,9 @@ import util.ClienteException;
 
 /**
  *
- * @author Ruan
+ * @author Ruan, Luiz Venturote
  */
-public class Controlador {
+public class Controlador{
     
     CidadeDAO cidDAO;
     ClienteDAO cliDAO;
@@ -40,8 +34,13 @@ public class Controlador {
     PedidoDAO pedidoDAO;
     PedidoItemDAO pedidoItemDAO;
     Pedido PedSelecionado;
+    
+    /**
+     * Guarda a instância da classe
+     */
+    private static Controlador instance;
 
-    public Controlador() throws Exception, SQLException {
+    private Controlador() throws Exception, SQLException {
         cidDAO = new CidadeDAO();
         cliDAO = new ClienteDAO();
         linhaDAO = new LinhaDAO();
@@ -54,6 +53,19 @@ public class Controlador {
         //pedIt = new Pedidoitem();
     }
     
+    /**
+     * Método que recupera a instância da classe. Isso faz com que a classe só instancie um objeto de acordo com o padrão singleton.
+     * 
+     * @return Instância da class
+     * @throws Exception
+     * @throws SQLException 
+     */
+    public static Controlador getInstance() throws Exception, SQLException {
+        if (instance == null) {
+            instance = new Controlador();
+        }
+        return instance;
+    }    
   
     public int inserirCliente(String nome, String endereco, String numero, String bairro, String complemento, 
             String tel, String cel, Cidade cidade, String cep, char tipo_cliente,String email, String cpf, String cnpj, String ie)
