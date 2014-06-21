@@ -27,7 +27,7 @@ public class JanelaClientePesqDialog extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         
-        control = new Controlador();
+        control = Controlador.getInstance();
         cliSelecionado = null;
     }
 

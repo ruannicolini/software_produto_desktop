@@ -28,7 +28,7 @@ public class JanelaLinhaDialog extends javax.swing.JDialog {
         
         
         try {
-            control = new Controlador();
+            control = Controlador.getInstance();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "ERRO de conexão com o BANCO. Procure o suporte. " + 
                         e.getMessage() );

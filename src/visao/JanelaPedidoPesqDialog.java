@@ -25,7 +25,7 @@ public class JanelaPedidoPesqDialog extends javax.swing.JDialog {
     public JanelaPedidoPesqDialog(java.awt.Frame parent, boolean modal) throws Exception, SQLException  {
         super(parent, modal);
         initComponents();
-        control = new Controlador();
+        control = Controlador.getInstance();
     }
 
     /**

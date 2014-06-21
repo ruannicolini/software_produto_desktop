@@ -39,7 +39,7 @@ public class JanelaClienteDialog extends javax.swing.JDialog {
         initComponents();
         
         try {
-            control = new Controlador();
+            control = Controlador.getInstance();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "ERRO de conexão com o BANCO. Procure o suporte. " + 
                         e.getMessage() );           
