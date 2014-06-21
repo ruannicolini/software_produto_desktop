@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package controlador;
 
 import dao.*;
@@ -19,12 +13,14 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import negocio.*;
 import util.ClienteException;
+import fabrica.Fabrica;
+import fabrica.FabricaAbstrata;
 
 /**
  *
- * @author Ruan
+ * @author Ruan, Luiz Venturote
  */
-public class Controlador {
+public class Controlador{
     
     CidadeDAO cidDAO;
     ClienteDAO cliDAO;
@@ -40,8 +36,18 @@ public class Controlador {
     PedidoDAO pedidoDAO;
     PedidoItemDAO pedidoItemDAO;
     Pedido PedSelecionado;
+    
+    /**
+     * Guarda a fábrica escolhida
+     */
+    FabricaAbstrata factory;
+    
+    /**
+     * Guarda a instância da classe
+     */
+    private static Controlador instance;
 
-    public Controlador() throws Exception, SQLException {
+    private Controlador() throws Exception, SQLException {
         cidDAO = new CidadeDAO();
         cliDAO = new ClienteDAO();
         linhaDAO = new LinhaDAO();
@@ -52,8 +58,27 @@ public class Controlador {
         pedidoDAO = new PedidoDAO();
         pedidoItemDAO = new PedidoItemDAO();
         //pedIt = new Pedidoitem();
+        
+        /**
+         * Inicia a fábirca
+         */
+        factory = new Fabrica();
+        
     }
     
+    /**
+     * Método que recupera a instância da classe. Isso faz com que a classe só instancie um objeto de acordo com o padrão singleton.
+     * 
+     * @return Instância da class
+     * @throws Exception
+     * @throws SQLException 
+     */
+    public static Controlador getInstance() throws Exception, SQLException {
+        if (instance == null) {
+            instance = new Controlador();
+        }
+        return instance;
+    }    
   
     public int inserirCliente(String nome, String endereco, String numero, String bairro, String complemento, 
             String tel, String cel, Cidade cidade, String cep, char tipo_cliente,String email, String cpf, String cnpj, String ie)
@@ -229,11 +254,18 @@ public class Controlador {
     
     public void inserirProduto(String descricao, Linha linha, Tipoproduto tipo, float preco, char status) throws Exception, SQLException {
         
+        this.prod = this.factory.criarProduto();
+        prod.setTipoproduto(tipo);
+        prod.setLinha(linha);
+        prod.setDescricao(descricao);
+        prod.setPreco(preco);
+        
         if(status == 'T'){ 
-            prod = new Produto(tipo, linha, descricao , preco, true);     
+            prod.setStatusVenda(true); 
         }else{
             if(status == 'F'){ 
-                prod = new Produto(tipo, linha, descricao , preco, false);}
+                prod.setStatusVenda(false); 
+            }
         }
         produtoDAO.inserir(prod);
     }
@@ -291,12 +323,19 @@ public class Controlador {
     }
     
     public void alterarProduto(int id, String descricao, Linha linha, Tipoproduto tipo, String preco, char habilitar_venda) throws Exception, SQLException {
+        
+        this.prod = this.factory.criarProduto();
+        prod.setTipoproduto(tipo);
+        prod.setLinha(linha);
+        prod.setDescricao(descricao);
+        prod.setPreco( Float.parseFloat(preco) );
+        
         if(habilitar_venda == 'T'){
-            prod = new Produto(tipo, linha, descricao, Float.parseFloat(preco), true);
+            prod.setStatusVenda(true); 
             prod.setIdProduto(id);
         }else{
             if(habilitar_venda == 'F'){
-                prod = new Produto(tipo, linha, descricao, Float.parseFloat(preco), false);
+                prod.setStatusVenda(false); 
                 prod.setIdProduto(id);
             }
         } 

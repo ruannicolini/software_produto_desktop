@@ -27,7 +27,7 @@ public class JanelaProdutoPesqDialog extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         
-        control = new Controlador();
+        control = Controlador.getInstance();
         prodSelecionado = null;
     }
 

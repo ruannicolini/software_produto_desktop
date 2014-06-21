@@ -27,7 +27,7 @@ public class JanelaPedidoPosDialog extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         try {
-            control = new Controlador();
+            control = Controlador.getInstance();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "ERRO de conexão com o BANCO. Procure o suporte. " + 
                         e.getMessage() );
@@ -42,7 +42,7 @@ public class JanelaPedidoPosDialog extends javax.swing.JDialog {
         initComponents();
         ped = pedido;
         try {
-            control = new Controlador();
+            control = Controlador.getInstance();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "ERRO de conexão com o BANCO. Procure o suporte. " + 
                         e.getMessage() );
