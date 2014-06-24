@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 04/06/2014 19:48:29 by Hibernate Tools 3.6.0 -->
+<!-- Generated 22/06/2014 13:53:19 by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
     <class name="negocio.Produto" table="produto" catalog="bioextratus">
         <id name="idProduto" type="java.lang.Integer">
@@ -28,6 +28,22 @@
                 <column name="idProduto" />
             </key>
             <one-to-many class="negocio.Pedidoitem" />
+        </set>
+        <set name="produtosForIdProdutoProduto" table="kit" inverse="false" lazy="true" fetch="select">
+            <key>
+                <column name="idProdutoKit" not-null="true" />
+            </key>
+            <many-to-many entity-name="negocio.Produto">
+                <column name="idProdutoProduto" not-null="true" />
+            </many-to-many>
+        </set>
+        <set name="produtosForIdProdutoKit" table="kit" inverse="false" lazy="true" fetch="select">
+            <key>
+                <column name="idProdutoProduto" not-null="true" />
+            </key>
+            <many-to-many entity-name="negocio.Produto">
+                <column name="idProdutoKit" not-null="true" />
+            </many-to-many>
         </set>
     </class>
 </hibernate-mapping>

@@ -1,5 +1,5 @@
 package negocio;
-// Generated 04/06/2014 19:48:26 by Hibernate Tools 3.6.0
+// Generated 22/06/2014 13:53:17 by Hibernate Tools 3.6.0
 
 
 import java.util.HashSet;
@@ -34,6 +34,7 @@ public class Linha  implements java.io.Serializable {
         this.descricao = descricao;
     }
     //
+   
     public Integer getIdLinha() {
         return this.idLinha;
     }

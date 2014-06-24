@@ -4,17 +4,15 @@
   <session-factory>
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/bioextratus?zeroDateTimeBehavior=convertToNull</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/BioExtratus?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">root</property>
-    <property name="hibernate.query.factory_class">org.hibernate.hql.classic.ClassicQueryTranslatorFactory</property>
-    <property name="hibernate.current_session_context_class">thread</property>
     <mapping resource="negocio/Cliente.hbm.xml"/>
     <mapping resource="negocio/Cidade.hbm.xml"/>
     <mapping resource="negocio/Produto.hbm.xml"/>
-    <mapping resource="negocio/Pedidoitem.hbm.xml"/>
     <mapping resource="negocio/Tipoproduto.hbm.xml"/>
-    <mapping resource="negocio/Pessoajuridica.hbm.xml"/>
+    <mapping resource="negocio/Pedidoitem.hbm.xml"/>
     <mapping resource="negocio/Linha.hbm.xml"/>
+    <mapping resource="negocio/Pessoajuridica.hbm.xml"/>
     <mapping resource="negocio/Pedido.hbm.xml"/>
     <mapping resource="negocio/Pessoafisica.hbm.xml"/>
   </session-factory>

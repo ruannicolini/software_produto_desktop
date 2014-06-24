@@ -1,5 +1,5 @@
 package negocio;
-// Generated 04/06/2014 19:48:26 by Hibernate Tools 3.6.0
+// Generated 22/06/2014 13:53:17 by Hibernate Tools 3.6.0
 
 
 
@@ -26,7 +26,6 @@ public class Pedidoitem  implements java.io.Serializable {
        this.precoUnitario = precoUnitario;
        this.precoParcial = precoParcial;
     }
-
     //
     public Pedidoitem(Pedido pedido, Produto produto, Integer quantidade, Float precoUnitario) {    
         this.pedido = pedido;
@@ -36,6 +35,7 @@ public class Pedidoitem  implements java.io.Serializable {
     }
     
     //
+   
     public Integer getIdPedidoItem() {
         return this.idPedidoItem;
     }
@@ -78,7 +78,7 @@ public class Pedidoitem  implements java.io.Serializable {
     public void setPrecoParcial(Float precoParcial) {
         this.precoParcial = precoParcial;
     }
-    
+
     @Override
     public String toString() {
         return produto.getDescricao();
@@ -86,7 +86,6 @@ public class Pedidoitem  implements java.io.Serializable {
     public Object[] toArray() {
         return new Object[]{this, produto.getLinha().getNome(), produto.getTipoproduto().getDescricao(), this.precoUnitario, this.quantidade};
     }
-
 
 
 }
