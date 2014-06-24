@@ -11,20 +11,15 @@ package chainofresponsibility;
  */
 public class AjudaCidadePesq extends Ajuda {
 
-  //  @Override
-    public void atende(final RequisicaoAjuda requisicao) {
-        if (requisicao.equals(RequisicaoAjuda.DUVIDA_SOBRE_A_REVOLUCAO_FRANCESA)) {
-            System.out.println("O professor de história respondeu a dúvida sobre a revolução francesa!");
+    @Override
+    public void solicitaAjuda(RequisicaoAjuda requisicao) {
+        if (requisicao.equals(RequisicaoAjuda.AJUDA_CIDADE_PESQ)) {
+            System.out.println("HELP! DA JANELA (CIDADE PESQUISA)");
         } else {
             if (sucessor != null) {
-                System.out.println("O professor de história não pode atender uma " + requisicao.toString() + ", pediu para outra pessoa responder");
+                System.out.println("Esta janela nao atende esse HELP  " + requisicao.toString() + ", pediu para outra janela atender");
                 sucessor.solicitaAjuda(requisicao);
             }
         }
-    }
-
-    @Override
-    public void solicitaAjuda(RequisicaoAjuda requisicao) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

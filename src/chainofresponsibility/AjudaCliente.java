@@ -11,21 +11,15 @@ package chainofresponsibility;
  */
 public class AjudaCliente extends Ajuda {
 
-    
-   // @Override
-    public void atende(final RequisicaoAjuda requisicao) {
-        if (requisicao.equals(RequisicaoAjuda.DUVIDA_SOBRE_VANGUARDAS_LITERARIAS)) {
-            System.out.println("O professor de Literatura respondeu a dúvida!");
+    @Override
+    public void solicitaAjuda(RequisicaoAjuda requisicao) {
+        if (requisicao.equals(RequisicaoAjuda.AJUDA_CLIENTE)) {
+            System.out.println("HELP! DA JANELA (CLIENTE)");
         } else {
             if (sucessor != null) {
-                System.out.println("O professor de literatura não pode atender uma " + requisicao.toString() + ", pediu para outra pessoa responder");
+                System.out.println("Esta janela nao atende esse HELP  " + requisicao.toString() + ", pediu para outra janela atender");
                 sucessor.solicitaAjuda(requisicao);
             }
         }
-    }
-
-    @Override
-    public void solicitaAjuda(RequisicaoAjuda requisicao) {
-        
     }
 }

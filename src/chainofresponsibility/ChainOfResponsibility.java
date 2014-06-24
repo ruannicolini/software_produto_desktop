@@ -16,19 +16,19 @@ public class ChainOfResponsibility {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Ajuda professorDeHistoria = new AjudaCidadePesq();
-        Ajuda professorDeLiteratura = new AjudaCliente();
-        Ajuda inspetor = new AjudaCidade();
-        Ajuda diretor = new AjudaClientePesq();
+        Ajuda ajudaCidadePesquisa = new AjudaCidadePesq();
+        Ajuda ajudaCliente = new AjudaCliente();
+        Ajuda ajudaCidade = new AjudaCidade();
+        Ajuda ajudaClientePesquisa = new AjudaClientePesq();
 
-        professorDeHistoria.setSucessor(professorDeLiteratura);
-        professorDeLiteratura.setSucessor(inspetor);
-        inspetor.setSucessor(diretor);
+        ajudaCidadePesquisa.setSucessor(ajudaCliente);
+        ajudaCliente.setSucessor(ajudaCidade);
+        ajudaCidade.setSucessor(ajudaClientePesquisa);
  
-        professorDeHistoria.solicitaAjuda(RequisicaoAjuda.AQUISICAO_DE_CADEIRA);
-        professorDeHistoria.solicitaAjuda(RequisicaoAjuda.DUVIDA_SOBRE_A_REVOLUCAO_FRANCESA);
-        professorDeHistoria.solicitaAjuda(RequisicaoAjuda.INFORMACAO_DE_NUMERO_DE_SALA);
-        professorDeHistoria.solicitaAjuda(RequisicaoAjuda.DUVIDA_SOBRE_VANGUARDAS_LITERARIAS);
+        ajudaClientePesquisa.solicitaAjuda(RequisicaoAjuda.AJUDA_CLIENTE_PESQ);
+        ajudaCidadePesquisa.solicitaAjuda(RequisicaoAjuda.AJUDA_CIDADE_PESQ);
+        ajudaCidade.solicitaAjuda(RequisicaoAjuda.AJUDA_CIDADE);
+        ajudaCliente.solicitaAjuda(RequisicaoAjuda.AJUDA_CLIENTE);
     }
     
 }
