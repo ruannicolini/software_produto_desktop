@@ -80,9 +80,7 @@ CREATE TABLE PedidoItem(idPedidoItem INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT
 						FOREIGN KEY(idProduto)
 						REFERENCES Produto(idProduto) ON DELETE RESTRICT);
 
-
-
-CREATE TABLE kit (idProdutoKit INTEGER NOT NULL,
+CREATE TABLE kitProdutos (idProdutoKit INTEGER NOT NULL,
 			  idProdutoProduto INTEGER NOT NULL,
 
     FOREIGN KEY (idProdutoKit)
@@ -93,7 +91,8 @@ CREATE TABLE kit (idProdutoKit INTEGER NOT NULL,
 
 	PRIMARY KEY (idProdutoKit, idProdutoProduto));
 
-
+insert into kitProdutos(idProdutoKit, idProdutoProduto)values(1,1);
+insert into kitProdutos(idProdutoKit, idProdutoProduto)values(1,2);
 
 
 
@@ -141,3 +140,5 @@ INSERT INTO PRODUTO(descricao, preco, idlinha, IDTIPO, statusVenda)VALUES('SAB L
 select * from produto;
 select * from pedido;
 select * from PedidoItem;
+select * from kitProdutos;
+
