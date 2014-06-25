@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 22/06/2014 13:53:19 by Hibernate Tools 3.6.0 -->
+<!-- Generated 22/06/2014 16:12:58 by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
     <class name="negocio.Pedidoitem" table="pedidoitem" catalog="bioextratus">
         <id name="idPedidoItem" type="java.lang.Integer">
             <column name="idPedidoItem" />
-            <generator class="identity" />
+            <generator class="identity"></generator>
         </id>
         <many-to-one name="pedido" class="negocio.Pedido" fetch="select">
             <column name="idPedido" />

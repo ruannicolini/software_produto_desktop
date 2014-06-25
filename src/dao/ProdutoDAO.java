@@ -127,6 +127,30 @@ public class ProdutoDAO {
         }
     }
     
+    public Produto pesquisarProdutoId ( int id ) throws Exception, SQLException {
+        Session sessao = null;
+        List<Produto> lista = null;
+        try {
+            sessao = dao.HibernateUtil.getSessionFactory().openSession();
+            sessao.beginTransaction();
+            
+            // Usando HQL           
+            Query consulta = sessao.createQuery("from Produto prod JOIN FETCH prod.linha JOIN FETCH prod.tipoproduto where prod.idProduto = " + id);
+            lista = consulta.list();
+            
+            sessao.getTransaction().commit(); 
+                       
+        } catch (HibernateException he) {
+            sessao.getTransaction().rollback();
+        }
+        finally {
+            if ( sessao != null ) {
+               sessao.close();
+            } 
+            return lista.get(0);
+        }
+    }
+    
     public void excluir ( Produto prod ) throws Exception, SQLException {
         Session sessao = null;
         try {

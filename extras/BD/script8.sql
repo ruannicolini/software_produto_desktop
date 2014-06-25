@@ -80,9 +80,9 @@ CREATE TABLE PedidoItem(idPedidoItem INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT
 						FOREIGN KEY(idProduto)
 						REFERENCES Produto(idProduto) ON DELETE RESTRICT);
 
-drop table kit;
 
-CREATE TABLE kitProdutos (idProdutoKit INTEGER NOT NULL,
+
+CREATE TABLE kit (idProdutoKit INTEGER NOT NULL,
 			  idProdutoProduto INTEGER NOT NULL,
 
     FOREIGN KEY (idProdutoKit)
@@ -93,8 +93,7 @@ CREATE TABLE kitProdutos (idProdutoKit INTEGER NOT NULL,
 
 	PRIMARY KEY (idProdutoKit, idProdutoProduto));
 
-insert into kitProdutos(idProdutoKit, idProdutoProduto)values(1,1);
-insert into kitProdutos(idProdutoKit, idProdutoProduto)values(1,2);
+
 
 
 
@@ -139,8 +138,6 @@ INSERT INTO PRODUTO(descricao, preco, idlinha, IDTIPO, statusVenda)VALUES('SAB L
 INSERT INTO PRODUTO(descricao, preco, idlinha, IDTIPO, statusVenda)VALUES('SAB LIQ ROSTO 150ML', 39.90, 4,3, TRUE);
 INSERT INTO PRODUTO(descricao, preco, idlinha, IDTIPO, statusVenda)VALUES('SAB LIQ ALCOOL 150ML', 19.90, 4,null, TRUE);
 
-select * from produto;
+select * from produto where produto.idproduto = 2;
 select * from pedido;
 select * from PedidoItem;
-select * from kitProdutos;
-

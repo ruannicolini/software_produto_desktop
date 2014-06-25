@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package Composite;
+package composite;
 
 import negocio.*;
 
@@ -19,7 +19,7 @@ public interface ComponenteProduto{
      public void print();
      
      public ComponenteProduto getFilho(int i);   
-     public String getDescricao(); // double - getDescricao  
+     public String getDescricao();   
      public Integer getIdProduto();
      public Tipoproduto getTipoproduto();
      public Linha getLinha();

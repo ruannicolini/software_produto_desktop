@@ -73,6 +73,9 @@ public class JanelaCidadeDialog extends javax.swing.JDialog {
         btnNovo = new javax.swing.JButton();
         btnAlterar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        menuAjuda = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cidade");
@@ -158,10 +161,24 @@ public class JanelaCidadeDialog extends javax.swing.JDialog {
                     .addComponent(btnNovo)
                     .addComponent(btnAlterar)
                     .addComponent(btnCancelar))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
+
+        menuAjuda.setText("Ajuda");
+
+        jMenuItem1.setText("Janela");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        menuAjuda.add(jMenuItem1);
+
+        jMenuBar1.add(menuAjuda);
+
+        setJMenuBar(jMenuBar1);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -249,6 +266,15 @@ public class JanelaCidadeDialog extends javax.swing.JDialog {
         
     }//GEN-LAST:event_btnAlterarActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        
+        
+        
+        
+        
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -299,7 +325,10 @@ public class JanelaCidadeDialog extends javax.swing.JDialog {
     private javax.swing.JComboBox cmbUf;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jtfNome;
+    private javax.swing.JMenu menuAjuda;
     // End of variables declaration//GEN-END:variables
 }

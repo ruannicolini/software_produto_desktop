@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 22/06/2014 13:53:19 by Hibernate Tools 3.6.0 -->
+<!-- Generated 22/06/2014 16:12:58 by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
     <class name="negocio.Produto" table="produto" catalog="bioextratus">
         <id name="idProduto" type="java.lang.Integer">
             <column name="idProduto" />
-            <generator class="identity" />
+            <generator class="identity"></generator>
         </id>
         <many-to-one name="tipoproduto" class="negocio.Tipoproduto" fetch="select">
             <column name="idTipo" />
@@ -29,7 +29,7 @@
             </key>
             <one-to-many class="negocio.Pedidoitem" />
         </set>
-        <set name="produtosForIdProdutoProduto" table="kit" inverse="false" lazy="true" fetch="select">
+        <set name="produtosForIdProdutoProduto" table="kitprodutos" inverse="false" lazy="true" fetch="select">
             <key>
                 <column name="idProdutoKit" not-null="true" />
             </key>
@@ -37,7 +37,7 @@
                 <column name="idProdutoProduto" not-null="true" />
             </many-to-many>
         </set>
-        <set name="produtosForIdProdutoKit" table="kit" inverse="false" lazy="true" fetch="select">
+        <set name="produtosForIdProdutoKit" table="kitprodutos" inverse="false" lazy="true" fetch="select">
             <key>
                 <column name="idProdutoProduto" not-null="true" />
             </key>

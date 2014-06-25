@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Composite;
+package composite;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -24,7 +24,15 @@ public class CompositeProduto extends Produto implements ComponenteProduto {
         super(tipoproduto, linha, descricao, preco, statusVenda);
     }
 
-    List<ComponenteProduto> produtosFilhos = new ArrayList<ComponenteProduto>(); // employees
+    public CompositeProduto(Integer idProduto, Tipoproduto tipoproduto, Linha linha, String descricao, float preco, boolean statusVenda) {
+        super(idProduto, tipoproduto, linha, descricao, preco, statusVenda);
+    }
+    
+    public CompositeProduto(){
+        
+    }
+
+    List<ComponenteProduto> produtosFilhos = new ArrayList<ComponenteProduto>(); 
 
     @Override
     public void add(ComponenteProduto cp) {

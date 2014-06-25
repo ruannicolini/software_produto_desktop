@@ -1,5 +1,5 @@
 package negocio;
-// Generated 22/06/2014 13:53:17 by Hibernate Tools 3.6.0
+// Generated 22/06/2014 16:12:58 by Hibernate Tools 3.6.0
 
 
 import java.text.SimpleDateFormat;
@@ -30,6 +30,7 @@ public class Pedido  implements java.io.Serializable {
        this.data = data;
        this.pedidoitems = pedidoitems;
     }
+   
     //
     public Pedido(Cliente cliente, String descricao) {
         this.cliente = cliente;
@@ -37,6 +38,7 @@ public class Pedido  implements java.io.Serializable {
         this.data = new Date(System.currentTimeMillis());
     }
     //
+    
     public Integer getIdPedido() {
         return this.idPedido;
     }

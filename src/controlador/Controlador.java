@@ -1,6 +1,11 @@
 package controlador;
 
+import composite.ComponenteProduto;
+import composite.CompositeProduto;
+import composite.LeafProduto;
 import dao.*;
+import fabrica.Fabrica;
+import fabrica.FabricaAbstrata;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -13,8 +18,6 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import negocio.*;
 import util.ClienteException;
-import fabrica.Fabrica;
-import fabrica.FabricaAbstrata;
 
 /**
  *
@@ -36,7 +39,7 @@ public class Controlador{
     PedidoDAO pedidoDAO;
     PedidoItemDAO pedidoItemDAO;
     Pedido PedSelecionado;
-    
+    KitProdutosDAO kitprodutosDAO;
     /**
      * Guarda a fábrica escolhida
      */
@@ -57,6 +60,7 @@ public class Controlador{
         tipoProdutoDAO = new TipoProdutoDAO();
         pedidoDAO = new PedidoDAO();
         pedidoItemDAO = new PedidoItemDAO();
+        kitprodutosDAO = new KitProdutosDAO();
         //pedIt = new Pedidoitem();
         
         /**
@@ -252,22 +256,58 @@ public class Controlador{
         linhaDAO.alterar(lin);
     }
     
-    public void inserirProduto(String descricao, Linha linha, Tipoproduto tipo, float preco, char status) throws Exception, SQLException {
+    public void inserirProduto(String descricao, Linha linha, Tipoproduto tipo, float preco, char status, JTable tabela) throws Exception, SQLException {
+        int qtnLinha;
+        ComponenteProduto kit = null;
+        ComponenteProduto produto = null;
         
         this.prod = this.factory.criarProduto();
         prod.setTipoproduto(tipo);
         prod.setLinha(linha);
         prod.setDescricao(descricao);
         prod.setPreco(preco);
-        
-        if(status == 'T'){ 
-            prod.setStatusVenda(true); 
+            
+        if(status == 'T'){
+            prod.setStatusVenda(true);
         }else{
-            if(status == 'F'){ 
+            if(status == 'F'){
                 prod.setStatusVenda(false); 
             }
         }
         produtoDAO.inserir(prod);
+        
+        
+        if(tipo.getDescricao().equalsIgnoreCase("KIT")){
+            qtnLinha = tabela.getModel().getRowCount();
+            
+            if(qtnLinha > 0){
+                if(status == 'T'){
+                    kit = new CompositeProduto(prod.getIdProduto(), tipo, linha, descricao, preco, true);
+                }else{
+                    if(status == 'F'){
+                        kit = new CompositeProduto(prod.getIdProduto(), tipo, linha, descricao, preco, false);
+                    }
+                }
+                for (int i = 0; i < qtnLinha; i++) {
+                    prod = (Produto) tabela.getValueAt(i, 0);
+                    
+                    produto = new LeafProduto(prod.getIdProduto(), prod.getTipoproduto(), prod.getLinha(), prod.getDescricao(), prod.getPreco(), prod.isStatusVenda());
+                    
+                    kit.add(produto);
+                    Kitprodutos kitproduto = new Kitprodutos(new KitprodutosId(kit.getIdProduto(), produto.getIdProduto()));
+                    kitprodutosDAO.inserir(kitproduto);
+                    
+                }
+                
+                kit.print();
+                
+                
+            }else{
+                throw new Exception("Todo Produto do Tipo Kit Deve Ser Composto Por No Mínimo Um Produto!");
+            }
+     
+        }
+
     }
     
     public void pesquisarProdutos( JTable tabela, int tipo, String pesq, int intuitoPesquisa,JTable tblProdSelecionado) throws Exception, SQLException {
@@ -369,6 +409,37 @@ public class Controlador{
         PedSelecionado = pedido;
         limpaDadosPedido();
     }
+    
+    public ComponenteProduto pesquisarItensKit(Produto produt, JTable tabela) throws Exception, SQLException{
+        ComponenteProduto cp;
+        List<Kitprodutos> listaIds = null;
+        int i, tam;
+        
+        if(produt.getTipoproduto().getDescricao().equals("KIT")){
+            cp = new CompositeProduto(produt.getIdProduto(), produt.getTipoproduto(), produt.getLinha(), produt.getDescricao(), produt.getPreco(), true);               
+        }else{
+            cp = new LeafProduto(produt.getIdProduto(), produt.getTipoproduto(), produt.getLinha(), produt.getDescricao(), produt.getPreco(), true);               
+        }
+        
+        
+        if(cp instanceof CompositeProduto){
+            listaIds = (kitprodutosDAO.pesquisar(produt.getIdProduto()));
+            tam = listaIds.size();
+            
+            
+            for(i= 0; i< tam; i++){
+                Produto teste = (Produto) produtoDAO.pesquisarProdutoId(listaIds.get(i).getId().getIdProdutoProduto());
+                pesquisarItensKit( teste ,tabela);
+            }
+        }else{
+            if(cp instanceof LeafProduto){
+                ((DefaultTableModel) tabela.getModel()).addRow( cp.toArray() );
+                return cp;
+            }
+        }
+        return null;
+    }
+    
     
     public void pesquisarPedidos( JTable tabela, int tipo, String pesq ) throws Exception, SQLException {
         List lista = null;

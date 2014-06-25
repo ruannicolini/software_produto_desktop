@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package Composite;
+package composite;
 import negocio.Linha;
 import negocio.*;
 
@@ -13,10 +13,20 @@ import negocio.*;
  * @author Ruan
  */
 public class LeafProduto extends Produto implements ComponenteProduto{
-    
+
+    public LeafProduto(Integer idProduto, Tipoproduto tipoproduto, Linha linha, String descricao, float preco, boolean statusVenda) {
+        super(idProduto, tipoproduto, linha, descricao, preco, statusVenda);
+    }
+
     public LeafProduto(Tipoproduto tipoproduto, Linha linha, String descricao, float preco, boolean statusVenda) {
         super(tipoproduto, linha, descricao, preco, statusVenda);
     }
+    
+    public  LeafProduto(){
+        
+    }
+    
+    
 
     @Override
     public void add(ComponenteProduto cp) {

@@ -8,7 +8,10 @@ package visao;
 
 import controlador.Controlador;
 import java.sql.SQLException;
+import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import negocio.Kitprodutos;
 import negocio.Linha;
 import negocio.Produto;
 import negocio.Tipoproduto;
@@ -18,7 +21,7 @@ import negocio.Tipoproduto;
  * @author Ruan
  */
 public class JanelaProdutoDialog extends javax.swing.JDialog {
-
+    JanelaProdutoPesqDialog prodPesq;
     Controlador control;
     Produto prod = null;
     /**
@@ -27,7 +30,7 @@ public class JanelaProdutoDialog extends javax.swing.JDialog {
     public JanelaProdutoDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        
+        jPanelProdutos.setVisible(false);
         try {
             control = Controlador.getInstance();
         } catch (SQLException e) {
@@ -58,6 +61,10 @@ public class JanelaProdutoDialog extends javax.swing.JDialog {
         rbAtivo.setSelected(true);
         cmbLinha.setSelectedIndex(0);
         cmbTipo.setSelectedIndex(0);
+        
+        //Limpa Tabela Itens de produtos
+        DefaultTableModel tableModel = (DefaultTableModel) tblProdutosSelecionados.getModel();
+        tableModel.setNumRows(0);
     }
     
     /**
@@ -70,6 +77,7 @@ public class JanelaProdutoDialog extends javax.swing.JDialog {
     private void initComponents() {
 
         bGrupStatusProd = new javax.swing.ButtonGroup();
+        jPanel3 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         rbAtivo = new javax.swing.JRadioButton();
@@ -88,6 +96,22 @@ public class JanelaProdutoDialog extends javax.swing.JDialog {
         jLabel5 = new javax.swing.JLabel();
         jtfPreco = new javax.swing.JTextField();
         cmbTipo = new javax.swing.JComboBox();
+        jPanelProdutos = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblProdutosSelecionados = new javax.swing.JTable();
+        btnPesProdutosDoKit = new javax.swing.JButton();
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Produto");
@@ -171,20 +195,75 @@ public class JanelaProdutoDialog extends javax.swing.JDialog {
 
         jLabel5.setText("Preço");
 
+        cmbTipo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbTipoItemStateChanged(evt);
+            }
+        });
+
+        jPanelProdutos.setBackground(new java.awt.Color(240, 240, 241));
+        jPanelProdutos.setBorder(javax.swing.BorderFactory.createTitledBorder("Produtos"));
+
+        jPanel4.setBackground(new java.awt.Color(240, 240, 241));
+        jPanel4.setLayout(new java.awt.BorderLayout());
+
+        tblProdutosSelecionados.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Produtos Seleionados"
+            }
+        ));
+        jScrollPane1.setViewportView(tblProdutosSelecionados);
+
+        jPanel4.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
+        btnPesProdutosDoKit.setText("...");
+        btnPesProdutosDoKit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesProdutosDoKitActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanelProdutosLayout = new javax.swing.GroupLayout(jPanelProdutos);
+        jPanelProdutos.setLayout(jPanelProdutosLayout);
+        jPanelProdutosLayout.setHorizontalGroup(
+            jPanelProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelProdutosLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(9, 9, 9)
+                .addComponent(btnPesProdutosDoKit, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanelProdutosLayout.setVerticalGroup(
+            jPanelProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelProdutosLayout.createSequentialGroup()
+                .addGroup(jPanelProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPesProdutosDoKit))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnCancelar))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanelProdutos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jLabel4)
@@ -207,9 +286,8 @@ public class JanelaProdutoDialog extends javax.swing.JDialog {
                                         .addComponent(jtfDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addGap(10, 10, 10)))
-                .addGap(11, 11, 11))
+                                .addGap(0, 78, Short.MAX_VALUE)))))
+                .addGap(21, 21, 21))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -241,12 +319,14 @@ public class JanelaProdutoDialog extends javax.swing.JDialog {
                             .addComponent(jLabel5)
                             .addComponent(jtfPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
+                .addGap(5, 5, 5)
+                .addComponent(jPanelProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnNovo)
+                    .addComponent(btnCancelar)
                     .addComponent(btnAlterar)
-                    .addComponent(btnCancelar))
-                .addContainerGap(12, Short.MAX_VALUE))
+                    .addComponent(btnNovo))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
@@ -261,6 +341,10 @@ public class JanelaProdutoDialog extends javax.swing.JDialog {
                     control.alterarProduto(prod.getIdProduto(), jtfDescricao.getText(),(Linha) cmbLinha.getSelectedItem(), (Tipoproduto)cmbTipo.getSelectedItem(), jtfPreco.getText(), (char) (bGrupStatusProd.getSelection().getMnemonic()));
                     JOptionPane.showMessageDialog(this, "Produto " + prod.getDescricao()+ " alterado com sucesso."  );
 
+                    if(prod.getTipoproduto().getDescricao().equalsIgnoreCase("KIT")){
+                        //
+                    }
+                    
                     // Limpa a janela
                     jtfCod.setText("");
                     jtfDescricao.setText("");
@@ -292,6 +376,7 @@ public class JanelaProdutoDialog extends javax.swing.JDialog {
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         // TODO add your handling code here:
+        
         rbAtivo.setSelected(true);
         try {        
             control.carregarComboLinhas(cmbLinha);
@@ -318,7 +403,7 @@ public class JanelaProdutoDialog extends javax.swing.JDialog {
         // TODO add your handling code here:
         
         try {
-                control.inserirProduto(jtfDescricao.getText(), (Linha) cmbLinha.getSelectedItem(), (Tipoproduto) cmbTipo.getSelectedItem(), Float.parseFloat(jtfPreco.getText()), (char) bGrupStatusProd.getSelection().getMnemonic());
+                control.inserirProduto(jtfDescricao.getText(), (Linha) cmbLinha.getSelectedItem(), (Tipoproduto) cmbTipo.getSelectedItem(), Float.parseFloat(jtfPreco.getText()), (char) bGrupStatusProd.getSelection().getMnemonic(), tblProdutosSelecionados);
                 JOptionPane.showMessageDialog(this, "Produto '" + jtfDescricao.getText() + "' inserido com sucesso.");
         } catch (SQLException erro) {
             JOptionPane.showMessageDialog(this, "Erro desconhecimento. " + 
@@ -332,7 +417,7 @@ public class JanelaProdutoDialog extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        JanelaProdutoPesqDialog prodPesq;
+        
         try {
             prodPesq = new JanelaProdutoPesqDialog(null, true);
             prodPesq.setVisible(true); 
@@ -355,6 +440,12 @@ public class JanelaProdutoDialog extends javax.swing.JDialog {
                         rbInativo.setSelected(true);
                     }
                 }
+                
+                if(prod.getTipoproduto().getDescricao().equalsIgnoreCase("KIT")){
+                    control.pesquisarItensKit(prod, tblProdutosSelecionados);
+                    cmbTipo.setEnabled(false);
+                }
+                
                 habilitarModo(2);
             }
         } catch (SQLException ex) {
@@ -364,6 +455,41 @@ public class JanelaProdutoDialog extends javax.swing.JDialog {
         }        
 
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnPesProdutosDoKitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesProdutosDoKitActionPerformed
+        // TODO add your handling code here:
+        JanelaProdutoPesqDialog prodPesq;
+        Produto produt;
+        try {
+            prodPesq = new JanelaProdutoPesqDialog(null, true);
+            prodPesq.setVisible(true); 
+            
+            produt = prodPesq.getProduto();
+            
+            if ( produt != null ){
+                ((DefaultTableModel) tblProdutosSelecionados.getModel()).addRow(produt.toArray2());
+                
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "ERRO DE BANCO AO PESQUISAR PRODUTOS PARA KIT. " + ex.getMessage() );
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "ERRO ao PESQUISAR AO PESQUISAR PRODUTOS PARA KIT. " + ex.getMessage() );
+        }        
+
+        
+    }//GEN-LAST:event_btnPesProdutosDoKitActionPerformed
+
+    private void cmbTipoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbTipoItemStateChanged
+        // TODO add your handling code here:
+        Tipoproduto tp;
+        tp = ((Tipoproduto) cmbTipo.getSelectedItem());
+        if(((tp.getDescricao()).equals("kit"))||((tp.getDescricao()).equals("KIT"))){
+            jPanelProdutos.setVisible(true);
+        }else{
+            jPanelProdutos.setVisible(false);
+        }
+        
+    }//GEN-LAST:event_cmbTipoItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -412,6 +538,7 @@ public class JanelaProdutoDialog extends javax.swing.JDialog {
     private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnNovo;
+    private javax.swing.JButton btnPesProdutosDoKit;
     private javax.swing.JComboBox cmbLinha;
     private javax.swing.JComboBox cmbTipo;
     private javax.swing.JButton jButton1;
@@ -422,10 +549,15 @@ public class JanelaProdutoDialog extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanelProdutos;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jtfCod;
     private javax.swing.JTextField jtfDescricao;
     private javax.swing.JTextField jtfPreco;
     private javax.swing.JRadioButton rbAtivo;
     private javax.swing.JRadioButton rbInativo;
+    private javax.swing.JTable tblProdutosSelecionados;
     // End of variables declaration//GEN-END:variables
 }

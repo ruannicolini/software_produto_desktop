@@ -502,6 +502,9 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
                 limpaDadosPedido();
                 btnEncerrarPedido.setEnabled(false);
                 JOptionPane.showMessageDialog(this, "Pedido Inserido Com Suceso!");
+                JanelaPedidoPosDialog jpp= new JanelaPedidoPosDialog(null, true, control.getPedSelecionado());
+                jpp.setLocationRelativeTo(null); // Faz com que a janela apareça no meio da tela
+                jpp.setVisible(true);
             }else{
                 btnEncerrarPedido.setEnabled(false);
                 JOptionPane.showMessageDialog(this, "Acrescente algum Item no Pedido.");
@@ -512,9 +515,7 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "ERRO ao criar Pedido. " + ex.getMessage());
         }
        
-        JanelaPedidoPosDialog jpp= new JanelaPedidoPosDialog(null, true, ped);
-        jpp.setLocationRelativeTo(null); // Faz com que a janela apareça no meio da tela
-        jpp.setVisible(true);
+        
     }//GEN-LAST:event_btnEncerrarPedidoActionPerformed
 
     private void mnuExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuExcluirActionPerformed
@@ -588,6 +589,9 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
                 control.alterarPedido(ped, cli, jtaObservacoes.getText(),tblProdSelecionado);
                 JOptionPane.showMessageDialog(this, "Pedido alterado com sucesso."  );
                 this.setVisible(false);
+                JanelaPedidoPosDialog jpp= new JanelaPedidoPosDialog(null, true, ped);
+                jpp.setLocationRelativeTo(null); // Faz com que a janela apareça no meio da tela
+                jpp.setVisible(true);
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "ERRO ao ALTERAR. " + ex.getMessage() );
@@ -595,9 +599,7 @@ public class JanelaPedidoDialog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "ERRO ao ALTERAR. " + ex.getMessage() );
         }
        
-        JanelaPedidoPosDialog jpp= new JanelaPedidoPosDialog(null, true, ped);
-        jpp.setLocationRelativeTo(null); // Faz com que a janela apareça no meio da tela
-        jpp.setVisible(true);
+        
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     public void limpaDadosPedido(){

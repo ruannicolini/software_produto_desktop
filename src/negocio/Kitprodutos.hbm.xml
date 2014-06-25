@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 22/06/2014 16:12:58 by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="negocio.Kitprodutos" table="kitprodutos" catalog="bioextratus">
+        <composite-id name="id" class="negocio.KitprodutosId">
+            <key-property name="idProdutoKit" type="int">
+                <column name="idProdutoKit" />
+            </key-property>
+            <key-property name="idProdutoProduto" type="int">
+                <column name="idProdutoProduto" />
+            </key-property>
+        </composite-id>
+    </class>
+</hibernate-mapping>

@@ -24,7 +24,7 @@ import org.hibernate.Session;
 public class CidadeDAO {
 
     public CidadeDAO() throws Exception {
-        
+    
     }
     
     public void inserir(Cidade cid) throws Exception, SQLException{

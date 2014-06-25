@@ -3,8 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Composite;
-
+package composite;
 /**
  *
  * @author Ruan
@@ -36,6 +35,8 @@ public class Teste {
         prod2.print();
         System.out.println("\n\n\n PROD1 =======================================");
         prod1.print();
+        
+       
         
     }
 
