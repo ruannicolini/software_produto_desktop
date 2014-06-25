@@ -6,6 +6,8 @@
 
 package visao;
 
+import composite.ComponenteProduto;
+import composite.CompositeProduto;
 import controlador.Controlador;
 import java.sql.SQLException;
 import java.util.List;
@@ -60,6 +62,7 @@ public class JanelaProdutoDialog extends javax.swing.JDialog {
         jtfPreco.setText("");
         rbAtivo.setSelected(true);
         cmbLinha.setSelectedIndex(0);
+        cmbTipo.setEnabled(true);
         cmbTipo.setSelectedIndex(0);
         
         //Limpa Tabela Itens de produtos
@@ -442,8 +445,12 @@ public class JanelaProdutoDialog extends javax.swing.JDialog {
                 }
                 
                 if(prod.getTipoproduto().getDescricao().equalsIgnoreCase("KIT")){
-                    control.pesquisarItensKit(prod, tblProdutosSelecionados);
+                    // No Método pesquisarItensKit é Feita a Utilização do Padrão de Projeto Composite
+                    ComponenteProduto cp = new CompositeProduto();                    
+                    cp = control.pesquisarItensKit(prod, tblProdutosSelecionados);
+                    cp.print();
                     cmbTipo.setEnabled(false);
+                   
                 }
                 
                 habilitarModo(2);

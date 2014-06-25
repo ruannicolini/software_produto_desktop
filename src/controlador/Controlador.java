@@ -405,14 +405,18 @@ public class Controlador{
     
     public ComponenteProduto pesquisarItensKit(Produto produt, JTable tabela) throws Exception, SQLException{
         ComponenteProduto cp = null;
-        //ComponenteProduto topo = new CompositeProduto();
+        ComponenteProduto topo = new CompositeProduto();
         List<Kitprodutos> listaIds = null;
         int i, tam;
         
         if(produt.getTipoproduto().getDescricao().equals("KIT")){
             cp = new CompositeProduto(produt.getIdProduto(), produt.getTipoproduto(), produt.getLinha(), produt.getDescricao(), produt.getPreco(), true);               
+            
         }else{
             cp = new LeafProduto(produt.getIdProduto(), produt.getTipoproduto(), produt.getLinha(), produt.getDescricao(), produt.getPreco(), true);               
+            
+            // Mostra os produtos (LeafProduto) na Tabela
+            ((DefaultTableModel) tabela.getModel()).addRow( cp.toArray() );
         }
         
         
@@ -420,18 +424,16 @@ public class Controlador{
             listaIds = (kitprodutosDAO.pesquisar(produt.getIdProduto()));
             tam = listaIds.size();
             
-            
             for(i= 0; i< tam; i++){
                 Produto p = (Produto) produtoDAO.pesquisarProdutoId(listaIds.get(i).getId().getIdProdutoProduto());
-                pesquisarItensKit( p ,tabela);
+                cp.add(pesquisarItensKit( p, tabela));
             }
         }else{
             if(cp instanceof LeafProduto){
-                ((DefaultTableModel) tabela.getModel()).addRow( cp.toArray() );
                 return cp;
             }
         }
-        return null;
+        return cp;
     }
     
     
