@@ -260,6 +260,7 @@ public class Controlador{
         int qtnLinha;
         ComponenteProduto kit = null;
         ComponenteProduto produto = null;
+        Produto prodProd;
         
         this.prod = this.factory.criarProduto();
         prod.setTipoproduto(tipo);
@@ -289,19 +290,11 @@ public class Controlador{
                     }
                 }
                 for (int i = 0; i < qtnLinha; i++) {
-                    prod = (Produto) tabela.getValueAt(i, 0);
-                    
-                    produto = new LeafProduto(prod.getIdProduto(), prod.getTipoproduto(), prod.getLinha(), prod.getDescricao(), prod.getPreco(), prod.isStatusVenda());
-                    
-                    kit.add(produto);
-                    Kitprodutos kitproduto = new Kitprodutos(new KitprodutosId(kit.getIdProduto(), produto.getIdProduto()));
+                    prodProd = (Produto) tabela.getValueAt(i, 0);
+                    Kitprodutos kitproduto = new Kitprodutos(new KitprodutosId(prod.getIdProduto(), prodProd.getIdProduto()));
                     kitprodutosDAO.inserir(kitproduto);
                     
                 }
-                
-                kit.print();
-                
-                
             }else{
                 throw new Exception("Todo Produto do Tipo Kit Deve Ser Composto Por No Mínimo Um Produto!");
             }
@@ -411,7 +404,8 @@ public class Controlador{
     }
     
     public ComponenteProduto pesquisarItensKit(Produto produt, JTable tabela) throws Exception, SQLException{
-        ComponenteProduto cp;
+        ComponenteProduto cp = null;
+        //ComponenteProduto topo = new CompositeProduto();
         List<Kitprodutos> listaIds = null;
         int i, tam;
         
@@ -428,8 +422,8 @@ public class Controlador{
             
             
             for(i= 0; i< tam; i++){
-                Produto teste = (Produto) produtoDAO.pesquisarProdutoId(listaIds.get(i).getId().getIdProdutoProduto());
-                pesquisarItensKit( teste ,tabela);
+                Produto p = (Produto) produtoDAO.pesquisarProdutoId(listaIds.get(i).getId().getIdProdutoProduto());
+                pesquisarItensKit( p ,tabela);
             }
         }else{
             if(cp instanceof LeafProduto){
