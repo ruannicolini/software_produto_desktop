@@ -5,6 +5,7 @@
  */
 
 package visao;
+import chainofresponsibility.ChainOfResponsibility;
 import controlador.Controlador;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -49,6 +50,9 @@ public class JanelaCidadePesqDialog extends javax.swing.JDialog {
         btnSelecionar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -146,6 +150,20 @@ public class JanelaCidadePesqDialog extends javax.swing.JDialog {
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
+        jMenu1.setText("Ajuda");
+
+        jMenuItem1.setText("Help");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -206,6 +224,12 @@ public class JanelaCidadePesqDialog extends javax.swing.JDialog {
 
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        String janela_pesq = "JANELA_CIDADE_PESQ";
+        ChainOfResponsibility.chamarAjuda(janela_pesq); 
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
 
     
     /**
@@ -256,6 +280,9 @@ public class JanelaCidadePesqDialog extends javax.swing.JDialog {
     private javax.swing.JButton btnPesquisar;
     private javax.swing.JButton btnSelecionar;
     private javax.swing.JComboBox cmbTipo;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblCidades;

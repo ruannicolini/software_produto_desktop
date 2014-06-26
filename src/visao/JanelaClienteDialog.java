@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package visao;
 
+import chainofresponsibility.ChainOfResponsibility;
 import com.sun.awt.AWTUtilities;
 import controlador.Controlador;
 import java.io.File;
@@ -18,7 +18,6 @@ import javax.swing.JOptionPane;
 import negocio.Cidade;
 import negocio.Cliente;
 
-
 /**
  *
  * @author Ruan
@@ -27,44 +26,42 @@ public class JanelaClienteDialog extends javax.swing.JDialog {
 
     Controlador control;
     Cliente cli = null;
+
     /**
      * Creates new form JanelaClienteDialog
      */
-    public JanelaClienteDialog(java.awt.Frame parent, boolean modal) { 
+    public JanelaClienteDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        
+
         // Tentando deixar a tela transparente
         //AWTUtilities.setWindowOpacity(this, 0.5f);
-        
         initComponents();
-        
+
         try {
             control = Controlador.getInstance();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "ERRO de conexão com o BANCO. Procure o suporte. " + 
-                        e.getMessage() );           
+            JOptionPane.showMessageDialog(null, "ERRO de conexão com o BANCO. Procure o suporte. "
+                    + e.getMessage());
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "ERRO não esperado. " + 
-                        e.getMessage() );
+            JOptionPane.showMessageDialog(null, "ERRO não esperado. "
+                    + e.getMessage());
         }
-        
-        
+
     }
-    
-    
+
     private void habilitarModo(int op) {
         if (op == 1) {
             // NOVO
             btnNovo.setEnabled(true);
-            btnAlterar.setEnabled(false);            
+            btnAlterar.setEnabled(false);
         } else {
             btnNovo.setEnabled(false);
             btnAlterar.setEnabled(true);
         }
-        
+
     }
-    
-    private void limpaDados(){
+
+    private void limpaDados() {
         jtfNome.setText("");
         jtfEndereco.setText("");
         jtfNumero.setText("");
@@ -80,7 +77,6 @@ public class JanelaClienteDialog extends javax.swing.JDialog {
         jtfIe.setText("");
         rbJuridica.setSelected(true); // ao limpar, pessoa juridica deve ficar selecionada
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -126,6 +122,9 @@ public class JanelaClienteDialog extends javax.swing.JDialog {
         cmbCidade = new javax.swing.JComboBox();
         jLabel2 = new javax.swing.JLabel();
         jtfCep = new javax.swing.JTextField();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cliente");
@@ -397,43 +396,54 @@ public class JanelaClienteDialog extends javax.swing.JDialog {
                     .addComponent(btnNovo)
                     .addComponent(btnCancelar)
                     .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
+        jMenu1.setText("Ajuda");
+
+        jMenuItem1.setText("Help");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
 
-    
-    
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
         // TODO add your handling code here:
         int id = 0;
         try {
-                id = control.inserirCliente(jtfNome.getText(), jtfEndereco.getText(), jtfNumero.getText(), jtfBairro.getText(), jtfComplemento.getText(),
-                    jtfTel.getText(), jtfCel.getText(), (Cidade) cmbCidade.getSelectedItem(),jtfCep.getText(), (char) bGroupTipo.getSelection().getMnemonic(), jtfEmail.getText(),
+            id = control.inserirCliente(jtfNome.getText(), jtfEndereco.getText(), jtfNumero.getText(), jtfBairro.getText(), jtfComplemento.getText(),
+                    jtfTel.getText(), jtfCel.getText(), (Cidade) cmbCidade.getSelectedItem(), jtfCep.getText(), (char) bGroupTipo.getSelection().getMnemonic(), jtfEmail.getText(),
                     jtfCpf.getText(), jtfCnpj.getText(), jtfIe.getText());
-            
-                JOptionPane.showMessageDialog(this, "Cliente " + id + " - " + jtfNome.getText() + " inserido com sucesso.");
+
+            JOptionPane.showMessageDialog(this, "Cliente " + id + " - " + jtfNome.getText() + " inserido com sucesso.");
 
         } catch (NumberFormatException erro) {
-            JOptionPane.showMessageDialog(this, "Digite um ID numerico." + 
-                    erro.getMessage() + erro.getCause() );
+            JOptionPane.showMessageDialog(this, "Digite um ID numerico."
+                    + erro.getMessage() + erro.getCause());
         } catch (util.ClienteException erro) {
-            JOptionPane.showMessageDialog(this, erro.getMessage() );
+            JOptionPane.showMessageDialog(this, erro.getMessage());
         } catch (SQLException erro) {
-            JOptionPane.showMessageDialog(this, "Erro desconhecimento. " + 
-                    erro.getMessage() + erro.getClass() );            
+            JOptionPane.showMessageDialog(this, "Erro desconhecimento. "
+                    + erro.getMessage() + erro.getClass());
         } catch (Exception erro) {
-            JOptionPane.showMessageDialog(this, "Erro desconhecimento. " + 
-                    erro.getMessage() + erro.getClass() );
-        }   
-        
+            JOptionPane.showMessageDialog(this, "Erro desconhecimento. "
+                    + erro.getMessage() + erro.getClass());
+        }
+
         limpaDados();  // Limpa os campos para que na proxima vez que a janela for chamada não apareça os ultimos dados cadastrados.
-        
+
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -442,12 +452,12 @@ public class JanelaClienteDialog extends javax.swing.JDialog {
         rbJuridica.setEnabled(true);
         btnNovo.setVisible(true);
         habilitarModo(1);
-        if((jtfNome.getText().trim().equals(""))&& (jtfEndereco.getText().trim().equals("")) && (jtfBairro.getText().trim().equals("")
-                && (jtfCel.getText().trim().equals(""))&&(jtfCep.getText().trim().equals(""))&&(jtfCnpj.getText().trim().equals(""))
-                && (jtfComplemento.getText().trim().equals(""))&&(jtfCpf.getText().trim().equals(""))&&(jtfEmail.getText().trim().equals("")
-                && (jtfIe.getText().trim().equals(""))&&(jtfTel.getText().trim().equals(""))&&(jtfNumero.getText().trim().equals(""))))){
-            this.setVisible(false); 
-        }else{
+        if ((jtfNome.getText().trim().equals("")) && (jtfEndereco.getText().trim().equals("")) && (jtfBairro.getText().trim().equals("")
+                && (jtfCel.getText().trim().equals("")) && (jtfCep.getText().trim().equals("")) && (jtfCnpj.getText().trim().equals(""))
+                && (jtfComplemento.getText().trim().equals("")) && (jtfCpf.getText().trim().equals("")) && (jtfEmail.getText().trim().equals("")
+                && (jtfIe.getText().trim().equals("")) && (jtfTel.getText().trim().equals("")) && (jtfNumero.getText().trim().equals(""))))) {
+            this.setVisible(false);
+        } else {
             limpaDados();
         }
     }//GEN-LAST:event_btnCancelarActionPerformed
@@ -473,39 +483,39 @@ public class JanelaClienteDialog extends javax.swing.JDialog {
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         // TODO add your handling code here:
-        
+
         rbJuridica.setSelected(true);
         jtfCpf.setEnabled(false);
         jtfCnpj.setEnabled(true);
         jtfIe.setEnabled(true);
-        
-        try {        
+
+        try {
             control.carregarComboCidade(cmbCidade);
         } catch (SQLException erro) {
-            JOptionPane.showMessageDialog(this, "Erro ao consultar CIDADES. " + 
-                    erro.getMessage() + erro.getClass() );            
+            JOptionPane.showMessageDialog(this, "Erro ao consultar CIDADES. "
+                    + erro.getMessage() + erro.getClass());
         } catch (Exception erro) {
-            JOptionPane.showMessageDialog(this, "Erro não esperado ao consultar CIDADES. " + 
-                    erro.getMessage() + erro.getClass() );
-        } 
-        
+            JOptionPane.showMessageDialog(this, "Erro não esperado ao consultar CIDADES. "
+                    + erro.getMessage() + erro.getClass());
+        }
+
     }//GEN-LAST:event_formComponentShown
 
     private void btnPesqCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesqCliActionPerformed
         // TODO add your handling code here:
         JanelaClientePesqDialog cliPesq;
-        
+
         try {
             cliPesq = new JanelaClientePesqDialog(null, true);
-            cliPesq.setVisible(true); 
-            
+            cliPesq.setVisible(true);
+
             cli = cliPesq.getCliente();
 
-            if ( cli != null ){
-                
-                jtfNome.setText( cli.getNome()  );
-                jtfEndereco.setText( cli.getEndereco()  );
-                jtfBairro.setText( cli.getBairro()  );
+            if (cli != null) {
+
+                jtfNome.setText(cli.getNome());
+                jtfEndereco.setText(cli.getEndereco());
+                jtfBairro.setText(cli.getBairro());
                 jtfNumero.setText(cli.getNumero());
                 jtfComplemento.setText(cli.getComplemento());
                 jtfCep.setText(cli.getCep());
@@ -513,73 +523,69 @@ public class JanelaClienteDialog extends javax.swing.JDialog {
                 jtfCel.setText(cli.getTelCel());
                 jtfEmail.setText(cli.getEmail());
                 cmbCidade.getModel().setSelectedItem(cli.getCidade());
-                if(cli.getTipoCliente() == 'F'){
+                if (cli.getTipoCliente() == 'F') {
                     jtfCpf.setEnabled(true);
-                    jtfCpf.setText(cli.getPessoafisica().getCpf()); 
+                    jtfCpf.setText(cli.getPessoafisica().getCpf());
                     rbFisica.setSelected(true);
                     jtfCnpj.setEnabled(false);
                     jtfIe.setEnabled(false);
-                }else{
-                    if(cli.getTipoCliente() == 'J'){                        
+                } else {
+                    if (cli.getTipoCliente() == 'J') {
                         jtfCnpj.setEnabled(true);
                         jtfIe.setEnabled(true);
                         rbJuridica.setSelected(true);
                         jtfCnpj.setText(cli.getPessoajuridica().getCnpj());
-                        jtfIe.setText(cli.getPessoajuridica().getIe()); 
-                        
+                        jtfIe.setText(cli.getPessoajuridica().getIe());
+
                         jtfCpf.setEnabled(false);
                     }
                 }
-                
+
                 rbFisica.setEnabled(false);
                 rbJuridica.setEnabled(false);
-                
+
                 btnNovo.setVisible(false);
                 btnAlterar.setVisible(true);
                 btnAlterar.setEnabled(true);
             }
-            
-            
+
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "ERRO ao PESQUISAR. " + ex.getMessage() );
+            JOptionPane.showMessageDialog(this, "ERRO ao PESQUISAR. " + ex.getMessage());
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "ERRO ao PESQUISAR. " + ex.getMessage() );
-        }        
+            JOptionPane.showMessageDialog(this, "ERRO ao PESQUISAR. " + ex.getMessage());
+        }
 
     }//GEN-LAST:event_btnPesqCliActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         // TODO add your handling code here:
-        
-        
-        
-        try{
-            if ( cli != null ) {   
-                control.alterarCliente(cli.getIdCliente(),jtfNome.getText(), jtfEndereco.getText(), jtfNumero.getText(), jtfBairro.getText(), jtfComplemento.getText(),
-                    jtfTel.getText(), jtfCel.getText(), (Cidade) cmbCidade.getSelectedItem(),jtfCep.getText(), (char) bGroupTipo.getSelection().getMnemonic(), jtfEmail.getText(),
-                    jtfCpf.getText(), jtfCnpj.getText(), jtfIe.getText());
-                        
-                JOptionPane.showMessageDialog(this, "Cliente " + cli.getNome() + " alterado com sucesso."  );
-                
+
+        try {
+            if (cli != null) {
+                control.alterarCliente(cli.getIdCliente(), jtfNome.getText(), jtfEndereco.getText(), jtfNumero.getText(), jtfBairro.getText(), jtfComplemento.getText(),
+                        jtfTel.getText(), jtfCel.getText(), (Cidade) cmbCidade.getSelectedItem(), jtfCep.getText(), (char) bGroupTipo.getSelection().getMnemonic(), jtfEmail.getText(),
+                        jtfCpf.getText(), jtfCnpj.getText(), jtfIe.getText());
+
+                JOptionPane.showMessageDialog(this, "Cliente " + cli.getNome() + " alterado com sucesso.");
+
                 rbFisica.setEnabled(true);
                 rbJuridica.setEnabled(true);
                 jtfCnpj.setEnabled(true);
                 jtfIe.setEnabled(true);
                 jtfCpf.setEnabled(false);
-                
+
                 limpaDados();
                 btnNovo.setVisible(true);
                 habilitarModo(1);
-                
+
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "ERRO ao ALTERAR. " + ex.getMessage() );
+            JOptionPane.showMessageDialog(this, "ERRO ao ALTERAR. " + ex.getMessage());
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "ERRO ao ALTERAR. " + ex.getMessage() );
-        }                  
- 
-        
-        
+            JOptionPane.showMessageDialog(this, "ERRO ao ALTERAR. " + ex.getMessage());
+        }
+
+
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void rbJuridicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbJuridicaActionPerformed
@@ -592,6 +598,12 @@ public class JanelaClienteDialog extends javax.swing.JDialog {
     private void cmbCidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCidadeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbCidadeActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        String janela = "JANELA_CLIENTE";
+        ChainOfResponsibility.chamarAjuda(janela);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -645,6 +657,9 @@ public class JanelaClienteDialog extends javax.swing.JDialog {
     private javax.swing.JComboBox cmbCidade;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jtfBairro;
     private javax.swing.JTextField jtfCel;

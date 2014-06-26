@@ -6,6 +6,7 @@
 
 package visao;
 
+import chainofresponsibility.ChainOfResponsibility;
 import controlador.Controlador;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -268,10 +269,8 @@ public class JanelaCidadeDialog extends javax.swing.JDialog {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
-        
-        
-        
-        
+        String janela = "JANELA_CIDADE";
+        ChainOfResponsibility.chamarAjuda(janela); 
         
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
