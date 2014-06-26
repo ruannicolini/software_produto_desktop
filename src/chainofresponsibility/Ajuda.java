@@ -5,18 +5,21 @@
  */
 package chainofresponsibility;
 
+import chainofresponsibility.visao.JanelaAjudaDialog;
+
 /**
  *
  * @author Matheus
  */
 public abstract class Ajuda {
-
     protected Ajuda sucessor;
+    JanelaAjudaDialog janelaAjuda;
+    String texto = null;
 
-    public void setSucessor(final Ajuda sucessor) {
+    public void setSucessor(Ajuda sucessor) {
         this.sucessor = sucessor;
     }
 
-    public abstract void solicitaAjuda(final RequisicaoAjuda requisicao);
+    public abstract void solicitaAjuda(String janela);
 
 }

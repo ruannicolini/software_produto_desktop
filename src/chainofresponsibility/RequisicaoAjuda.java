@@ -12,7 +12,7 @@ package chainofresponsibility;
 public enum RequisicaoAjuda {
 
     AJUDA_CLIENTE_PESQ,
-    AJUDA_CIDADE_PESQ,
+    JANELA_CIDADE_PESQ,
     AJUDA_CLIENTE,
-    AJUDA_CIDADE
+    JANELA_CIDADE
 }

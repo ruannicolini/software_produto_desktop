@@ -5,20 +5,28 @@
  */
 package chainofresponsibility;
 
+import chainofresponsibility.visao.JanelaAjudaDialog;
+
 /**
  *
  * @author Matheus
  */
 public class AjudaClientePesq extends Ajuda {
-
+//    JanelaAjudaDialog janelaAjuda;
+//    String texto;
+    
     @Override
-    public void solicitaAjuda(RequisicaoAjuda requisicao) {
-        if (requisicao.equals(RequisicaoAjuda.AJUDA_CLIENTE_PESQ)) {
-            System.out.println("HELP! DA JANELA (CLIENTE PESQUISA)");
+    public void solicitaAjuda(String janela) {
+        if (janela.equals("JANELA_CLIENTE_PESQ")) {
+            texto = "Oi \n\n\n\n\n\n Oi CLIENTE PESQUISA!! ;)";
+            janelaAjuda = new JanelaAjudaDialog(null, true, texto);
+            
+            janelaAjuda.setLocationRelativeTo(null); // Faz com que a janela apareça no meio da tela
+            janelaAjuda.setVisible(true);
         } else {
             if (sucessor != null) {
-                System.out.println("Esta janela nao atende esse HELP  " + requisicao.toString() + ", pediu para outra janela atender");
-                sucessor.solicitaAjuda(requisicao);
+                //System.out.println("Esta janela nao atende esse HELP  " + requisicao.toString() + ", pediu para outra janela atender");
+                sucessor.solicitaAjuda(janela);
             }
         }
     }

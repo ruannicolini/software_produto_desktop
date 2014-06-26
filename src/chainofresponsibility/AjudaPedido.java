@@ -6,15 +6,30 @@
 
 package chainofresponsibility;
 
+import chainofresponsibility.visao.JanelaAjudaDialog;
+
 /**
  *
  * @author Matheus
  */
 public class AjudaPedido extends Ajuda{
-
+//    JanelaAjudaDialog janelaAjuda;
+//    String texto;
+    
     @Override
-    public void solicitaAjuda(RequisicaoAjuda requisicao) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void solicitaAjuda(String janela) {
+        if (janela.equals("JANELA_PEDIDO")) {
+            texto = "Oi \n\n\n\n\n\n Oi PEDIDO!! ;)";
+            janelaAjuda = new JanelaAjudaDialog(null, true, texto);
+            
+            janelaAjuda.setLocationRelativeTo(null); // Faz com que a janela apareça no meio da tela
+            janelaAjuda.setVisible(true);
+        } else {
+            if (sucessor != null) {
+                //System.out.println("Esta janela nao atende esse HELP  " + requisicao.toString() + ", pediu para outra janela atender");
+                sucessor.solicitaAjuda(janela);
+            }
+        }
     }
     
 }
