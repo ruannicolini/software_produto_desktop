@@ -6,6 +6,7 @@
 
 package visao;
 
+import chainofresponsibility.ChainOfResponsibility;
 import com.sun.awt.AWTUtilities;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -69,6 +70,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
 
         jLabel1.setFont(new java.awt.Font("Yu Gothic", 2, 24)); // NOI18N
@@ -218,6 +220,14 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
         jMenu3.setText("Ajuda");
 
+        jMenuItem2.setText("Help");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem2);
+
         jMenuItem7.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
         jMenuItem7.setText("Sobre");
         jMenu3.add(jMenuItem7);
@@ -311,6 +321,12 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         janelaPedido.setVisible(true);
     }//GEN-LAST:event_jMenuItem10ActionPerformed
 
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        String janela = "JANELA_PRINCIPAL";
+        ChainOfResponsibility.chamarAjuda(janela);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -362,6 +378,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;

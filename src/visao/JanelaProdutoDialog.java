@@ -6,6 +6,7 @@
 
 package visao;
 
+import chainofresponsibility.ChainOfResponsibility;
 import composite.ComponenteProduto;
 import composite.CompositeProduto;
 import controlador.Controlador;
@@ -104,6 +105,9 @@ public class JanelaProdutoDialog extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblProdutosSelecionados = new javax.swing.JTable();
         btnPesProdutosDoKit = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -334,6 +338,20 @@ public class JanelaProdutoDialog extends javax.swing.JDialog {
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
 
+        jMenu1.setText("Ajuda");
+
+        jMenuItem1.setText("Help");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -498,6 +516,12 @@ public class JanelaProdutoDialog extends javax.swing.JDialog {
         
     }//GEN-LAST:event_cmbTipoItemStateChanged
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        String janela = "JANELA_PRODUTO";
+        ChainOfResponsibility.chamarAjuda(janela);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -554,6 +578,9 @@ public class JanelaProdutoDialog extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

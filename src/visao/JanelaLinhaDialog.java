@@ -6,6 +6,7 @@
 
 package visao;
 
+import chainofresponsibility.ChainOfResponsibility;
 import controlador.Controlador;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -72,6 +73,9 @@ public class JanelaLinhaDialog extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jtfNome = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Linha");
@@ -159,10 +163,24 @@ public class JanelaLinhaDialog extends javax.swing.JDialog {
                     .addComponent(btnNovo)
                     .addComponent(btnAlterar)
                     .addComponent(btnCancelar))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
+
+        jMenu1.setText("Ajuda");
+
+        jMenuItem1.setText("Help");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -251,6 +269,12 @@ public class JanelaLinhaDialog extends javax.swing.JDialog {
 
     }//GEN-LAST:event_btnAlterarActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        String janela = "JANELA_LINHA";
+        ChainOfResponsibility.chamarAjuda(janela);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -300,6 +324,9 @@ public class JanelaLinhaDialog extends javax.swing.JDialog {
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jtfDescricao;
