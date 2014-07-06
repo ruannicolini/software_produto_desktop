@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6ac884fa-0cb9-42c4-ab58-5b383d76741f">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="19"/>
+	<property name="ireport.y" value="18"/>
 	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
 	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
@@ -43,7 +43,7 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="163" splitType="Stretch">
+		<band height="202" splitType="Stretch">
 			<image>
 				<reportElement uuid="0baa3f32-2bf2-440e-9fbf-a935ab93d9ee" x="275" y="0" width="281" height="64"/>
 				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
@@ -213,7 +213,30 @@
 				<textFieldExpression><![CDATA[$P{pedido}.getCliente().getTelCel()]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement uuid="3686a957-a3d4-4d65-850c-5f2811295231" x="1" y="154" width="556" height="1"/>
+				<reportElement uuid="3686a957-a3d4-4d65-850c-5f2811295231" x="1" y="154" width="554" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="84a450ce-039a-499a-848f-ff26aaeec555" x="1" y="180" width="554" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="8294df6c-549f-4d38-a060-f5b50eaa6d9e" x="1" y="184" width="555" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="043c79b9-074e-4fbe-af65-ee306876a5bf" x="9" y="155" width="353" height="25"/>
+				<textElement verticalAlignment="Middle" rotation="None"/>
+				<text><![CDATA[VENDEDOR: WELLINGON NICOLINI DA SILVA        TEL: (33)3263-2920]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="c2cb0eab-f287-47d3-9f93-fa4bc2a593c7" x="555" y="155" width="1" height="25"/>
+			</line>
+			<line>
+				<reportElement uuid="f419f7f0-3cc2-4993-9e10-ff098c4f5362" x="0" y="155" width="1" height="25"/>
+			</line>
+			<line>
+				<reportElement uuid="b291065e-4d9a-4a01-8193-e2e1e7b47b7b" x="362" y="155" width="1" height="25"/>
+			</line>
+			<line>
+				<reportElement uuid="6a17b40f-0025-49c7-bb3b-33f0f6df4973" x="241" y="154" width="1" height="25"/>
 			</line>
 		</band>
 	</title>
