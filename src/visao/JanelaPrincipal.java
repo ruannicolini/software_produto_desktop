@@ -11,11 +11,21 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.query.JRHibernateQueryExecuterFactory;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -197,14 +207,24 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         jMenu4.setText("Relatórios");
 
         jMenuItem14.setText("Clientes");
+        jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem14ActionPerformed(evt);
+            }
+        });
         jMenu4.add(jMenuItem14);
 
-        jMenuItem15.setText("Pedidos");
+        jMenuItem15.setText("Comissão/Mês");
+        jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem15ActionPerformed(evt);
+            }
+        });
         jMenu4.add(jMenuItem15);
 
         jMenuBar1.add(jMenu4);
 
-        jMenu2.setText("Ferramentas");
+        jMenu2.setText("Configurações");
 
         jMenuItem8.setText("Opções");
         jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
@@ -310,6 +330,22 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         janelaPedido.setLocationRelativeTo(null); // Faz com que a janela apareça no meio da tela
         janelaPedido.setVisible(true);
     }//GEN-LAST:event_jMenuItem10ActionPerformed
+
+    private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
+        // TODO add your handling code here:
+        JanelaRelClientesDialog janelaRelClientes;
+        janelaRelClientes = new JanelaRelClientesDialog(this, false);
+        janelaRelClientes.setLocationRelativeTo(null); // Faz com que a janela apareça no meio da tela
+        janelaRelClientes.setVisible(true);
+    }//GEN-LAST:event_jMenuItem14ActionPerformed
+
+    private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
+        // TODO add your handling code here:
+        JanelaRelComissaoDialog janelaRelComissao;
+        janelaRelComissao = new JanelaRelComissaoDialog(this, false);
+        janelaRelComissao.setLocationRelativeTo(null); // Faz com que a janela apareça no meio da tela
+        janelaRelComissao.setVisible(true);
+    }//GEN-LAST:event_jMenuItem15ActionPerformed
 
     /**
      * @param args the command line arguments

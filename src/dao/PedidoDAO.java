@@ -120,6 +120,35 @@ public class PedidoDAO {
         }
     }
 
+    public List apuracaoMes(String mes, String ano) throws Exception, SQLException{
+        int numMes;
+        numMes = Mes(mes);
+        DateFormat dateFormat = new SimpleDateFormat("MM"); 
+        
+        
+        Session sessao = null;
+        List lista = null;
+        try {
+            sessao = dao.HibernateUtil.getSessionFactory().openSession();
+            sessao.beginTransaction();
+            
+            // Usando HQL           
+            Query consulta = sessao.createQuery("From Pedido p JOIN FETCH p.cliente JOIN FETCH p.cliente.cidade where (month(p.data)) = "+numMes+" AND (year(p.data)) = "+ano+" ORDER BY data DESC");
+            lista = consulta.list();
+            
+            sessao.getTransaction().commit(); 
+                       
+        } catch (HibernateException he) {
+            sessao.getTransaction().rollback();
+        }
+        finally {
+            if ( sessao != null ) {
+               sessao.close();
+            } 
+            return lista;
+        }
+    }
+    
     public List pesquisarPedidoHoje() throws Exception, SQLException {
         Session sessao = null;
         List lista = null;

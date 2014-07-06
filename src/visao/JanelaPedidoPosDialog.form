@@ -397,6 +397,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Enviar Pedido"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEnviarPedidoActionPerformed"/>
+          </Events>
         </Component>
         <Container class="javax.swing.JPanel" name="jPanel4">
           <Properties>
@@ -436,6 +439,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Gerar PDF"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGerarPdfActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

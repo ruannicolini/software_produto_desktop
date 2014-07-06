@@ -3,23 +3,36 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package visao;
 
 import controlador.Controlador;
+import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import negocio.Pedido;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.query.JRHibernateQueryExecuterFactory;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
  * @author Ruan
  */
 public class JanelaPedidoPosDialog extends javax.swing.JDialog {
+
     Controlador control;
     Pedido ped;
+
     /**
      * Creates new form JanelaPedidoPos
      */
@@ -29,27 +42,28 @@ public class JanelaPedidoPosDialog extends javax.swing.JDialog {
         try {
             control = new Controlador();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "ERRO de conexão com o BANCO. Procure o suporte. " + 
-                        e.getMessage() );
+            JOptionPane.showMessageDialog(null, "ERRO de conexão com o BANCO. Procure o suporte. "
+                    + e.getMessage());
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "ERRO não esperado. " + 
-                        e.getMessage() );
+            JOptionPane.showMessageDialog(null, "ERRO não esperado. "
+                    + e.getMessage());
         }
     }
 
     JanelaPedidoPosDialog(java.awt.Frame parent, boolean modal, Pedido pedido) {
+
         super(parent, modal);
         initComponents();
-        ped = pedido;
         try {
             control = new Controlador();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "ERRO de conexão com o BANCO. Procure o suporte. " + 
-                        e.getMessage() );
+            JOptionPane.showMessageDialog(null, "ERRO de conexão com o BANCO. Procure o suporte. "
+                    + e.getMessage());
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "ERRO não esperado. " + 
-                        e.getMessage() );
-        }    
+            JOptionPane.showMessageDialog(null, "ERRO não esperado. "
+                    + e.getMessage());
+        }
+        ped = pedido;
     }
 
     /**
@@ -102,7 +116,6 @@ public class JanelaPedidoPosDialog extends javax.swing.JDialog {
                 formComponentShown(evt);
             }
         });
-        getContentPane().setLayout(new java.awt.BorderLayout());
 
         jPanel1.setBackground(new java.awt.Color(240, 240, 241));
 
@@ -291,6 +304,11 @@ public class JanelaPedidoPosDialog extends javax.swing.JDialog {
         );
 
         btnEnviarPedido.setText("Enviar Pedido");
+        btnEnviarPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEnviarPedidoActionPerformed(evt);
+            }
+        });
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("OBSERVAÇÕES"));
         jPanel4.setLayout(new java.awt.BorderLayout());
@@ -303,6 +321,11 @@ public class JanelaPedidoPosDialog extends javax.swing.JDialog {
         jPanel4.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         btnGerarPdf.setText("Gerar PDF");
+        btnGerarPdf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGerarPdfActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -351,32 +374,98 @@ public class JanelaPedidoPosDialog extends javax.swing.JDialog {
         // TODO add your handling code here:
         jtfNomeCliente.setText(ped.getCliente().getNome());
         jtfEndereco.setText(ped.getCliente().getEndereco());
-        jftCidadeCliente.setText((String)ped.getCliente().getCidade().getNome());
+        jftCidadeCliente.setText((String) ped.getCliente().getCidade().getNome());
         jtfNumero.setText(ped.getCliente().getNumero());
         jtfBairro.setText(ped.getCliente().getBairro());
         jtfCelCliente.setText(ped.getCliente().getTelCel());
         jtfTelCliente.setText(ped.getCliente().getTelFixo());
         jtfEmail.setText(ped.getCliente().getEmail());
-        if(ped.getCliente().getTipoCliente() == 'F'){
+        jtaObsrevacoes.setText(ped.getDescricao());
+        if (ped.getCliente().getTipoCliente() == 'F') {
             jtfCnpjCpf.setText(ped.getCliente().getPessoafisica().getCpf());
-        }else{
-            if(ped.getCliente().getTipoCliente() == 'J'){
+        } else {
+            if (ped.getCliente().getTipoCliente() == 'J') {
                 jtfCnpjCpf.setText(ped.getCliente().getPessoajuridica().getCnpj());
                 jtfIe.setText(ped.getCliente().getPessoajuridica().getIe());
             }
         }
-        
+
         try {
             control.pesquisarPedidoItem(tblProdutosVendidos, ped.getIdPedido());
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "ERRO no BANCO ao pesquisarPedidoItem." + 
-                        e.getMessage() );
+            JOptionPane.showMessageDialog(null, "ERRO no BANCO ao pesquisarPedidoItem."
+                    + e.getMessage());
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "ERRO não esperado. " + 
-                        e.getMessage() );
+            JOptionPane.showMessageDialog(null, "ERRO não esperado. "
+                    + e.getMessage());
         }
-        
+
     }//GEN-LAST:event_formComponentShown
+
+    private void btnGerarPdfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGerarPdfActionPerformed
+        // TODO add your handling code here:
+        InputStream rel = null;
+        
+        if (ped != null) {
+            List lista = null;
+            
+            try {
+                lista = control.pesquisarPedidoItem(null, ped.getIdPedido());
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "ERRO no BANCO ao pesquisarPedidoItem."
+                        + e.getMessage());
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "ERRO não esperado. "
+                        + e.getMessage());
+            }
+            
+            try{
+                // Dados para o RELATORIO
+                JRBeanCollectionDataSource dados = new JRBeanCollectionDataSource(lista);
+
+                // PASSO 1 - Caminho do relatório
+                if(ped.getCliente().getTipoCliente() == 'F'){
+                    rel = getClass().getResourceAsStream("../relatorios/PedidoPF.jasper");
+                }else{
+                    rel = getClass().getResourceAsStream("../relatorios/PedidoPJ.jasper");
+
+                }
+                
+                // PASSO 2 - Criar parâmetros de Pesquisa 
+                Map parametros = new HashMap();
+                // Imagem 
+                ImageIcon gto = new ImageIcon(getClass().getResource("../relatorios/leaf_banner_green.png"));
+                parametros.put("logo", gto.getImage());
+                
+                parametros.put("pedido", ped);
+
+                // PASSO 3 - Carregar o relatório com os dados
+                JasperPrint print;
+                // Passar o caminho do RELATORIO e os PARAMETROS dos PASSSOS 1 e 2 e os DADOS
+                print = JasperFillManager.fillReport(rel, parametros, dados);
+
+                // PASSO 4 - Mostrat em uma JANELA
+                JasperViewer janela = new JasperViewer(print, false);
+                janela.setVisible(true);
+
+            } catch (JRException ex) {
+                    Logger.getLogger(JanelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(null, "ERRO JRException. Procure o suporte. "
+                            + ex.getMessage());
+            } catch (Exception ex) {
+                    Logger.getLogger(JanelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(null, "Procure o suporte. "
+                            + ex.getMessage());
+            }
+        }
+        this.setVisible(false);
+    }//GEN-LAST:event_btnGerarPdfActionPerformed
+
+    private void btnEnviarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarPedidoActionPerformed
+        // TODO add your handling code here:
+            
+        
+    }//GEN-LAST:event_btnEnviarPedidoActionPerformed
 
     /**
      * @param args the command line arguments

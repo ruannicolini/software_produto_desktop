@@ -131,3 +131,6 @@ INSERT INTO PRODUTO(descricao, preco, idlinha, IDTIPO, statusVenda)VALUES('SAB L
 select * from produto where produto.idproduto = 2;
 select * from pedido;
 select * from PedidoItem;
+
+Select Year('2014-02-01');
+select month('2014-02-01');

@@ -168,7 +168,7 @@ public class JanelaPedidoPesqDialog extends javax.swing.JDialog {
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
         try {
             // TODO add your handling code here:
-            control.pesquisarPedidos(tblPedidos, cmbTipo.getSelectedIndex(), txtPesq.getText());
+            control.pesquisarPedidos(tblPedidos, cmbTipo.getSelectedIndex(), txtPesq.getText(), null);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "ERRO ao PESQUISAR no BANCO. " + ex.getMessage() );
         } catch (Exception ex) {

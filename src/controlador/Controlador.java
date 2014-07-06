@@ -99,14 +99,15 @@ public class Controlador {
     }
     
     public void carregarComboLinhas(JComboBox combo) throws Exception, SQLException  {
-        
         List lista = linhaDAO.listarLinhas();
         combo.setModel( new DefaultComboBoxModel( lista.toArray() ) );
     }
-
     
-    public void pesquisarCidade( JTable tabela, int tipo, String pesq ) throws Exception, SQLException {
+    public void carregarComboAno(JComboBox combo) throws Exception, SQLException  {
         
+    }
+
+    public void pesquisarCidade( JTable tabela, int tipo, String pesq ) throws Exception, SQLException {
         List lista = null;
         
         switch (tipo) {
@@ -141,7 +142,7 @@ public class Controlador {
         cidDAO.alterar(cid);
     }
     
-    public void pesquisarCliente( JTable tabela, int tipo, String pesq ) throws Exception, SQLException {
+    public List pesquisarCliente( JTable tabela, int tipo, String pesq ) throws Exception, SQLException {
         List lista = null;
         
         switch (tipo) {
@@ -152,22 +153,27 @@ public class Controlador {
                 int id = Integer.parseInt(pesq);
                 lista = cliDAO.pesquisar(id);
                 break;
-            case 2: // Pesquisar BAIRRO
+            case 2: // Pesquisar CIDADE
                 lista = cliDAO.pesquisarCidade(pesq);
                 break;
             
-        }    
-        // PERCORRE A LISTA E COLOCA NA TABELA      
-        Cliente cli;
-        // Apagar as linhas da tabela
-        ((DefaultTableModel) tabela.getModel()).setRowCount(0);
-        Iterator<Cliente> ite = lista.iterator();
-        while ( ite.hasNext() ) {
-            cli = ite.next();
-            
-            ((DefaultTableModel) tabela.getModel()).addRow( cli.toArray() );                        
+        } 
+        if(tabela != null){
+            // PERCORRE A LISTA E COLOCA NA TABELA      
+            Cliente cli;
+            // Apagar as linhas da tabela
+            ((DefaultTableModel) tabela.getModel()).setRowCount(0);
+            Iterator<Cliente> ite = lista.iterator();
+            while ( ite.hasNext() ) {
+                cli = ite.next();
 
-        }                      
+                ((DefaultTableModel) tabela.getModel()).addRow( cli.toArray() );                        
+
+            }   
+        }else{
+            return lista;
+        }
+        return null;
     }
 
     
@@ -331,7 +337,7 @@ public class Controlador {
         limpaDadosPedido();
     }
     
-    public void pesquisarPedidos( JTable tabela, int tipo, String pesq ) throws Exception, SQLException {
+    public List pesquisarPedidos( JTable tabela, int tipo, String pesq, String ano ) throws Exception, SQLException {
         List lista = null;
       
         switch (tipo) {
@@ -343,17 +349,22 @@ public class Controlador {
                 break;
             case 2: // Pesquisar Tipo
                 lista = pedidoDAO.pesquisarPedidoHoje();
-                break;      
+                break;
+            case 3: // Apenas para verificar comissao do mes
+                lista = pedidoDAO.apuracaoMes(pesq, ano);
+                break;
         }
-        // PERCORRE A LISTA E COLOCA NA TABELA
-        Pedido ped;
-        ((DefaultTableModel) tabela.getModel()).setRowCount(0);
-        Iterator<Pedido> ite = lista.iterator();
-        while ( ite.hasNext() ) {
-                ped = ite.next();        
-                ((DefaultTableModel) tabela.getModel()).addRow( ped.toArray() );
+        if(tabela != null){
+            // PERCORRE A LISTA E COLOCA NA TABELA
+            Pedido ped;
+            ((DefaultTableModel) tabela.getModel()).setRowCount(0);
+            Iterator<Pedido> ite = lista.iterator();
+            while ( ite.hasNext() ) {
+                    ped = ite.next();        
+                    ((DefaultTableModel) tabela.getModel()).addRow( ped.toArray() );
+            }
         }
-        
+        return lista;
     }
     
     public void excluirPedido(Pedido ped) throws SQLException, Exception{
@@ -364,26 +375,29 @@ public class Controlador {
         pedidoItemDAO.excluir(pedIt);
     }
     
-    public void pesquisarPedidoItem( JTable tabela, int idPedido ) throws Exception, SQLException {
+    public List pesquisarPedidoItem( JTable tabela, int idPedido ) throws Exception, SQLException {
         List lista = null;
         lista = pedidoItemDAO.pesquisar(idPedido);
     
-        // PERCORRE A LISTA E COLOCA NA TABELA      
-        Pedidoitem pedItem;
-        // Apagar as linhas da tabela
-        ((DefaultTableModel) tabela.getModel()).setRowCount(0);
-        Iterator<Pedidoitem> ite = lista.iterator();
-        while ( ite.hasNext() ) {
-            pedItem = ite.next();
-            ((DefaultTableModel) tabela.getModel()).addRow( pedItem.toArray() );
-            int lastLine = tabela.getRowCount() - 1;
-            
-            
-            if(tabela.getModel().getColumnCount()>5){ // Diferença entre a quantidade de colunas em pedidoDialog e PedidoPosDialog
-                tabela.setValueAt("ItemJaInserido", lastLine, 5);
-            }
-            
-        }                      
+        if(tabela != null){
+            // PERCORRE A LISTA E COLOCA NA TABELA      
+            Pedidoitem pedItem;
+            // Apagar as linhas da tabela
+            ((DefaultTableModel) tabela.getModel()).setRowCount(0);
+            Iterator<Pedidoitem> ite = lista.iterator();
+            while ( ite.hasNext() ) {
+                pedItem = ite.next();
+                ((DefaultTableModel) tabela.getModel()).addRow( pedItem.toArray() );
+                int lastLine = tabela.getRowCount() - 1;
+
+
+                if(tabela.getModel().getColumnCount()>5){ // Diferença entre a quantidade de colunas em pedidoDialog e PedidoPosDialog
+                    tabela.setValueAt("ItemJaInserido", lastLine, 5);
+                }
+
+            }    
+        }
+        return lista;
     }
     public void alterarPedido(Pedido pedido,Cliente cli, String obs, JTable tabela) throws SQLException, Exception{
         float valorTotal = 0;
@@ -417,6 +431,10 @@ public class Controlador {
     }
     public Pedido getPedSelecionado(){
         return PedSelecionado;
+    }
+    
+    public void setPedSelecionado(Pedido ped){
+        PedSelecionado = ped;
     }
     
     public void limpaDadosPedido(){
