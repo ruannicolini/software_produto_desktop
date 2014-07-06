@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package visao;
 
+import chainofresponsibility.ChainOfResponsibility;
 import controlador.Controlador;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -17,16 +17,17 @@ import negocio.Cliente;
  * @author Ruan
  */
 public class JanelaClientePesqDialog extends javax.swing.JDialog {
+
     Controlador control;
     Cliente cliSelecionado;
 
     /**
      * Creates new form JanelaClientePesqDialog
      */
-    public JanelaClientePesqDialog(java.awt.Dialog parent, boolean modal) throws Exception, SQLException  {
+    public JanelaClientePesqDialog(java.awt.Dialog parent, boolean modal) throws Exception, SQLException {
         super(parent, modal);
         initComponents();
-        
+
         control = Controlador.getInstance();
         cliSelecionado = null;
     }
@@ -49,6 +50,9 @@ public class JanelaClientePesqDialog extends javax.swing.JDialog {
         btnCancelar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
         btnSelecionar = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -137,7 +141,7 @@ public class JanelaClientePesqDialog extends javax.swing.JDialog {
                     .addComponent(btnPesquisar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar)
                     .addComponent(btnSelecionar)
@@ -147,20 +151,33 @@ public class JanelaClientePesqDialog extends javax.swing.JDialog {
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
+        jMenu1.setText("Ajuda");
+
+        jMenuItem1.setText("Help");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
         try {
             // TODO add your handling code here:
-            control.pesquisarCliente(tblClientes, cmbTipo.getSelectedIndex(), txtPesq.getText() );
+            control.pesquisarCliente(tblClientes, cmbTipo.getSelectedIndex(), txtPesq.getText());
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "ERRO ao PESQUISAR no BANCO. " + ex.getMessage() );
+            JOptionPane.showMessageDialog(this, "ERRO ao PESQUISAR no BANCO. " + ex.getMessage());
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "ERRO ao PESQUISAR. " + ex.getMessage() );
+            JOptionPane.showMessageDialog(this, "ERRO ao PESQUISAR. " + ex.getMessage());
         }
-        
-      
+
 
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
@@ -174,9 +191,9 @@ public class JanelaClientePesqDialog extends javax.swing.JDialog {
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         // TODO add your handling code here:
 
-        try{
+        try {
             int linha = tblClientes.getSelectedRow();
-            if ( linha >= 0 ) {
+            if (linha >= 0) {
                 cliSelecionado = (Cliente) tblClientes.getValueAt(linha, 0);
                 control.excluirCliente(cliSelecionado);
                 ((DefaultTableModel) tblClientes.getModel()).removeRow(linha);
@@ -185,17 +202,17 @@ public class JanelaClientePesqDialog extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "Selecione um CLIENTE.");
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "ERRO ao EXCLUIR no BANCO. " + ex.getMessage() );
+            JOptionPane.showMessageDialog(this, "ERRO ao EXCLUIR no BANCO. " + ex.getMessage());
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "ERRO ao EXCLUIR. " + ex.getMessage() );
+            JOptionPane.showMessageDialog(this, "ERRO ao EXCLUIR. " + ex.getMessage());
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionarActionPerformed
         // TODO add your handling code here:
-                
+
         int linha = tblClientes.getSelectedRow();
-        if ( linha >= 0 ) {
+        if (linha >= 0) {
             cliSelecionado = (Cliente) tblClientes.getValueAt(linha, 0);
             setVisible(false);
         } else {
@@ -203,6 +220,12 @@ public class JanelaClientePesqDialog extends javax.swing.JDialog {
         }
 
     }//GEN-LAST:event_btnSelecionarActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        String janela = "JANELA_CLIENTE_PESQ";
+        ChainOfResponsibility.chamarAjuda(janela);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     public Cliente getCliente() {
         return cliSelecionado;
@@ -217,6 +240,9 @@ public class JanelaClientePesqDialog extends javax.swing.JDialog {
     private javax.swing.JButton btnPesquisar;
     private javax.swing.JButton btnSelecionar;
     private javax.swing.JComboBox cmbTipo;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblClientes;

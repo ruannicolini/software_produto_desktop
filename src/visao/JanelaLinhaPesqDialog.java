@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package visao;
+
+import chainofresponsibility.ChainOfResponsibility;
 import controlador.Controlador;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -16,14 +17,14 @@ import negocio.Linha;
  * @author Ruan
  */
 public class JanelaLinhaPesqDialog extends javax.swing.JDialog {
-    
+
     Controlador control;
     Linha linSelecionada;
 
     /**
      * Creates new form JanelaCidadePesqDialog
      */
-    public JanelaLinhaPesqDialog(java.awt.Frame parent, boolean modal) throws Exception, SQLException  {
+    public JanelaLinhaPesqDialog(java.awt.Frame parent, boolean modal) throws Exception, SQLException {
         super(parent, modal);
         initComponents();
         control = Controlador.getInstance();
@@ -48,6 +49,9 @@ public class JanelaLinhaPesqDialog extends javax.swing.JDialog {
         btnSelecionar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -145,17 +149,31 @@ public class JanelaLinhaPesqDialog extends javax.swing.JDialog {
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
+        jMenu1.setText("Ajuda");
+
+        jMenuItem1.setText("Help");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
         try {
             // TODO add your handling code here:
-            control.pesquisarLinha(tblLinhas, cmbTipo.getSelectedIndex(), txtPesq.getText() );
+            control.pesquisarLinha(tblLinhas, cmbTipo.getSelectedIndex(), txtPesq.getText());
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "ERRO ao PESQUISAR no BANCO. " + ex.getMessage() );
+            JOptionPane.showMessageDialog(this, "ERRO ao PESQUISAR no BANCO. " + ex.getMessage());
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "ERRO ao PESQUISAR. " + ex.getMessage() );
+            JOptionPane.showMessageDialog(this, "ERRO ao PESQUISAR. " + ex.getMessage());
         }
 
     }//GEN-LAST:event_btnPesquisarActionPerformed
@@ -164,21 +182,21 @@ public class JanelaLinhaPesqDialog extends javax.swing.JDialog {
         // TODO add your handling code here:
 
         int linha = tblLinhas.getSelectedRow();
-        if ( linha >= 0 ) {
+        if (linha >= 0) {
             linSelecionada = (Linha) tblLinhas.getValueAt(linha, 0);
             setVisible(false);
         } else {
             JOptionPane.showMessageDialog(this, "Selecione uma Linha.");
         }
-        
+
 
     }//GEN-LAST:event_btnSelecionarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
 //        // TODO add your handling code here:
-        try{ 
+        try {
             int linha = tblLinhas.getSelectedRow();
-            if ( linha >= 0 ) {
+            if (linha >= 0) {
                 linSelecionada = (Linha) tblLinhas.getValueAt(linha, 0);
                 control.excluirLinha(linSelecionada);
                 ((DefaultTableModel) tblLinhas.getModel()).removeRow(linha);
@@ -187,17 +205,17 @@ public class JanelaLinhaPesqDialog extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "Selecione uma LINHA.");
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "ERRO ao EXCLUIR no BANCO. " + ex.getMessage() );
+            JOptionPane.showMessageDialog(this, "ERRO ao EXCLUIR no BANCO. " + ex.getMessage());
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "ERRO ao EXCLUIR. " + ex.getMessage() );
+            JOptionPane.showMessageDialog(this, "ERRO ao EXCLUIR. " + ex.getMessage());
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     public Linha getLinha() {
         return linSelecionada;
     }
-    
-    
+
+
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
         linSelecionada = null;
@@ -205,8 +223,12 @@ public class JanelaLinhaPesqDialog extends javax.swing.JDialog {
 
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        String janela = "JANELA_LINHA_PESQ";
+        ChainOfResponsibility.chamarAjuda(janela);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    
     /**
      * @param args the command line arguments
      */
@@ -255,6 +277,9 @@ public class JanelaLinhaPesqDialog extends javax.swing.JDialog {
     private javax.swing.JButton btnPesquisar;
     private javax.swing.JButton btnSelecionar;
     private javax.swing.JComboBox cmbTipo;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblLinhas;
