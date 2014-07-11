@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 09/07/2014 13:56:13 by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="negocio.Configuracoes" table="configuracoes" catalog="bioextratus">
+        <id name="idConfiguracoes" type="java.lang.Integer">
+            <column name="idConfiguracoes" />
+            <generator class="identity" />
+        </id>
+        <property name="nomeVendedor" type="string">
+            <column name="nomeVendedor" length="60" not-null="true" />
+        </property>
+        <property name="enderecoVendedor" type="string">
+            <column name="enderecoVendedor" length="120" />
+        </property>
+        <property name="telFixoVendedor" type="string">
+            <column name="telFixoVendedor" length="30" />
+        </property>
+        <property name="telCelVendedor" type="string">
+            <column name="telCelVendedor" length="30" />
+        </property>
+        <property name="emailVendedor" type="string">
+            <column name="emailVendedor" length="80" />
+        </property>
+        <property name="emailEnvioPedido" type="string">
+            <column name="emailEnvioPedido" length="80" />
+        </property>
+    </class>
+</hibernate-mapping>

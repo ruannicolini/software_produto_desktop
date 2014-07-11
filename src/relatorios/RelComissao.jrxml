@@ -18,7 +18,7 @@
 	<field name="pedidoitems" class="java.util.Set"/>
 	<field name="valorTotal" class="java.lang.Float"/>
 	<variable name="valorTotal_SUM" class="java.lang.Float" calculation="Sum">
-		<variableExpression><![CDATA[$F{valorTotal}]]></variableExpression>
+		<variableExpression><![CDATA[$F{valorTotal} * 0.07]]></variableExpression>
 	</variable>
 	<variable name="valorTotal_SUM_1" class="java.lang.Float" resetType="Column" calculation="Sum">
 		<variableExpression><![CDATA[$F{valorTotal}]]></variableExpression>
@@ -73,13 +73,10 @@
 				<text><![CDATA[VALOR TOTAL]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="c91e78c8-5ef9-4d0a-a959-367eeb34456d" x="356" y="1" width="100" height="20"/>
+				<reportElement uuid="c91e78c8-5ef9-4d0a-a959-367eeb34456d" x="356" y="1" width="197" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[COMISSÃO]]></text>
 			</staticText>
-			<line>
-				<reportElement uuid="e03937c6-51bb-4b2d-b403-c8e291bef82b" x="456" y="1" width="1" height="19"/>
-			</line>
 			<line>
 				<reportElement uuid="17ad35bb-acbe-4bd5-ac09-a79b311c0ffe" x="356" y="2" width="1" height="19"/>
 			</line>
@@ -98,7 +95,7 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="24" splitType="Stretch">
+		<band height="21" splitType="Stretch">
 			<textField>
 				<reportElement uuid="2514d96e-1046-4fe1-a32c-f3fe8dc6e471" x="0" y="0" width="40" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
@@ -119,8 +116,8 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{valorTotal}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement uuid="c562b509-8426-4dc4-bb42-3a52f21b8dd3" x="356" y="0" width="100" height="20"/>
+			<textField pattern="###0.00">
+				<reportElement uuid="c562b509-8426-4dc4-bb42-3a52f21b8dd3" x="356" y="0" width="197" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{valorTotal} * 0.07]]></textFieldExpression>
 			</textField>
@@ -129,9 +126,6 @@
 			</line>
 		</band>
 	</detail>
-	<columnFooter>
-		<band height="45" splitType="Stretch"/>
-	</columnFooter>
 	<pageFooter>
 		<band height="20" splitType="Stretch">
 			<textField>
@@ -158,6 +152,20 @@
 		</band>
 	</pageFooter>
 	<summary>
-		<band splitType="Stretch"/>
+		<band height="61" splitType="Stretch">
+			<rectangle>
+				<reportElement uuid="79964440-12a5-4f1a-bd11-ad4a5dbfd84e" x="357" y="0" width="196" height="20" backcolor="#CCCCCC"/>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="93be07a2-d061-4139-a3d9-6c9c64061657" x="358" y="0" width="41" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<text><![CDATA[ TOTAL:]]></text>
+			</staticText>
+			<textField pattern="###0.00">
+				<reportElement uuid="d4995487-8708-4324-bc41-65e0aa63cdbe" x="399" y="0" width="114" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{valorTotal_SUM}]]></textFieldExpression>
+			</textField>
+		</band>
 	</summary>
 </jasperReport>

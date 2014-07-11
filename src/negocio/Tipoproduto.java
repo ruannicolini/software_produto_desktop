@@ -1,5 +1,5 @@
 package negocio;
-// Generated 04/06/2014 19:48:26 by Hibernate Tools 3.6.0
+// Generated 09/07/2014 13:56:11 by Hibernate Tools 3.6.0
 
 
 import java.util.HashSet;
@@ -62,6 +62,7 @@ public class Tipoproduto  implements java.io.Serializable {
     public void setProdutos(Set produtos) {
         this.produtos = produtos;
     }
+
     @Override
     public String toString() {
         return descricao;
@@ -70,7 +71,6 @@ public class Tipoproduto  implements java.io.Serializable {
     public Object[] toArray() {
         return new Object[]{this, getUnVenda()};
     }
-
 
 
 }

@@ -15,6 +15,7 @@ import java.util.Iterator;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import negocio.*;
@@ -28,6 +29,7 @@ public class Controlador {
     
     CidadeDAO cidDAO;
     ClienteDAO cliDAO;
+    ConfiguracoesDAO configDAO;
     PessoafisicaDAO pfDAO;
     PessoajuridicaDAO pjDAO;
     LinhaDAO linhaDAO;
@@ -40,6 +42,7 @@ public class Controlador {
     PedidoDAO pedidoDAO;
     PedidoItemDAO pedidoItemDAO;
     Pedido PedSelecionado;
+    
 
     public Controlador() throws Exception, SQLException {
         cidDAO = new CidadeDAO();
@@ -51,6 +54,7 @@ public class Controlador {
         tipoProdutoDAO = new TipoProdutoDAO();
         pedidoDAO = new PedidoDAO();
         pedidoItemDAO = new PedidoItemDAO();
+        configDAO = new ConfiguracoesDAO();
         //pedIt = new Pedidoitem();
     }
     
@@ -440,6 +444,26 @@ public class Controlador {
     public void limpaDadosPedido(){
         cli = null;
         prod = null;
+    }
+    
+    public void AlterarConfiguracoes(String nomeVendedor, String enderecoVendedor, String emailVendedor, String telFixoVendedor, String telCelVendedor, String emailEnvioPedido) throws Exception, SQLException{
+            
+        // OBS, por padrão só teremos um registro na tabela Configuracoes, por isso, sempre alteraremos o id 1;
+        Configuracoes config = new Configuracoes(nomeVendedor, enderecoVendedor, telFixoVendedor, telCelVendedor, emailVendedor,  emailEnvioPedido);
+        
+        config.setIdConfiguracoes(1);
+           
+        configDAO.alterar(config);
+        
+    }
+    
+    public Configuracoes consultarConfiguracoes( ) throws Exception, SQLException{
+            
+        // OBS, por padrão só teremos um registro na tabela Configuracoes, por isso, sempre alteraremos o id 1;
+            
+        Configuracoes config = configDAO.consultar( );
+        
+        return config;
     }
     
     

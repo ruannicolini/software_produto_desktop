@@ -7,11 +7,13 @@
 package visao;
 
 import com.sun.awt.AWTUtilities;
+import controlador.Controlador;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.InputStream;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -33,7 +35,7 @@ import net.sf.jasperreports.view.JasperViewer;
  */
 public class JanelaPrincipal extends javax.swing.JFrame {
     JanelaClienteDialog janelaClientes;
-
+    Controlador control;
     /**
      * Creates new form Principal
      */
@@ -44,6 +46,26 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         
         // Aloca Uma janela de Cliente
         janelaClientes = new JanelaClienteDialog(this, true);
+        
+        try {
+            control = new Controlador();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "ERRO de conexão com o BANCO. Procure o suporte. " + 
+                        e.getMessage() );           
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ERRO não esperado. " + 
+                        e.getMessage() );
+        }
+        
+        //Chamo Esse metodo apenas para iniciar o hibernate;
+        try{
+            control.consultarConfiguracoes( );
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "ERRO ao Alterar no Banco. " + ex.getMessage() );
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "ERRO ao Alterar. " + ex.getMessage() );
+        }
     }
 
     /**
@@ -93,6 +115,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         jButton4.setText("Relatório");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("BioExtratus - Software de Gerenciamento de Vendas");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
@@ -226,7 +249,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
         jMenu2.setText("Configurações");
 
-        jMenuItem8.setText("Opções");
+        jMenuItem8.setText("Parâmetros");
         jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem8ActionPerformed(evt);
@@ -240,6 +263,11 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
         jMenuItem7.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
         jMenuItem7.setText("Sobre");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem7);
 
         jMenuBar1.add(jMenu3);
@@ -261,6 +289,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        
         
      
 
@@ -291,6 +320,11 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
         // TODO add your handling code here:
+        JanelaConfiguracoesDialog janelaC;
+        janelaC = new JanelaConfiguracoesDialog(this, false);
+        janelaC.setLocationRelativeTo(null); // Faz com que a janela apareça no meio da tela
+        janelaC.setVisible(true);
+        
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
@@ -320,6 +354,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         JanelaCidadeDialog janelaCidade;
         janelaCidade = new JanelaCidadeDialog(this, true);
         janelaCidade.setLocationRelativeTo(null); // Faz com que a janela apareça no meio da tela
+        
         janelaCidade.setVisible(true);
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
@@ -347,6 +382,14 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         janelaRelComissao.setVisible(true);
     }//GEN-LAST:event_jMenuItem15ActionPerformed
 
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        // TODO add your handling code here:
+        JanelaSobreDialog janelaSobre;
+        janelaSobre = new JanelaSobreDialog(this, true);
+        janelaSobre.setLocationRelativeTo(null); // Faz com que a janela apareça no meio da tela
+        janelaSobre.setVisible(true);
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -358,7 +401,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Windows".equals(info.getName())) {
+                if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }

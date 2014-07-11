@@ -163,8 +163,7 @@ public class ProdutoDAO {
             if ( sessao != null ) {
                 sessao.close();
             }            
-        }
-        
+        }   
     }
 
 }
