@@ -18,8 +18,10 @@ import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import negocio.Pedido;
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.query.JRHibernateQueryExecuterFactory;
 import net.sf.jasperreports.view.JasperViewer;
@@ -382,9 +384,14 @@ public class JanelaPedidoPosDialog extends javax.swing.JDialog {
     private void btnGerarPdfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGerarPdfActionPerformed
         // TODO add your handling code here:
         InputStream rel = null;
+        Map parametros = null;
+        ImageIcon gto = null;
+        JasperPrint print = null;
+        JRBeanCollectionDataSource dados = null;
+        List lista = null;
         
         if (ped != null) {
-            List lista = null;
+            
             
             try {
                 lista = control.pesquisarPedidoItem(null, ped.getIdPedido());
@@ -398,26 +405,26 @@ public class JanelaPedidoPosDialog extends javax.swing.JDialog {
             
             try{
                 // Dados para o RELATORIO
-                JRBeanCollectionDataSource dados = new JRBeanCollectionDataSource(lista);
+                dados = new JRBeanCollectionDataSource(lista);
 
                 // PASSO 1 - Caminho do relatório
                 if(ped.getCliente().getTipoCliente() == 'F'){
-                    rel = getClass().getResourceAsStream("../relatorios/PedidoPF.jasper");
+                    //System.out.println(getClass().getResourceAsStream("/relatorios/PedidoPF.jasper"));
+                    rel = getClass().getResourceAsStream("/relatorios/PedidoPF.jasper");
                 }else{
-                    rel = getClass().getResourceAsStream("../relatorios/PedidoPJ.jasper");
-
+                    rel = getClass().getResourceAsStream("/relatorios/PedidoPJ.jasper");
                 }
                 
                 // PASSO 2 - Criar parâmetros de Pesquisa 
-                Map parametros = new HashMap();
+                parametros = new HashMap();
                 // Imagem 
-                ImageIcon gto = new ImageIcon(getClass().getResource("../relatorios/leaf_banner_green.png"));
+                gto = new ImageIcon(getClass().getResource("/relatorios/leaf_banner_green.png"));
                 parametros.put("logo", gto.getImage());
                 
                 parametros.put("pedido", ped);
 
-                // PASSO 3 - Carregar o relatório com os dados
-                JasperPrint print;
+                
+                
                 // Passar o caminho do RELATORIO e os PARAMETROS dos PASSSOS 1 e 2 e os DADOS
                 print = JasperFillManager.fillReport(rel, parametros, dados);
 

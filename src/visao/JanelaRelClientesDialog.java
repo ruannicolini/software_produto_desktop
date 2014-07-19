@@ -169,7 +169,7 @@ public class JanelaRelClientesDialog extends javax.swing.JDialog {
             JRBeanCollectionDataSource dados = new JRBeanCollectionDataSource(lista);
             
             // PASSO 1 - Caminho do relatório
-            InputStream rel = getClass().getResourceAsStream("../relatorios/RelClienteCidade.jasper");
+            InputStream rel = getClass().getResourceAsStream("/relatorios/RelClienteCidade.jasper");
 
             // PASSO 2 - Criar parâmetros de Pesquisa 
             Map parametros = new HashMap();

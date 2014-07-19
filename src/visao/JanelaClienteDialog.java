@@ -6,7 +6,7 @@
 
 package visao;
 
-import com.sun.awt.AWTUtilities;
+
 import controlador.Controlador;
 import java.io.File;
 import java.sql.SQLException;
@@ -413,25 +413,29 @@ public class JanelaClienteDialog extends javax.swing.JDialog {
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
         // TODO add your handling code here:
         int id = 0;
-        try {
-                id = control.inserirCliente(jtfNome.getText(), jtfEndereco.getText(), jtfNumero.getText(), jtfBairro.getText(), jtfComplemento.getText(),
-                    jtfTel.getText(), jtfCel.getText(), (Cidade) cmbCidade.getSelectedItem(),jtfCep.getText(), (char) bGroupTipo.getSelection().getMnemonic(), jtfEmail.getText(),
-                    jtfCpf.getText(), jtfCnpj.getText(), jtfIe.getText());
-            
-                JOptionPane.showMessageDialog(this, "Cliente " + id + " - " + jtfNome.getText() + " inserido com sucesso.");
+        if(jtfNome.getText().equals("") || jtfNome == null){
+                                JOptionPane.showMessageDialog(this, "Informe o Nome do Cliente.");
+        }else{
+            try {
+                    id = control.inserirCliente(jtfNome.getText(), jtfEndereco.getText(), jtfNumero.getText(), jtfBairro.getText(), jtfComplemento.getText(),
+                        jtfTel.getText(), jtfCel.getText(), (Cidade) cmbCidade.getSelectedItem(),jtfCep.getText(), (char) bGroupTipo.getSelection().getMnemonic(), jtfEmail.getText(),
+                        jtfCpf.getText(), jtfCnpj.getText(), jtfIe.getText());
 
-        } catch (NumberFormatException erro) {
-            JOptionPane.showMessageDialog(this, "Digite um ID numerico." + 
-                    erro.getMessage() + erro.getCause() );
-        } catch (util.ClienteException erro) {
-            JOptionPane.showMessageDialog(this, erro.getMessage() );
-        } catch (SQLException erro) {
-            JOptionPane.showMessageDialog(this, "Erro desconhecimento. " + 
-                    erro.getMessage() + erro.getClass() );            
-        } catch (Exception erro) {
-            JOptionPane.showMessageDialog(this, "Erro desconhecimento. " + 
-                    erro.getMessage() + erro.getClass() );
-        }   
+                    JOptionPane.showMessageDialog(this, "Cliente " + id + " - " + jtfNome.getText() + " inserido com sucesso.");
+
+            } catch (NumberFormatException erro) {
+                JOptionPane.showMessageDialog(this, "Digite um ID numerico." + 
+                        erro.getMessage() + erro.getCause() );
+            } catch (util.ClienteException erro) {
+                JOptionPane.showMessageDialog(this, erro.getMessage() );
+            } catch (SQLException erro) {
+                JOptionPane.showMessageDialog(this, "Erro desconhecimento. " + 
+                        erro.getMessage() + erro.getClass() );            
+            } catch (Exception erro) {
+                JOptionPane.showMessageDialog(this, "Erro desconhecimento. " + 
+                        erro.getMessage() + erro.getClass() );
+            }
+        }
         
         limpaDados();  // Limpa os campos para que na proxima vez que a janela for chamada não apareça os ultimos dados cadastrados.
         

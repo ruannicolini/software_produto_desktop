@@ -6,13 +6,14 @@
 
 package visao;
 
-import com.sun.awt.AWTUtilities;
+
 import controlador.Controlador;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.InputStream;
+import java.net.URL;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,6 +21,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -40,7 +42,13 @@ public class JanelaPrincipal extends javax.swing.JFrame {
      * Creates new form Principal
      */
     public JanelaPrincipal() {
+                
         initComponents();
+        
+        //Metodo criado para colocar icone no programa
+        setIcon();
+       
+                
         // Adquando a Frame ao Tamanho e larguta da tela do monitos
         this.setExtendedState(this.MAXIMIZED_BOTH);
         
@@ -117,6 +125,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("BioExtratus - Software de Gerenciamento de Vendas");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setIconImages(null);
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
                 formComponentShown(evt);
@@ -452,4 +461,8 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPanel jpFoto;
     // End of variables declaration//GEN-END:variables
+
+    private void setIcon() {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("folha.png")));
+    }
 }

@@ -158,12 +158,12 @@ public class JanelaRelComissaoDialog extends javax.swing.JDialog {
             JRBeanCollectionDataSource dados = new JRBeanCollectionDataSource(lista);
             
             // PASSO 1 - Caminho do relatório
-            InputStream rel = getClass().getResourceAsStream("../relatorios/RelComissao.jasper");
+            InputStream rel = getClass().getResourceAsStream("/relatorios/RelComissao.jasper");
 
             // PASSO 2 - Criar parâmetros de Pesquisa 
             Map parametros = new HashMap();
             // Imagem 
-            ImageIcon gto = new ImageIcon(getClass().getResource("../relatorios/leaf_banner_gray.png"));
+            ImageIcon gto = new ImageIcon(getClass().getResource("/relatorios/leaf_banner_gray.png"));
             parametros.put("logo", gto.getImage());
 
             // PASSO 3 - Carregar o relatório com os dados
